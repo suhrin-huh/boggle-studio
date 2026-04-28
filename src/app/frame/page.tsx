@@ -30,7 +30,7 @@ export default function FramePage() {
   return (
     <div className="flex flex-col items-center">
       <h1>프레임 선택</h1>
-      <div className="mx-auto w-100">
+      <div className="mx-auto w-full">
         <Carousel
           items={FRAME_THEMES}
           renderItem={renderThemeItem}
