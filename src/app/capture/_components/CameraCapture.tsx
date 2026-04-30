@@ -43,7 +43,6 @@ export default function CameraCapture({ capturedCuts, onCapture }: CameraCapture
         촬영하기
       </button>
       {capturedCuts.map((src, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
         <img key={i} src={src} alt={`촬영 ${i + 1}`} style={{ width: 100, height: 75 }} />
       ))}
     </div>
