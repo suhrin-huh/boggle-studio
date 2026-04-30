@@ -3,23 +3,23 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useBoothStore } from '@/store/useBoothStore';
-import { MAX_PHOTO_COUNT } from '@/constants/themes';
-import { CaptureMode } from '@/types/booth';
+import { FRAMES, CAPTURE_MODE, CaptureMode } from '@/constants/booth';
 import CameraCapture from './_components/CameraCapture';
 import UploadCapture from './_components/UploadCapture';
 import PixelButton from '@/components/common/PixelButton';
 
 export default function CapturePage() {
   const router = useRouter();
-  const { addCapture, capturedCuts } = useBoothStore();
+  const { addCapture, capturedCuts, frameId } = useBoothStore();
+  const requiredPhotoCount = frameId ? FRAMES[frameId].requiredPhotoCount : 0;
 
   const [mode, setMode] = useState<CaptureMode | null>(null);
   const [confirmedSlots, setConfirmedSlots] = useState<string[]>([]);
-
+  const captureMode = Object.values(CAPTURE_MODE);
   const allFilled =
     mode === 'camera'
-      ? capturedCuts.length >= MAX_PHOTO_COUNT
-      : confirmedSlots.filter(Boolean).length >= MAX_PHOTO_COUNT;
+      ? capturedCuts.length >= requiredPhotoCount
+      : confirmedSlots.filter(Boolean).length >= requiredPhotoCount;
 
   const handleUploadConfirm = useCallback(
     (index: number, data: string) => {
@@ -38,12 +38,11 @@ export default function CapturePage() {
       <>
         <h1 className="text-center">촬영 방법 선택</h1>
         <div className="gap-md flex justify-center">
-          <button className="p-lg rounded-lg border-2" onClick={() => setMode('camera')}>
-            촬영하기
-          </button>
-          <button className="p-lg rounded-lg border-2" onClick={() => setMode('upload')}>
-            사진 업로드 하기
-          </button>
+          {captureMode.map((mode) => (
+            <button className="p-lg rounded-lg border-2" onClick={() => setMode(mode.id)}>
+              {mode.label}
+            </button>
+          ))}
         </div>
       </>
     );
@@ -54,7 +53,7 @@ export default function CapturePage() {
       <h1>촬영</h1>
       <p>
         {mode === 'camera' ? capturedCuts.length : confirmedSlots.filter(Boolean).length} /{' '}
-        {MAX_PHOTO_COUNT}
+        {requiredPhotoCount}
       </p>
 
       {mode === 'camera' && <CameraCapture capturedCuts={capturedCuts} onCapture={addCapture} />}
