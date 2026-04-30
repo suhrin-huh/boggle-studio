@@ -56,7 +56,13 @@ export default function CapturePage() {
         {requiredPhotoCount}
       </p>
 
-      {mode === 'camera' && <CameraCapture capturedCuts={capturedCuts} onCapture={addCapture} />}
+      {mode === 'camera' && (
+        <CameraCapture
+          capturedCuts={capturedCuts}
+          onCapture={addCapture}
+          requiredPhotoCount={requiredPhotoCount}
+        />
+      )}
 
       {mode === 'upload' && (
         <UploadCapture confirmedSlots={confirmedSlots} onConfirm={handleUploadConfirm} />

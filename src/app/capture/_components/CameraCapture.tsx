@@ -2,7 +2,6 @@
 
 import Webcam from 'react-webcam';
 import useCamera from '@/hooks/useCamera';
-import { MAX_PHOTO_COUNT } from '@/constants/themes';
 
 const VIDEO_CONSTRAINTS = {
   width: 800,
@@ -13,18 +12,20 @@ const VIDEO_CONSTRAINTS = {
 interface CameraCaptureProps {
   capturedCuts: string[];
   onCapture: (data: string) => void;
+  requiredPhotoCount: number;
 }
 
 /**
  * 카메라 촬영 전용 컴포넌트
  * @param capturedCuts : 촬영된 사진 데이터
  * @param onCapture : 촬영하기 버튼 클릭 시 동작할 이벤트 함수
+ * @param requiredPhotoCount : 필요한 사진 장수
  */
-export default function CameraCapture({ capturedCuts, onCapture }: CameraCaptureProps) {
+export default function CameraCapture({ capturedCuts, onCapture, requiredPhotoCount }: CameraCaptureProps) {
   const { webcamRef, capture } = useCamera();
 
   const handleCapture = () => {
-    if (capturedCuts.length >= MAX_PHOTO_COUNT) return;
+    if (capturedCuts.length >= requiredPhotoCount) return;
     const screenshot = capture();
     if (screenshot) onCapture(screenshot);
   };
@@ -39,7 +40,7 @@ export default function CameraCapture({ capturedCuts, onCapture }: CameraCapture
         style={{ width: 400, height: 300 }}
       />
       <br />
-      <button onClick={handleCapture} disabled={capturedCuts.length >= MAX_PHOTO_COUNT}>
+      <button onClick={handleCapture} disabled={capturedCuts.length >= requiredPhotoCount}>
         촬영하기
       </button>
       {capturedCuts.map((src, i) => (
