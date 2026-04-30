@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { FRAME_THEMES } from '@/constants/themes';
-import useBoothStore from '@/store/useBoothStore';
+import { useBoothStore } from '@/store/useBoothStore';
 import type { ThemeOption } from '@/types/booth';
 import Carousel from '@/components/common/Carousel';
 import frameImg from '@/assets/image/frame.png';

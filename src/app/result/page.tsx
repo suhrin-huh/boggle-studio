@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useBoothStore from '@/store/useBoothStore';
+import { useBoothStore } from '@/store/useBoothStore';
 import { assembleVertical } from '@/utils/canvasHelper';
 
 // 개별 사진 크기, 임시로 설정 => 4:3 비율로 작업 예정

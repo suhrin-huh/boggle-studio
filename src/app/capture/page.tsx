@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import useBoothStore from '@/store/useBoothStore';
+import { useBoothStore } from '@/store/useBoothStore';
 import { MAX_PHOTO_COUNT } from '@/constants/themes';
 import { CaptureMode } from '@/types/booth';
 import CameraCapture from './_components/CameraCapture';
