@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface UseLocalPhotoSlotsProps {
   totalSlots: number;
@@ -9,7 +9,12 @@ interface UseLocalPhotoSlotsProps {
  * @returns localSlots, setPhotoAtIndex, addNextPhoto, isAllFilled,
  */
 export default function UseLocalPhotoSlots({ totalSlots }: UseLocalPhotoSlotsProps) {
-  const [localSlots, setLocalSlots] = useState<(string | null)[]>(Array(totalSlots).fill(null));
+  const [localSlots, setLocalSlots] = useState<(string | null)[]>([]);
+
+  useEffect(() => {
+    const initSlot = Array(totalSlots).fill(null);
+    setLocalSlots(initSlot);
+  }, [totalSlots]);
 
   // 순서대로 사진이 추가되는 함수(촬영하기 모드)
   const addNextPhoto = (photoData: string) => {
