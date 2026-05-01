@@ -22,7 +22,7 @@ import PhotoGrid from './_components/PhotoGrid';
 export default function UploadPage() {
   const router = useRouter();
   const frameId = useBoothStore((state) => state.frameId);
-  const setCapturedCuts = useBoothStore((state) => state.setCapturedCuts);
+  const setPhotoSlots = useBoothStore((state) => state.setPhotoSlots);
   const totalSlots = frameId ? FRAMES[frameId].requiredPhotoCount : 0;
   const { localSlots, setPhotoAtIndex, isAllFilled } = useLocalPhotoSlots({ totalSlots });
   const handleUploadConfirm = (index: number, data: string) => {
@@ -39,7 +39,7 @@ export default function UploadPage() {
 
   // 출력 버튼 이벤트 핸들러
   const handlePrint = () => {
-    setCapturedCuts(localSlots as string[]);
+    setPhotoSlots(localSlots as string[]);
     router.push('/result');
   };
 
