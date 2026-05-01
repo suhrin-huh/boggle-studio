@@ -1,71 +1,50 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import Webcam from 'react-webcam';
-import useBoothStore from '@/store/useBoothStore';
-import useCamera from '@/hooks/useCamera';
-import { MAX_PHOTO_COUNT } from '@/constants/themes';
-import { CaptureMode } from '@/types/booth';
-
-// 카메라 해상도: 4:3 비율
-const VIDEO_CONSTRAINTS = {
-  width: 800,
-  height: 600,
-  facingMode: 'user',
-} as const;
+import { useBoothStore } from '@/store/useBoothStore';
+import { FRAMES, CAPTURE_MODE, CaptureMode } from '@/constants/booth';
+import CameraCapture from './_components/CameraCapture';
+import UploadCapture from './_components/UploadCapture';
+import PixelButton from '@/components/common/PixelButton';
 
 export default function CapturePage() {
   const router = useRouter();
-  const addCapture = useBoothStore((state) => state.addCapture);
-  const capturedCuts = useBoothStore((state) => state.capturedCuts);
+  const { addCapture, capturedCuts, frameId } = useBoothStore();
+  const requiredPhotoCount = frameId ? FRAMES[frameId].requiredPhotoCount : 0;
 
   const [mode, setMode] = useState<CaptureMode | null>(null);
-  const [countdown, setCountdown] = useState<number | null>(null);
   const [confirmedSlots, setConfirmedSlots] = useState<string[]>([]);
-  const { webcamRef, capture } = useCamera();
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const captureMode = Object.values(CAPTURE_MODE);
   const allFilled =
     mode === 'camera'
-      ? capturedCuts.length >= MAX_PHOTO_COUNT
-      : confirmedSlots.filter(Boolean).length >= MAX_PHOTO_COUNT;
+      ? capturedCuts.length >= requiredPhotoCount
+      : confirmedSlots.filter(Boolean).length >= requiredPhotoCount;
 
-  // 4장 완성 시 3초 카운트다운 후 result 페이지로 이동
-  useEffect(() => {
-    if (!allFilled) return;
+  const handleUploadConfirm = useCallback(
+    (index: number, data: string) => {
+      setConfirmedSlots((prev) => {
+        const next = [...prev];
+        next[index] = data;
+        return next;
+      });
+      addCapture(data);
+    },
+    [addCapture],
+  );
 
-    setCountdown(3);
-    let remaining = 3;
-
-    timerRef.current = setInterval(() => {
-      remaining -= 1;
-      setCountdown(remaining);
-      if (remaining <= 0) {
-        clearInterval(timerRef.current!);
-        router.push('/result');
-      }
-    }, 1000);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [allFilled, router]);
-
-  const handleCameraCapture = useCallback(() => {
-    if (capturedCuts.length >= MAX_PHOTO_COUNT) return;
-    const screenshot = capture();
-    if (screenshot) addCapture(screenshot);
-  }, [capture, addCapture, capturedCuts.length]);
-
-  // 모드 선택 전
   if (!mode) {
     return (
-      <div>
-        <h1>촬영 방법 선택</h1>
-        <button onClick={() => setMode('camera')}>촬영하기</button>
-        <button onClick={() => setMode('upload')}>사진 업로드 하기</button>
-      </div>
+      <>
+        <h1 className="text-center">촬영 방법 선택</h1>
+        <div className="gap-md flex justify-center">
+          {captureMode.map((mode) => (
+            <button className="p-lg rounded-lg border-2" onClick={() => setMode(mode.id)}>
+              {mode.label}
+            </button>
+          ))}
+        </div>
+      </>
     );
   }
 
@@ -74,39 +53,31 @@ export default function CapturePage() {
       <h1>촬영</h1>
       <p>
         {mode === 'camera' ? capturedCuts.length : confirmedSlots.filter(Boolean).length} /{' '}
-        {MAX_PHOTO_COUNT}
+        {requiredPhotoCount}
       </p>
 
-      {/* 카메라 모드 */}
       {mode === 'camera' && (
-        <div>
-          <Webcam
-            ref={webcamRef}
-            audio={false}
-            screenshotFormat="image/png"
-            videoConstraints={VIDEO_CONSTRAINTS}
-            mirrored
-            style={{ width: 400, height: 300 }}
-          />
-          <br />
-          <button onClick={handleCameraCapture} disabled={capturedCuts.length >= MAX_PHOTO_COUNT}>
-            촬영하기
-          </button>
-          {/* 촬영된 사진 미리보기 */}
-          {capturedCuts.map((src, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={i} src={src} alt={`촬영 ${i + 1}`} style={{ width: 100, height: 75 }} />
-          ))}
-        </div>
+        <CameraCapture
+          capturedCuts={capturedCuts}
+          onCapture={addCapture}
+          requiredPhotoCount={requiredPhotoCount}
+        />
       )}
 
-      {/* 4장 완성 시 버튼 + 카운트다운 */}
-      {allFilled && (
-        <div>
-          <button disabled>사진을 모두 선택하였습니다</button>
-          {countdown !== null && <p>{countdown}초 후 결과 페이지로 이동합니다</p>}
-        </div>
+      {mode === 'upload' && (
+        <UploadCapture confirmedSlots={confirmedSlots} onConfirm={handleUploadConfirm} />
       )}
+
+      <div>
+        <PixelButton
+          variant={allFilled ? 'primary' : 'ghost'}
+          disabled={!allFilled}
+          onClick={() => router.push('/result')}
+          className="scale-110"
+        >
+          사진 출력하기
+        </PixelButton>
+      </div>
     </div>
   );
 }

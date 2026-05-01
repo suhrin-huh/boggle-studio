@@ -2,19 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useBoothStore from '@/store/useBoothStore';
+import { useBoothStore } from '@/store/useBoothStore';
 import { assembleVertical } from '@/utils/canvasHelper';
 
-// 개별 사진 크기, 임시로 설정 => 4:3 비율로 작업 예정
+// 개별 사진 크기, 임시로 설정, 후에 assemble 로직 수정하면서 frame 적용 예정
 const FRAME_WIDTH = 400;
 const FRAME_HEIGHT = 300;
 
 export default function ResultPage() {
   const router = useRouter();
   const capturedCuts = useBoothStore((state) => state.capturedCuts);
-  const selectedTheme = useBoothStore((state) => state.selectedTheme);
   const resetBooth = useBoothStore((state) => state.resetBooth);
-
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +28,6 @@ export default function ResultPage() {
   // 4장 사진을 세로 조립
   useEffect(() => {
     if (capturedCuts.length === 0) return;
-
     const assemble = async () => {
       try {
         setIsLoading(true);
@@ -46,7 +43,7 @@ export default function ResultPage() {
     };
 
     assemble();
-  }, [capturedCuts, selectedTheme]);
+  }, [capturedCuts]);
 
   const handleDownload = () => {
     if (!resultImage) return;

@@ -3,27 +3,31 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { FRAME_THEMES } from '@/constants/themes';
-import useBoothStore from '@/store/useBoothStore';
-import type { ThemeOption } from '@/types/booth';
+import { FRAMES, FrameId } from '@/constants/booth';
+import { useBoothStore } from '@/store/useBoothStore';
+import type { FrameConfig } from '@/types/booth';
 import Carousel from '@/components/common/Carousel';
-import frameImg from '@/assets/image/frame.png';
 import PixelButton from '@/components/common/PixelButton';
+
+const frameList = Object.values(FRAMES);
+const frameKeys = Object.keys(FRAMES) as FrameId[];
 
 export default function FramePage() {
   const router = useRouter();
-  const setTheme = useBoothStore((state) => state.setTheme);
+  const setFrameId = useBoothStore((state) => state.setFrameId);
   const [focusedIndex, setFocusedIndex] = useState(0);
 
   const handleNext = () => {
-    setTheme(FRAME_THEMES[focusedIndex]);
+    setFrameId(frameKeys[focusedIndex]);
     router.push('/capture');
   };
 
-  const renderThemeItem = (theme: ThemeOption) => (
+  const renderFrameItem = (frame: FrameConfig) => (
     <div>
-      <Image src={frameImg} alt={theme.label} width={200} height={150} />
-      <p className="text-center">{theme.label}</p>
+      <div className="relative h-100 w-50">
+        <Image src={frame.sampleImageUrl} alt={frame.label} fill />
+      </div>
+      <p className="text-center">{frame.label}</p>
     </div>
   );
 
@@ -32,8 +36,8 @@ export default function FramePage() {
       <h1>프레임 선택</h1>
       <div className="mx-auto w-full">
         <Carousel
-          items={FRAME_THEMES}
-          renderItem={renderThemeItem}
+          items={frameList}
+          renderItem={renderFrameItem}
           infinite={false}
           onIndexChange={setFocusedIndex}
         />
