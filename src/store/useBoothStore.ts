@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { FrameId } from '@/constants/booth';
 
 export interface BoothState {
@@ -24,11 +25,20 @@ export type BoothStore = BoothState & BoothActions;
  * @returns addCapture : 사진 추가 함수
  * @returns resetBooth : 전역 변수 초기화 함수
  */
-export const useBoothStore = create<BoothStore>((set) => ({
-  frameId: null,
-  capturedCuts: [],
-  finalImageName: '',
-  setFrameId: (id) => set({ frameId: id }),
-  addCapture: (imageData) => set((state) => ({ capturedCuts: [...state.capturedCuts, imageData] })),
-  resetBooth: () => set({ frameId: null, capturedCuts: [], finalImageName: '' }),
-}));
+export const useBoothStore = create<BoothStore>()(
+  persist(
+    (set) => ({
+      frameId: null,
+      capturedCuts: [],
+      finalImageName: '',
+      setFrameId: (id) => set({ frameId: id }),
+      addCapture: (imageData) =>
+        set((state) => ({ capturedCuts: [...state.capturedCuts, imageData] })),
+      resetBooth: () => set({ frameId: null, capturedCuts: [], finalImageName: '' }),
+    }),
+    {
+      name: 'booth-store',
+      partialize: (state) => ({ frameId: state.frameId }),
+    },
+  ),
+);
