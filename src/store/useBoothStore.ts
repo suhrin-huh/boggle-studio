@@ -10,7 +10,7 @@ export interface BoothState {
 
 export interface BoothActions {
   setFrameId: (id: FrameId) => void;
-  addCapture: (imageData: string) => void;
+  setCapturedCuts: (imageDatas: string[]) => void;
   resetBooth: () => void;
 }
 
@@ -22,7 +22,7 @@ export type BoothStore = BoothState & BoothActions;
  * @returns capturedCuts : 촬영된 사진 데이터
  * @returns finalImageName : 최종 이미지명
  * @returns setFrameId : 프레임 변경 함수
- * @returns addCapture : 사진 추가 함수
+ * @returns setCapturedCuts : capturedCuts 업데이트 함수
  * @returns resetBooth : 전역 변수 초기화 함수
  */
 export const useBoothStore = create<BoothStore>()(
@@ -32,8 +32,7 @@ export const useBoothStore = create<BoothStore>()(
       capturedCuts: [],
       finalImageName: '',
       setFrameId: (id) => set({ frameId: id }),
-      addCapture: (imageData) =>
-        set((state) => ({ capturedCuts: [...state.capturedCuts, imageData] })),
+      setCapturedCuts: (imageDatas: string[]) => set({ capturedCuts: [...imageDatas] }),
       resetBooth: () => set({ frameId: null, capturedCuts: [], finalImageName: '' }),
     }),
     {
