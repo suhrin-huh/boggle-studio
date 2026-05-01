@@ -11,7 +11,7 @@ const FRAME_HEIGHT = 300;
 
 export default function ResultPage() {
   const router = useRouter();
-  const capturedCuts = useBoothStore((state) => state.capturedCuts);
+  const photoSlots = useBoothStore((state) => state.photoSlots);
   const resetBooth = useBoothStore((state) => state.resetBooth);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>('');
@@ -20,18 +20,18 @@ export default function ResultPage() {
 
   // 사진 없이 직접 접근한 경우 홈으로 리다이렉트
   useEffect(() => {
-    if (capturedCuts.length === 0) {
+    if (photoSlots.length === 0) {
       router.replace('/');
     }
-  }, [capturedCuts, router]);
+  }, [photoSlots, router]);
 
   // 4장 사진을 세로 조립
   useEffect(() => {
-    if (capturedCuts.length === 0) return;
+    if (photoSlots.length === 0) return;
     const assemble = async () => {
       try {
         setIsLoading(true);
-        const assembled = await assembleVertical(capturedCuts, FRAME_WIDTH, FRAME_HEIGHT);
+        const assembled = await assembleVertical(photoSlots, FRAME_WIDTH, FRAME_HEIGHT);
         const name = 'BOGGLE BOGGLE STUDIO';
         setResultImage(assembled);
         setFileName(name);
@@ -43,7 +43,7 @@ export default function ResultPage() {
     };
 
     assemble();
-  }, [capturedCuts]);
+  }, [photoSlots]);
 
   const handleDownload = () => {
     if (!resultImage) return;
@@ -69,7 +69,7 @@ export default function ResultPage() {
         <img
           src={resultImage}
           alt="완성된 인생네컷"
-          style={{ width: FRAME_WIDTH, height: FRAME_HEIGHT * capturedCuts.length }}
+          style={{ width: FRAME_WIDTH, height: FRAME_HEIGHT * photoSlots.length }}
         />
       )}
       <br />

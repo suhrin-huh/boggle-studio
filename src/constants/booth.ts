@@ -8,10 +8,12 @@ export const CAPTURE_MODE = {
   camera: {
     id: 'camera',
     label: '촬영하기',
+    path: 'capture/camera',
   },
   upload: {
     id: 'upload',
     label: '업로드하기',
+    path: 'capture/upload',
   },
 } as const;
 
