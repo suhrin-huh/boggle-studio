@@ -1,3 +1,57 @@
+import { FrameConfig } from '@/types/booth';
+
+/**
+ * 이미지 소스를 HTMLImageElement로 로드합니다.
+ */
+const loadImage = (src: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`이미지 로드 실패: ${src}`));
+    img.src = src;
+  });
+
+/**
+ * FrameConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성합니다.
+ * 합성 순서: 배경 프레임 → 슬롯 사진들 → 오버레이(있을 경우)
+ * @param frameConfig - FRAMES에서 선택된 프레임 설정
+ * @param photoSlots - 슬롯에 배치할 사진 소스(Base64 또는 URL) 배열
+ * @returns 합성된 이미지의 Base64 문자열을 담은 Promise
+ */
+export const assembleFrame = async (
+  frameConfig: FrameConfig,
+  photoSlots: string[],
+): Promise<string> => {
+  const { width, height, frameImageUrl, overlayImageUrl, slots } = frameConfig;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas context를 가져올 수 없습니다.');
+
+  // 1단계: 배경 프레임 이미지를 도화지 크기에 맞게 그리기
+  const frameImage = await loadImage(frameImageUrl);
+  ctx.drawImage(frameImage, 0, 0, width, height);
+
+  // 2단계: 각 슬롯 좌표에 사진 합성
+  const photoImages = await Promise.all(photoSlots.map(loadImage));
+  photoImages.forEach((img, index) => {
+    const slot = slots[index];
+    if (!slot) return;
+    ctx.drawImage(img, slot.x, slot.y, slot.width, slot.height);
+  });
+
+  // 3단계: 오버레이 이미지가 있으면 최상단에 합성
+  if (overlayImageUrl) {
+    const overlayImage = await loadImage(overlayImageUrl);
+    ctx.drawImage(overlayImage, 0, 0, width, height);
+  }
+
+  return canvas.toDataURL('image/png');
+};
+
 /**
  * 여러 장의 이미지(현재에는 4장)를 수직으로 조립하여 하나의 Base64 이미지로 반환합니다.
  * @param images - 합성할 이미지 소스(Base64 또는 URL) 배열
