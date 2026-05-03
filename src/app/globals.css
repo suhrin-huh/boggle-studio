@@ -1,21 +1,18 @@
 /* ════════════════════════════════════════
-  Google Fonts
-════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
-
-/* ════════════════════════════════════════
   Tailwind 4 — @theme 블록으로 디자인 토큰 정의
   CSS 변수로도 자동 노출됨 (var(--color-primary-light) 등)
 ════════════════════════════════════════ */
 @import 'tailwindcss';
 
 @theme {
-  /* 폰트 */
+  /* ── 폰트 ────────────────────────────── */
+  /* next/font/google 소스 변수를 참조 — 하드코딩 폰트명 대신 var()로 통일 */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-pixel: 'Press Start 2P', monospace;
-  --font-ko: 'Noto Sans KR', sans-serif;
+  --font-luckiestguy: var(--font-luckiest-guy);
+  --font-ko: var(--font-noto-sans-kr);
+  --font-sansita: var(--font-sansita-face);
+  --font-unbounded: var(--font-unbounded-face);
 
   /* 텍스트 등의 색상 (new)/ 내용 잉크  */
   --color-foreground-main: #2a3a6e;
@@ -162,8 +159,4 @@
   /* Caption (10px -> 12px로 상향 조정) */
   --text-caption: 0.75rem; /* 12px - 최소 가독성 보장 사이즈 (날짜, 저작권, 매우 작은 뱃지) */
   --text-caption--line-height: 1.4;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
 }
