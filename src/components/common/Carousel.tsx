@@ -51,25 +51,55 @@ export default function Carousel<T>({
       <button
         onClick={goPrev}
         disabled={isPrevDisabled}
-        className="cursor-pointer transition-transform hover:scale-110 disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 shadow transition-all hover:scale-110 hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-30"
         aria-label="이전 아이템으로 이동"
       >
-        ◀
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
       </button>
-      {/* flex-1과 overflow-hidden : 캐러셀 내용물이 부모 컨테이너를 벗어나지 않도록 영역을 확보*/}
+
+      {/* 모든 아이템을 미리 렌더링하고 CSS로 show/hide — 이미지 사전 로드로 전환 시 지연 없음 */}
       <div className="flex flex-1 justify-center overflow-hidden">
-        <div className="flex flex-1 justify-center">
-          {renderItem(items[currentIndex], currentIndex)}
-        </div>
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className={`flex flex-1 justify-center ${index === currentIndex ? '' : 'hidden'}`}
+          >
+            {renderItem(item, index)}
+          </div>
+        ))}
       </div>
 
       <button
         onClick={goNext}
         disabled={isNextDisabled}
-        className="cursor-pointer transition-transform hover:scale-110 disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 shadow transition-all hover:scale-110 hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-30"
         aria-label="다음 아이템으로 이동"
       >
-        ▶
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
       </button>
     </div>
   );
