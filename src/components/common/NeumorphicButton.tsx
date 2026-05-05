@@ -1,6 +1,6 @@
 interface NeumorphicButtonProps {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   className?: string;
 }
@@ -9,7 +9,6 @@ export default function NeumorphicButton({
   children,
   onClick,
   disabled = false,
-
   className = '',
 }: NeumorphicButtonProps) {
   const raisedShadow =
