@@ -13,9 +13,9 @@ export default function Header() {
     <header className="p-md">
       <p
         onClick={handleClick}
-        className="font-pixel text-primary text-body-sm md:text-body-lg text-center"
+        className="font-luckiestguy text-foreground-main text-h3 md:text-h1 text-center"
       >
-        BB STUDIO
+        BOGGLE STUDIO
       </p>
     </header>
   );
