@@ -25,7 +25,7 @@ export default function NeumorphicButton({
       className={[
         'cursor-pointer select-none',
         'px-lg py-md rounded-2xl bg-[#e1ecfa]/30',
-        'font-unbounded text-[12px] font-semibold tracking-wide md:text-sm',
+        'font-unbounded text-[10px] font-semibold tracking-wide',
         'transition-all duration-200 ease-in-out outline-none',
         'active:scale-[0.97]',
         disabled

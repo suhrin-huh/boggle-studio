@@ -11,10 +11,7 @@ export default function Header() {
 
   return (
     <header className="p-md">
-      <p
-        onClick={handleClick}
-        className="font-luckiestguy text-foreground-main text-h3 md:text-h1 text-center"
-      >
+      <p onClick={handleClick} className="font-luckiestguy text-primary-dark text-h3 text-center">
         BOGGLE STUDIO
       </p>
     </header>

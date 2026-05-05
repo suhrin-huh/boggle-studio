@@ -4,7 +4,7 @@ import PhotoFrame from './PhotoFrame';
 
 export default function ServiceDemo() {
   return (
-    <PhotoFrame className="aspect-3/4 w-60 md:w-70 lg:w-90">
+    <PhotoFrame className="aspect-3/4 w-50">
       <Image
         src={serviceDemo}
         alt="서비스 소개 GIF"

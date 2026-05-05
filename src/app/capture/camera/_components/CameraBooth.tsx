@@ -12,7 +12,6 @@ import NeumorphicButton from '@/components/common/NeumorphicButton';
 const VIDEO_CONSTRAINTS = {
   width: { ideal: 1920 },
   height: { ideal: 1440 },
-  aspectRatio: 4 / 3,
   facingMode: { ideal: 'user' },
 };
 
@@ -51,9 +50,9 @@ export default function CameraBooth() {
 
   return (
     <>
-      <div className="shadow-neu relative w-full max-w-150 rounded-lg">
+      <div className="shadow-neu relative aspect-4/3 w-75">
         {/* 촬영 카운트 */}
-        <span className="absolute top-[5%] right-[5%] z-10 text-[20px] text-white tabular-nums">
+        <span className="absolute top-[5%] right-[5%] z-10 text-[16px] font-semibold text-white tabular-nums">
           {filledCount} / {totalSlots}
         </span>
 
@@ -64,7 +63,7 @@ export default function CameraBooth() {
           mirrored
           screenshotFormat="image/png"
           videoConstraints={VIDEO_CONSTRAINTS}
-          className="w-full rounded-xl shadow-lg"
+          className="rounded-lg shadow-lg"
         />
       </div>
 

@@ -32,7 +32,7 @@ export default function ResultActionButtons({ resultImage, fileName }: ResultAct
 
   return (
     <>
-      <div className="gap-md flex w-full flex-col md:flex-row">
+      <div className="gap-md flex w-full flex-col justify-center md:flex-row">
         <NeumorphicButton onClick={handleDownload}>
           <div className="text-muted-dark flex flex-col items-center gap-1.5">
             <DownloadIcon />

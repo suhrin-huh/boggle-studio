@@ -32,7 +32,7 @@ export default function ResultBooth() {
       <PageTitle title="Done!" />
 
       {/* Generated Cut */}
-      <div className="relative aspect-1/3 w-30 md:w-60">
+      <div className="relative aspect-1/3 w-30">
         <Image src={resultImage} alt="Generated cut" fill className="object-cover" />
       </div>
 
