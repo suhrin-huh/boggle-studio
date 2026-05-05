@@ -17,9 +17,15 @@ export const CAPTURE_MODE = {
   },
 } as const;
 
-// 특정 속성의 값들만 타입으로 추출
-export type CaptureMode = (typeof CAPTURE_MODE)[keyof typeof CAPTURE_MODE]['id'];
-// 결과: 'camera' | 'upload';
+// 타입 추출
+export type CaptureMode = (typeof CAPTURE_MODE)[keyof typeof CAPTURE_MODE];
+
+/*
+ * 결과:
+ * type CaptureMode =
+ * { readonly id: "camera"; readonly label: "Camera"; readonly path: "/capture/camera" }
+ * { readonly id: "upload"; readonly label: "Upload"; readonly path: "/capture/upload" }
+ */
 
 /**
  * 현재 프레임 미완성으로 모두 동일한 sample image를 보여준다.

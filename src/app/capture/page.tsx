@@ -1,25 +1,19 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { CAPTURE_MODE } from '@/constants/booth';
+import PageTitle from '@/components/common/PageTitle';
+import CaptureModeButton from './_components/CaptureModeButton';
+
 export default function CapturePage() {
-  const router = useRouter();
   const captureModes = Object.values(CAPTURE_MODE);
 
   return (
-    <>
-      <h1 className="text-center">촬영 방법 선택</h1>
-      <div className="gap-md flex justify-center">
+    <main className="flex flex-1 flex-col items-center justify-center">
+      <PageTitle title="SELECT A MODE" />
+      {/* 모드 선택 버튼 */}
+      <div className="gap-lg p-lg flex w-full shrink-0 flex-col">
         {captureModes.map((mode) => (
-          <button
-            key={`${mode.id}`}
-            className="p-lg rounded-lg border-2"
-            onClick={() => router.push(mode.path)}
-          >
-            {mode.label}
-          </button>
+          <CaptureModeButton key={mode.id} mode={mode} />
         ))}
       </div>
-    </>
+    </main>
   );
 }
