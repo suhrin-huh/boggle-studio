@@ -24,7 +24,7 @@ export default function FilledSlotProps({ index, src, onChangeClick }: FilledSlo
           onClick={onChangeClick}
           className="rounded-lg bg-white/20 px-3 py-1.5 text-xs text-white backdrop-blur-sm transition hover:bg-white/40"
         >
-          변경
+          Replace
         </button>
       </div>
     </div>

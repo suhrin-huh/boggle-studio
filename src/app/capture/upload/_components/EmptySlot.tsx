@@ -12,12 +12,19 @@ export default function EmptySlot({ index, onClick }: EmptySlotProps) {
   return (
     <button
       onClick={onClick}
-      className="flex aspect-4/3 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 transition hover:bg-gray-50"
+      className="hover:bg-muted-hover/30 flex aspect-4/3 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 transition"
     >
-      <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg
+        className="text-muted-dark h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
       </svg>
-      <span className="text-xs font-medium text-gray-500">사진 {index + 1} 업로드</span>
+      <span className="font-unbounded text-muted-dark md: text-sm text-xs font-medium">
+        SLOT {index + 1}
+      </span>
     </button>
   );
 }
