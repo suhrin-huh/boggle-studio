@@ -1,4 +1,6 @@
 import Header from '@/components/common/Header';
+import Image from 'next/image';
+import background from '@/assets/image/background.jpg';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -6,11 +8,14 @@ interface AppShellProps {
 
 export default function AppShell({ children }: AppShellProps) {
   return (
-    <div className="bg-primary p-md flex h-dvh min-h-150 min-w-80 justify-center">
-      <main className="relative flex w-full max-w-120 flex-col overflow-hidden rounded-lg bg-white shadow-2xl">
+    // 화면 전체 틀
+    <div className="p-lg flex h-dvh min-h-150 min-w-80 justify-center font-sans">
+      {/* 메인 요소 레이아웃 */}
+      <div className="shadow-neu relative flex w-full max-w-140 flex-col overflow-hidden rounded-lg">
         <Header />
+        <Image src={background} alt="배경" loading="eager" fill className="-z-10" />
         {children}
-      </main>
+      </div>
     </div>
   );
 }

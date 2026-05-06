@@ -1,0 +1,12 @@
+export const generateFileName = (text: string = '') => {
+  const date = new Date();
+  const yy = date.getFullYear().toString().substring(2, 4);
+  const MM = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  const HH = String(date.getHours()).padStart(2, '0');
+  const mm = String(date.getMinutes()).padStart(2, '0');
+  const ss = String(date.getSeconds()).padStart(2, '0');
+  const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase();
+
+  return `BOGGLE_STUDIO_${text}_${yy}${MM}${dd}${HH}${mm}${ss}_${randomStr}.png`;
+};

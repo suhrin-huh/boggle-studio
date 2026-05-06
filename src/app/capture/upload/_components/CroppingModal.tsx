@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import useCropSelection from '@/hooks/useCropSelection';
+import NeumorphicButton from '@/components/common/NeumorphicButton';
 
 interface CroppingModalProps {
   file: File;
@@ -9,21 +10,13 @@ interface CroppingModalProps {
   onCancel: () => void;
 }
 
-/**
- * 업로드한 사진을 편집(자르기) 전용 모달 컴포넌트
- * @param file : 선택한 사진
- * @param onConfirm : 완료 버튼 클릭시 동작할 이벤트 함수
- * @param onCancel : 취소 버튼 클릭시 동작할 이벤트 함수
- */
 export default function CroppingModal({ file, onConfirm, onCancel }: CroppingModalProps) {
-  const { canvasRef, loadFile, confirmCrop, cropToBase64, resetCrop } = useCropSelection();
+  const { canvasRef, loadFile, confirmCrop, cropToBase64 } = useCropSelection();
 
-  // 모달이 열리면 전달받은 파일을 캔버스에 로드합니다.
   useEffect(() => {
     loadFile(file);
   }, [file, loadFile]);
 
-  // 자르기 완료 로직
   const handleConfirm = () => {
     confirmCrop();
     const data = cropToBase64();
@@ -33,28 +26,23 @@ export default function CroppingModal({ file, onConfirm, onCancel }: CroppingMod
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-      <div className="flex w-full max-w-120 flex-col gap-4 rounded-2xl bg-white p-5 shadow-2xl">
+    <div className="p-md fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      {/* 뉴모픽 모달 카드 — 앱 표면과 동일한 배경색으로 그림자 입체감 표현 */}
+      <div className="p-md gap-md flex w-5/6 max-w-110 flex-col rounded-2xl bg-gray-100">
         {/* 헤더 */}
-        <h2 className="text-base font-semibold">사진 자르기</h2>
-        {/* 캔버스 (기존 4:3 UI 유지) */}
-        <div className="aspect-4/3 overflow-hidden rounded-xl border bg-black">
+        <p className="font-unbounded text-muted-dark text-body-md text-center font-semibold">
+          EDIT PHOTO
+        </p>
+
+        {/* 캔버스 영역 — 인셋 그림자로 눌린 느낌의 뷰포트 표현 */}
+        <div className="shadow-neu-inset aspect-4/3 overflow-hidden rounded-xl bg-black/90">
           <canvas ref={canvasRef} className="block h-full w-full cursor-move touch-none" />
         </div>
+
         {/* 액션 버튼 */}
-        <div className="flex gap-2 pt-2">
-          <button onClick={onCancel} className="rounded-lg border px-4 py-2 text-sm transition">
-            취소
-          </button>
-          <button onClick={resetCrop} className="rounded-lg border px-4 py-2 text-sm transition">
-            초기화
-          </button>
-          <button
-            onClick={handleConfirm}
-            className="ml-auto rounded-lg border px-5 py-2 text-sm font-medium transition"
-          >
-            완료
-          </button>
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <NeumorphicButton onClick={onCancel}>CANCEL</NeumorphicButton>
+          <NeumorphicButton onClick={handleConfirm}>SAVE</NeumorphicButton>
         </div>
       </div>
     </div>

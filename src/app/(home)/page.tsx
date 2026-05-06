@@ -1,16 +1,19 @@
-'use client';
-
-import PixelButton from '@/components/common/PixelButton';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import HeroContent from './_components/HeroContent';
+import ServiceDemo from './_components/ServiceDemo';
+import NeumorphicButton from '@/components/common/NeumorphicButton'; // 직접 불러옵니다!
 
 export default function HomePage() {
-  const router = useRouter();
-
   return (
-    <div className="p-sm flex flex-1 flex-col items-center justify-center gap-2">
-      <p className="font-pixel text-primary text-body-sm md:text-body-lg">BOGGLE BOGGLE STUDIO</p>
-      <p>집에서 편리하게 촬영하는 인생네컷</p>
-      <PixelButton onClick={() => router.push('/frame')}>START</PixelButton>
-    </div>
+    <main className="p-md gap-lg flex flex-1 flex-col items-center justify-center">
+      <HeroContent />
+      <ServiceDemo />
+      <p className="text-muted-dark font-unbounded text-[10px]">PLAYFUL · PHOTO · PIECES</p>
+
+      {/* ✨ 컴포넌트 따로 만들 필요 없이 여기서 바로 조립 (합성 패턴) */}
+      <Link href="/frame" className="z-10">
+        <NeumorphicButton className="hover:cursor-pointer">START</NeumorphicButton>
+      </Link>
+    </main>
   );
 }

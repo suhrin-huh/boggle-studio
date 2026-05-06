@@ -20,7 +20,7 @@
 - Language: ALWAYS respond to the user in Korean (한국어), regardless of the prompt's language. Explanations, suggestions, and chat responses must be in Korean.
 - Code Comments: Write code comments in Korean to maintain context for the user.
 
-## 1. Directory Structure
+## Directory Structure
 
 - `src/app/`: Next.js App Router (Routing, Layouts)
 - `src/components/`: Globally shared UI components only
@@ -30,7 +30,7 @@
 - `src/types/`: Shared TypeScript definitions
 - `src/assets/`: Static resources (Images, Icons, Lottie)
 
-## 2. Naming Conventions
+## Naming Conventions
 
 - Components: Use `PascalCase` (e.g., `CaptureButton.tsx`, `FrameSelector.tsx`).
 - Component Props: Use `PascalCase` + `Props` suffix (e.g., `interface CaptureButtonProps { ... }`).
@@ -43,10 +43,11 @@
 
 ## Design Patterns & Component Rules
 
-- Functional Components: Write all components as arrow functions (`const Component = () => { ... }`).
+- Functional Components: Write all components as function declarations with export default (e.g., `export default function Component() { ... }`).
 - Separation of Concerns: Keep UI rendering logic inside components. Extract complex state changes and business logic into `hooks/`. Move heavy Canvas compositing logic to pure functions in `utils/`.
 - Props Handling: Destructure props immediately in the function signature for better readability.
 - Early Return: Minimize code depth (indentation) by using the Early Return pattern for edge cases and condition checks at the top of the function.
+- Component Composition (Children Pattern): Avoid rigid, deeply nested internal component structures. Instead of a parent component internally importing and rendering its deep children, use the `children` prop to compose them at the usage site. This makes the UI hierarchy visible at a glance from the top level (Inversion of Control) and prevents prop drilling (e.g., `<Container><List><Item /></List></Container>`).
 
 ## Styling & UI (Tailwind CSS v4)
 
