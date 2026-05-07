@@ -6,11 +6,13 @@ export interface BoothState {
   frameId: FrameId | null;
   photoSlots: string[];
   finalImageName: string;
+  effectSlots: string[]; // 캡처 순간마다 저장된 캔버스 이펙트 스냅샷 배열 (photoSlots와 1:1 대응)
 }
 
 export interface BoothActions {
   setFrameId: (id: FrameId) => void;
   setPhotoSlots: (imageDatas: string[]) => void;
+  setEffectSlots: (snapshots: string[]) => void;
   resetBooth: () => void;
 }
 
@@ -31,9 +33,11 @@ export const useBoothStore = create<BoothStore>()(
       frameId: null,
       photoSlots: [],
       finalImageName: '',
+      effectSlots: [],
       setFrameId: (id) => set({ frameId: id }),
       setPhotoSlots: (imageDatas: string[]) => set({ photoSlots: [...imageDatas] }),
-      resetBooth: () => set({ frameId: null, photoSlots: [], finalImageName: '' }),
+      setEffectSlots: (snapshots) => set({ effectSlots: [...snapshots] }),
+      resetBooth: () => set({ frameId: null, photoSlots: [], finalImageName: '', effectSlots: [] }),
     }),
     {
       name: 'booth-store',

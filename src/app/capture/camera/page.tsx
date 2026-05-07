@@ -1,75 +1,9 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useBoothStore } from '@/store/useBoothStore';
-import { FRAMES } from '@/constants/booth';
-import Webcam from 'react-webcam';
-import useCamera from '@/hooks/useCamera';
-import useLocalPhotoSlots from '@/hooks/useLocalPhotoSlots';
-import NeumorphicButton from '@/components/common/NeumorphicButton';
-
-// ideal로 지정 시 지원 안 되는 기기에서도 fallback 허용
-const VIDEO_CONSTRAINTS = {
-  // 높은 해상도 요구, 기기가 지원하지 않을 수 있으므로 ideal 사용
-  width: { ideal: 1920 },
-  height: { ideal: 1440 },
-
-  // 해상도에 관계없이 4:3 비율로 크롭해서 가져오도록 강제
-  aspectRatio: 4 / 3,
-
-  // 전면 카메라 우선(호환성 측면 고려하여 'ideal')
-  facingMode: { ideal: 'user' },
-};
+import CameraBooth from './_components/CameraBooth';
 
 export default function CameraPage() {
-  const router = useRouter();
-  const frameId = useBoothStore((state) => state.frameId);
-  const setPhotoSlots = useBoothStore((state) => state.setPhotoSlots);
-  const totalSlots = frameId ? FRAMES[frameId].requiredPhotoCount : 0;
-  const { localSlots, addNextPhoto, isAllFilled } = useLocalPhotoSlots({ totalSlots });
-  const { webcamRef, capture } = useCamera();
-
-  const filledCount = localSlots.filter((slot) => slot !== null).length;
-
-  const handleCapture = () => {
-    const screenshot = capture();
-    if (screenshot) addNextPhoto(screenshot);
-  };
-
-  const handlePrint = () => {
-    setPhotoSlots(localSlots as string[]);
-    router.push('/result');
-  };
-
   return (
-    <main className="p-md gap-lg flex flex-1 flex-col items-center justify-center">
-      <div className="shadow-neu relative w-full max-w-150 rounded-lg">
-        {/* 촬영 카운트 */}
-        <span className="absolute top-[5%] right-[5%] z-10 text-[20px] text-white tabular-nums">
-          {filledCount} / {totalSlots}
-        </span>
-
-        {/* 웹캠 */}
-        <Webcam
-          ref={webcamRef}
-          audio={false}
-          mirrored
-          screenshotFormat="image/png"
-          videoConstraints={VIDEO_CONSTRAINTS}
-          className="w-full rounded-xl shadow-lg"
-        />
-      </div>
-
-      {/* 액션 버튼 */}
-      <div className="flex flex-col items-center gap-3">
-        {!isAllFilled ? (
-          <NeumorphicButton onClick={handleCapture}>Capture</NeumorphicButton>
-        ) : (
-          <NeumorphicButton onClick={handlePrint} className="text-red-800">
-            Create Your Print!
-          </NeumorphicButton>
-        )}
-      </div>
+    <main className="p-md gap-lg flex flex-1 flex-col">
+      <CameraBooth />
     </main>
   );
 }
