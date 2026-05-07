@@ -2,7 +2,7 @@
  * 서비스에 필요한 config
  */
 
-import { FrameConfig } from '@/types/booth';
+import { FrameConfig } from '@/types';
 
 export const CAPTURE_MODE = {
   camera: {
@@ -90,6 +90,24 @@ export const FRAMES = {
     frameImageUrl: '/images/frames/light-denim.png',
     sampleImageUrl: '/images/samples/light-denim.png',
     overlayImageUrl: '/images/overlays/blue-silver-1.png',
+    slots: [
+      { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
+      { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2
+      { x: 50, y: 950, width: 500, height: 375 }, // SLOT 3
+      { x: 50, y: 1335, width: 500, height: 375 }, // SLOT 4
+    ],
+  },
+  // 이펙트 테스트용: basic_black 기반 버블 이펙트 프레임
+  bubble_black: {
+    id: 'bubble_black',
+    label: 'Bubble Black',
+    width: 600,
+    height: 1800,
+    requiredPhotoCount: 4,
+    frameImageUrl: '/images/frames/basic-black.png',
+    sampleImageUrl: '/images/samples/basic-black.png',
+    overlayImageUrl: null,
+    effectType: 'bubble',
     slots: [
       { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
       { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2

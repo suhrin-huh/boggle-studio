@@ -11,16 +11,20 @@ const MODE_ICONS: Record<string, React.ReactNode> = {
 
 interface CaptureModeButtonProps {
   mode: CaptureMode;
+  disabled?: boolean;
 }
 
 /**
  * 모드 선택 버튼 UI
- * @param mode
- * 모드의 id과 컴포넌트 내의 icon 대응
+ * @param mode 모드의 id와 컴포넌트 내의 icon 대응
+ * @param disabled 버튼 비활성화 여부 (이펙트 프레임 선택 시 Upload 버튼 비활성화에 사용)
  */
-export default function CaptureModeButton({ mode }: CaptureModeButtonProps) {
+export default function CaptureModeButton({ mode, disabled = false }: CaptureModeButtonProps) {
   return (
-    <NeumorphicButton className="h-60 w-full hover:cursor-pointer">
+    <NeumorphicButton
+      disabled={disabled}
+      className={`h-60 w-full ${disabled ? 'cursor-not-allowed' : 'hover:cursor-pointer'}`}
+    >
       <div className="flex flex-col items-center gap-2">
         {MODE_ICONS[mode.id]}
         <span>{mode.label}</span>

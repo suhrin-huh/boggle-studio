@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { FrameConfig } from '@/types/booth';
+import type { FrameConfig } from '@/types';
 
 interface FrameItemProps {
   frame: FrameConfig;
