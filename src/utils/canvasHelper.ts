@@ -1,4 +1,4 @@
-import { FrameConfig } from '@/types/booth';
+import { FrameConfig } from '@/types';
 
 /**
  * 이미지 소스를 HTMLImageElement로 로드합니다.
@@ -12,15 +12,18 @@ const loadImage = (src: string): Promise<HTMLImageElement> =>
   });
 
 /**
- * FrameConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성합니다.
- * 합성 순서: 배경 프레임 → 슬롯 사진들 → 오버레이(있을 경우)
+ * FrameConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성
+ * 합성 순서: 배경 프레임 → 슬롯 사진들 → 이펙트 스냅샷들(있을 경우) → 오버레이(있을 경우)
  * @param frameConfig - FRAMES에서 선택된 프레임 설정
  * @param photoSlots - 슬롯에 배치할 사진 소스(Base64 또는 URL) 배열
+ * @param effectSlots - 캡처 순간마다 저장된 캔버스 스냅샷 배열. photoSlots와 1:1 대응하며
+ *                      동일한 슬롯 좌표(x, y, width, height)에 그려짐
  * @returns 합성된 이미지의 Base64 문자열을 담은 Promise
  */
 export const assembleFrame = async (
   frameConfig: FrameConfig,
   photoSlots: string[],
+  effectSlots?: string[],
 ): Promise<string> => {
   const { width, height, frameImageUrl, overlayImageUrl, slots } = frameConfig;
 
@@ -43,7 +46,23 @@ export const assembleFrame = async (
     ctx.drawImage(img, slot.x, slot.y, slot.width, slot.height);
   });
 
-  // 3단계: 오버레이 이미지가 있으면 최상단에 합성
+  // 3단계: 이펙트 스냅샷을 photoSlots와 동일한 슬롯 좌표에 합성
+  // 각 스냅샷은 캡처 순간의 캔버스 픽셀(반투명 버블 포함)이므로
+  // drawImage의 기본 알파 합성으로 사진 위에 자연스럽게 올라감
+  if (effectSlots && effectSlots.length > 0) {
+    const effectImages = await Promise.all(
+      effectSlots.map((src) => (src ? loadImage(src) : Promise.resolve(null))),
+    );
+    effectImages.forEach((img, index) => {
+      if (!img) return;
+      const slot = slots[index];
+      if (!slot) return;
+      // photoSlot과 완전히 동일한 (x, y, width, height)에 스케일해서 그림
+      ctx.drawImage(img, slot.x, slot.y, slot.width, slot.height);
+    });
+  }
+
+  // 4단계: 오버레이 이미지가 있으면 최상단에 합성
   if (overlayImageUrl) {
     const overlayImage = await loadImage(overlayImageUrl);
     ctx.drawImage(overlayImage, 0, 0, width, height);
