@@ -21,17 +21,19 @@ const VIDEO_CONSTRAINTS = {
 
 export default function CameraBooth() {
   const router = useRouter();
+
+  // global states
   const frameId = useBoothStore((state) => state.frameId);
   const setPhotoSlots = useBoothStore((state) => state.setPhotoSlots);
   const setEffectSlots = useBoothStore((state) => state.setEffectSlots);
 
-  // Zustand에서 frameId를 바탕으로 totalSlots 계산
+  // frameId를 바탕으로 totalSlots 계산
   const totalSlots = frameId ? FRAMES[frameId].requiredPhotoCount : 4;
 
-  const { localSlots, addNextPhoto, isAllFilled } = useLocalPhotoSlots({ totalSlots });
-  const { webcamRef, capture } = useCamera();
-  console.log(totalSlots);
-  const filledCount = localSlots.filter((slot) => slot !== null).length;
+  // local states
+  const { localSlots, addNextPhoto, isAllFilled, filledCount } = useLocalPhotoSlots({ totalSlots });
+
+  const { webcamRef, capture, isCameraReady, setIsCameraReady } = useCamera();
 
   // 애니메이션 재생/일시정지 상태 (기본값: 재생 중)
   const [isPlaying, setIsPlaying] = useState(true);
@@ -90,6 +92,14 @@ export default function CameraBooth() {
   return (
     <>
       <div className="relative aspect-4/3">
+        {/* 웹캠 연결 전 로딩 스피너 */}
+        {!isCameraReady && (
+          <div className="absolute flex h-full w-full flex-col items-center justify-center gap-4">
+            <div className="border-muted h-10 w-10 animate-spin rounded-full border-8 border-t-white" />
+            <p className="text-mute-dark text-body-md">Setting...</p>
+          </div>
+        )}
+
         {/* 촬영 카운트 */}
         <span className="absolute top-[5%] right-[5%] z-10 text-[16px] font-semibold text-white tabular-nums">
           {filledCount} / {totalSlots}
@@ -102,6 +112,7 @@ export default function CameraBooth() {
           mirrored
           screenshotFormat="image/png"
           videoConstraints={VIDEO_CONSTRAINTS}
+          onUserMedia={() => setIsCameraReady(true)}
           className="h-full w-full rounded-lg object-cover shadow-lg"
         />
 
