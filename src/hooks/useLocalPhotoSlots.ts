@@ -42,10 +42,13 @@ export default function useLocalPhotoSlots({ totalSlots }: UseLocalPhotoSlotsPro
   // 모든 slot에 사진 데이터 저장되어있는지 확인
   const isAllFilled = localSlots.every((slot) => slot !== null);
 
+  const filledCount = localSlots.filter((slot) => slot !== null).length;
+
   return {
     localSlots,
     setPhotoAtIndex,
     addNextPhoto,
     isAllFilled,
+    filledCount,
   };
 }

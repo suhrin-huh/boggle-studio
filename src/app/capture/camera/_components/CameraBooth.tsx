@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Webcam from 'react-webcam';
 import { useBoothStore } from '@/store/useBoothStore';
 import { FRAMES } from '@/constants/booth';
 import { FrameConfig } from '@/types';
@@ -10,14 +9,8 @@ import useCamera from '@/hooks/useCamera';
 import useLocalPhotoSlots from '@/hooks/useLocalPhotoSlots';
 import useCanvasEffect from '@/hooks/useCanvasEffect';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
-
-const VIDEO_CONSTRAINTS = {
-  width: { ideal: 1920 },
-  height: { ideal: 1440 },
-  // 4:3 비율을 카메라 스트림 단계에서 강제 → 브라우저가 16:9 기본값으로 fallback하는 것을 방지
-  aspectRatio: 4 / 3,
-  facingMode: { ideal: 'user' },
-};
+import CameraScreen from './CameraScreen';
+import CameraControls from './CameraControls';
 
 export default function CameraBooth() {
   const router = useRouter();
@@ -91,31 +84,13 @@ export default function CameraBooth() {
 
   return (
     <>
-      <div className="relative aspect-4/3">
-        {/* 웹캠 연결 전 로딩 스피너 */}
-        {!isCameraReady && (
-          <div className="absolute flex h-full w-full flex-col items-center justify-center gap-4">
-            <div className="border-muted h-10 w-10 animate-spin rounded-full border-8 border-t-white" />
-            <p className="text-mute-dark text-body-md">Setting...</p>
-          </div>
-        )}
-
-        {/* 촬영 카운트 */}
-        <span className="absolute top-[5%] right-[5%] z-10 text-[16px] font-semibold text-white tabular-nums">
-          {filledCount} / {totalSlots}
-        </span>
-
-        {/* 웹캠 */}
-        <Webcam
-          ref={webcamRef}
-          audio={false}
-          mirrored
-          screenshotFormat="image/png"
-          videoConstraints={VIDEO_CONSTRAINTS}
-          onUserMedia={() => setIsCameraReady(true)}
-          className="h-full w-full rounded-lg object-cover shadow-lg"
-        />
-
+      <CameraScreen
+        isCameraReady={isCameraReady}
+        setIsCameraReady={setIsCameraReady}
+        filledCount={filledCount}
+        totalSlots={totalSlots}
+        webcamRef={webcamRef}
+      >
         {/* 이펙트 캔버스: effectType이 있는 프레임에서만 렌더 */}
         {effectType && (
           <canvas
@@ -123,28 +98,17 @@ export default function CameraBooth() {
             className="pointer-events-none absolute inset-0 z-30 h-full w-full rounded-lg"
           />
         )}
-      </div>
+      </CameraScreen>
 
       {/* 액션 버튼 */}
-      <div className="grid w-full grid-cols-2 gap-3">
-        {/* 이펙트 토글 버튼: effectType이 있는 프레임에서만 노출 */}
-        {effectType && (
-          <div className="w-full">
-            <NeumorphicButton className="w-full" onClick={() => setIsPlaying((prev) => !prev)}>
-              {isPlaying ? 'Pause Effect' : 'Play Effect'}
-            </NeumorphicButton>
-          </div>
-        )}
-        {!isAllFilled ? (
-          <NeumorphicButton className="w-full" onClick={handleCapture}>
-            Capture
-          </NeumorphicButton>
-        ) : (
-          <NeumorphicButton onClick={handlePrint} className="w-full text-red-800">
-            Create Your Print!
-          </NeumorphicButton>
-        )}
-      </div>
+      <CameraControls
+        effectType={effectType}
+        isPlaying={isPlaying}
+        isAllFilled={isAllFilled}
+        onTogglePlay={() => setIsPlaying((prev) => !prev)}
+        onCapture={handleCapture}
+        onPrint={handlePrint}
+      ></CameraControls>
     </>
   );
 }
