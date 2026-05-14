@@ -15,6 +15,7 @@ interface CameraScreenProps extends HTMLAttributes<HTMLDivElement> {
   filledCount: number;
   totalSlots: number;
   webcamRef: RefObject<Webcam | null>;
+  isFlashing: boolean;
 }
 
 export default function CameraScreen({
@@ -23,11 +24,15 @@ export default function CameraScreen({
   filledCount,
   totalSlots,
   webcamRef,
+  isFlashing,
   children,
   ...rest
 }: CameraScreenProps) {
   return (
-    <div className="relative aspect-4/3" {...rest}>
+    <div
+      className={`relative aspect-4/3 overflow-hidden rounded-lg after:pointer-events-none after:absolute after:inset-0 after:z-50 after:bg-white after:opacity-0 ${isFlashing ? 'after:animate-[flash_0.35s_ease-out_forwards]' : ''}`}
+      {...rest}
+    >
       {/* 로딩 스피너 */}
       {!isCameraReady && (
         <div className="absolute flex h-full w-full flex-col items-center justify-center gap-4">
