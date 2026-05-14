@@ -27,10 +27,19 @@ export type CaptureMode = (typeof CAPTURE_MODE)[keyof typeof CAPTURE_MODE];
  * { readonly id: "upload"; readonly label: "Upload"; readonly path: "/capture/upload" }
  */
 
+// 4*1 4:3 비율의 basic frame slot
+const BASIC_SLOTS = [
+  { x: 70, y: 200, width: 460, height: 345 }, // SLOT 1
+  { x: 70, y: 575, width: 460, height: 345 }, // SLOT 2
+  { x: 70, y: 950, width: 460, height: 345 }, // SLOT 3
+  { x: 70, y: 1325, width: 460, height: 345 }, // SLOT 4
+];
+
 /**
- * 현재 프레임 미완성으로 모두 동일한 sample image를 보여준다.
+ * 프레임 정보를 모아놓은 config
  * => next/image + Config 데이터의 width, height 활용하여 CLS 방지
- * id, label, width, height, requiredPhotoCount, sampleImageUrl, frameImageUrl, overlayImageUrl, slots
+ * @keys basic_black, basic_white, dark_denim, light_denim
+ * @values id, label, width, height, requiredPhotoCount, sampleImageUrl, frameImageUrl, overlayImageUrl, slots
  */
 export const FRAMES = {
   basic_black: {
@@ -42,12 +51,7 @@ export const FRAMES = {
     frameImageUrl: '/images/frames/basic-black.png',
     sampleImageUrl: '/images/samples/basic-black.png',
     overlayImageUrl: null,
-    slots: [
-      { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
-      { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2
-      { x: 50, y: 950, width: 500, height: 375 }, // SLOT 3
-      { x: 50, y: 1335, width: 500, height: 375 }, // SLOT 4
-    ],
+    slots: BASIC_SLOTS,
   },
   basic_white: {
     id: 'basic_white',
@@ -58,12 +62,7 @@ export const FRAMES = {
     frameImageUrl: '/images/frames/basic-white.png',
     sampleImageUrl: '/images/samples/basic-white.png',
     overlayImageUrl: null,
-    slots: [
-      { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
-      { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2
-      { x: 50, y: 950, width: 500, height: 375 }, // SLOT 3
-      { x: 50, y: 1335, width: 500, height: 375 }, // SLOT 4
-    ],
+    slots: BASIC_SLOTS,
   },
   dark_denim: {
     id: 'dark_denim',
@@ -74,12 +73,7 @@ export const FRAMES = {
     frameImageUrl: '/images/frames/dark-denim.png',
     sampleImageUrl: '/images/samples/dark-denim.png',
     overlayImageUrl: '/images/overlays/blue-silver-1.png',
-    slots: [
-      { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
-      { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2
-      { x: 50, y: 950, width: 500, height: 375 }, // SLOT 3
-      { x: 50, y: 1335, width: 500, height: 375 }, // SLOT 4진
-    ],
+    slots: BASIC_SLOTS,
   },
   light_denim: {
     id: 'light_denim',
@@ -90,12 +84,7 @@ export const FRAMES = {
     frameImageUrl: '/images/frames/light-denim.png',
     sampleImageUrl: '/images/samples/light-denim.png',
     overlayImageUrl: '/images/overlays/blue-silver-1.png',
-    slots: [
-      { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
-      { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2
-      { x: 50, y: 950, width: 500, height: 375 }, // SLOT 3
-      { x: 50, y: 1335, width: 500, height: 375 }, // SLOT 4
-    ],
+    slots: BASIC_SLOTS,
   },
   // 이펙트 테스트용: basic_black 기반 버블 이펙트 프레임
   bubble_black: {
@@ -108,12 +97,7 @@ export const FRAMES = {
     sampleImageUrl: '/images/samples/basic-black.png',
     overlayImageUrl: null,
     effectType: 'bubble',
-    slots: [
-      { x: 50, y: 180, width: 500, height: 375 }, // SLOT 1
-      { x: 50, y: 565, width: 500, height: 375 }, // SLOT 2
-      { x: 50, y: 950, width: 500, height: 375 }, // SLOT 3
-      { x: 50, y: 1335, width: 500, height: 375 }, // SLOT 4
-    ],
+    slots: BASIC_SLOTS,
   },
 } satisfies Record<string, FrameConfig>;
 
