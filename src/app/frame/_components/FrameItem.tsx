@@ -3,15 +3,21 @@ import type { FrameConfig } from '@/types';
 
 interface FrameItemProps {
   frame: FrameConfig;
+  index: number;
 }
 
-export default function FrameItem({ frame }: FrameItemProps) {
+export default function FrameItem({ frame, index }: FrameItemProps) {
   return (
     <div className="gap-md flex flex-col items-center justify-center">
-      <div className="relative aspect-1/3 w-30">
-        <Image src={frame.sampleImageUrl} alt={frame.label} fill />
-      </div>
-      <p className="text-caption font-sans">{frame.label}</p>
+      <p className="text-body-sm text-muted-dark font-unbounded">{frame.label}</p>
+      <Image
+        src={frame.sampleImageUrl}
+        alt={frame.label}
+        width={120}
+        height={360}
+        priority={index === 0}
+        loading={index !== 0 ? 'eager' : undefined}
+      />
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function FrameSelector() {
       <div className="w-full">
         <Carousel
           items={frameList}
-          renderItem={(frame) => <FrameItem frame={frame} />}
+          renderItem={(frame, index) => <FrameItem frame={frame} index={index} />}
           infinite={false}
           onIndexChange={setFocusedIndex}
         />
