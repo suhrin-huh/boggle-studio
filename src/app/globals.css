@@ -112,3 +112,12 @@ CSS 변수로도 자동 노출됨 (var(--color-primary-light) 등)
   --shadow-neu-inset:
     inset -4px -4px 8px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(163, 177, 198, 0.6);
 }
+
+@keyframes flash {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -8,7 +8,6 @@ import { FrameConfig } from '@/types';
 import useCamera from '@/hooks/useCamera';
 import useLocalPhotoSlots from '@/hooks/useLocalPhotoSlots';
 import useCanvasEffect from '@/hooks/useCanvasEffect';
-import NeumorphicButton from '@/components/common/NeumorphicButton';
 import CameraScreen from './CameraScreen';
 import CameraControls from './CameraControls';
 
@@ -30,6 +29,9 @@ export default function CameraBooth() {
 
   // 애니메이션 재생/일시정지 상태 (기본값: 재생 중)
   const [isPlaying, setIsPlaying] = useState(true);
+
+  // 촬영 순간 플래시 효과 트리거 상태
+  const [isFlashing, setIsFlashing] = useState(false);
 
   // 캔버스 오버레이 ref
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -59,6 +61,9 @@ export default function CameraBooth() {
   const handleCapture = () => {
     const screenshot = capture();
     if (!screenshot) return;
+
+    setIsFlashing(true);
+    setTimeout(() => setIsFlashing(false), 350);
 
     // 현재 채워진 슬롯 수 = 방금 찍힌 사진이 들어갈 인덱스
     const nextIndex = filledCount;
@@ -90,6 +95,7 @@ export default function CameraBooth() {
         filledCount={filledCount}
         totalSlots={totalSlots}
         webcamRef={webcamRef}
+        isFlashing={isFlashing}
       >
         {/* 이펙트 캔버스: effectType이 있는 프레임에서만 렌더 */}
         {effectType && (
