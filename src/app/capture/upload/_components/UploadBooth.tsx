@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useBoothStore } from '@/store/useBoothStore';
-import { FRAMES } from '@/constants/booth';
 
 // hooks
 import useLocalPhotoSlots from '@/hooks/useLocalPhotoSlots';
@@ -16,15 +14,16 @@ import FilledSlot from './FilledSlot';
 import CroppingModal from './CroppingModal';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 
+// constants
+import { TOTAL_SLOTS } from '@/constants/booth';
+
 export default function UploadBooth() {
   const router = useRouter();
-  const frameId = useBoothStore((state) => state.frameId);
   const setPhotoSlots = useBoothStore((state) => state.setPhotoSlots);
 
-  // Zustand에서 frameId를 바탕으로 totalSlots 계산
-  const totalSlots = frameId ? FRAMES[frameId].requiredPhotoCount : 4;
-
-  const { localSlots, setPhotoAtIndex, isAllFilled } = useLocalPhotoSlots({ totalSlots });
+  const { localSlots, setPhotoAtIndex, isAllFilled } = useLocalPhotoSlots({
+    totalSlots: TOTAL_SLOTS,
+  });
 
   const handleUploadConfirm = (index: number, data: string) => {
     setPhotoAtIndex(index, data);
@@ -39,18 +38,9 @@ export default function UploadBooth() {
     closeModal,
   } = useUploadBooth({ onConfirm: handleUploadConfirm });
 
-  useEffect(() => {
-    if (!frameId) {
-      router.replace('/');
-    }
-  }, [frameId, router]);
-
-  if (!frameId) return null;
-
-  // 출력 버튼 이벤트 핸들러
   const handlePrint = () => {
     setPhotoSlots(localSlots as string[]);
-    router.push('/result');
+    router.push('/frame');
   };
 
   return (
