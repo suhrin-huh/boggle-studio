@@ -14,7 +14,7 @@ export default function CameraControls({ isAllFilled, onCapture, onPrint }: Came
         className={`flex-1 ${isAllFilled ? 'text-red-800' : ''}`}
         onClick={isAllFilled ? onPrint : onCapture}
       >
-        {isAllFilled ? 'Create Your Print!' : 'Capture'}
+        {isAllFilled ? 'Select a Frame' : 'Capture'}
       </NeumorphicButton>
     </div>
   );

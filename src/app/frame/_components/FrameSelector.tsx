@@ -20,7 +20,7 @@ export default function FrameSelector() {
           onIndexChange={setFocusedIndex}
         />
       </div>
-      <NeumorphicButton onClick={handleConfirm}>Take a photo</NeumorphicButton>
+      <NeumorphicButton onClick={handleConfirm}>Create Your Print!</NeumorphicButton>
     </>
   );
 }
