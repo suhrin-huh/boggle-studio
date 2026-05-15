@@ -10,7 +10,6 @@ export default function useFrameAssembly() {
   const router = useRouter();
   const frameId = useBoothStore((state) => state.frameId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
-  const effectSlots = useBoothStore((state) => state.effectSlots);
 
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>('');
@@ -29,8 +28,7 @@ export default function useFrameAssembly() {
       try {
         setIsLoading(true);
         const frameConfig = FRAMES[frameId] as FrameConfig;
-        // 캡처 순간마다 저장된 이펙트 스냅샷 배열을 전달 (비어 있으면 이펙트 합성 생략)
-        const assembled = await assembleFrame(frameConfig, photoSlots, effectSlots);
+        const assembled = await assembleFrame(frameConfig, photoSlots);
 
         setResultImage(assembled);
         setFileName(generateFileName('Studio'));
@@ -42,7 +40,7 @@ export default function useFrameAssembly() {
     };
 
     assemble();
-  }, [photoSlots, frameId, effectSlots, router]);
+  }, [photoSlots, frameId, router]);
 
   return { resultImage, fileName, isLoading, error };
 }

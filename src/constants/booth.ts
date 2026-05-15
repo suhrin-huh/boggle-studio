@@ -86,19 +86,6 @@ export const FRAMES = {
     overlayImageUrl: '/images/overlays/blue-silver-1.png',
     slots: BASIC_SLOTS,
   },
-  // 이펙트 테스트용: basic_black 기반 버블 이펙트 프레임
-  bubble_black: {
-    id: 'bubble_black',
-    label: 'Bubble Black',
-    width: 600,
-    height: 1800,
-    requiredPhotoCount: 4,
-    frameImageUrl: '/images/frames/basic-black.png',
-    sampleImageUrl: '/images/samples/basic-black.png',
-    overlayImageUrl: null,
-    effectType: 'bubble',
-    slots: BASIC_SLOTS,
-  },
 } satisfies Record<string, FrameConfig>;
 
 export type FrameId = keyof typeof FRAMES;
