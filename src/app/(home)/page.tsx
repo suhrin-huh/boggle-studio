@@ -13,7 +13,7 @@ export default function HomePage() {
       <p className="text-muted-dark font-unbounded text-[10px]">PLAYFUL · PHOTO · PIECES</p>
 
       {/* ✨ 컴포넌트 따로 만들 필요 없이 여기서 바로 조립 (합성 패턴) */}
-      <Link href="/frame" className="z-10">
+      <Link href="/capture" className="z-10">
         <NeumorphicButton className="hover:cursor-pointer">START</NeumorphicButton>
       </Link>
     </main>

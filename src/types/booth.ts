@@ -9,21 +9,16 @@ export interface PhotoSlot {
   height: number;
 }
 
-/** 캔버스 애니메이션 이펙트 종류 */
-export type EffectType = 'bubble';
-
 /** 프레임 관련 config
- * id, label, width, height, requiredPhotoCount, sampleImageUrl, frameImageUrl, overlayImageUrl, slots
+ * id, label, width, height, sampleImageUrl, frameImageUrl, overlayImageUrl, slots
  */
 export interface FrameConfig {
   id: string; //
   label: string; //
   width: number; // 프레임의 가로 길이
   height: number; // 프레임의 세로 길이
-  requiredPhotoCount: number; // 프레임에 필요한 사진의 수
   sampleImageUrl: string; // 예시 이미지, 작은 사이즈
   frameImageUrl: string; // 배경 레이어
   overlayImageUrl: string | null; // 데코 레이어
   slots: PhotoSlot[]; // 사진 슬롯 좌표 및 크기 정보 배열 (requiredPhotoCount의 개수와 일치)
-  effectType?: EffectType; // 카메라 화면에 오버레이되는 캔버스 이펙트 종류 (선택)
 }

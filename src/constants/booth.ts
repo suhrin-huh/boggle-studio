@@ -20,6 +20,8 @@ export const CAPTURE_MODE = {
 // 타입 추출
 export type CaptureMode = (typeof CAPTURE_MODE)[keyof typeof CAPTURE_MODE];
 
+export const TOTAL_SLOTS = 4;
+
 /*
  * 결과:
  * type CaptureMode =
@@ -39,7 +41,7 @@ const BASIC_SLOTS = [
  * 프레임 정보를 모아놓은 config
  * => next/image + Config 데이터의 width, height 활용하여 CLS 방지
  * @keys basic_black, basic_white, dark_denim, light_denim
- * @values id, label, width, height, requiredPhotoCount, sampleImageUrl, frameImageUrl, overlayImageUrl, slots
+ * @values id, label, width, height sampleImageUrl, frameImageUrl, overlayImageUrl, slots
  */
 export const FRAMES = {
   basic_black: {
@@ -47,7 +49,6 @@ export const FRAMES = {
     label: 'Basic Black',
     width: 600,
     height: 1800,
-    requiredPhotoCount: 4,
     frameImageUrl: '/images/frames/basic-black.png',
     sampleImageUrl: '/images/samples/basic-black.png',
     overlayImageUrl: null,
@@ -58,7 +59,6 @@ export const FRAMES = {
     label: 'Basic White',
     width: 600,
     height: 1800,
-    requiredPhotoCount: 4,
     frameImageUrl: '/images/frames/basic-white.png',
     sampleImageUrl: '/images/samples/basic-white.png',
     overlayImageUrl: null,
@@ -69,7 +69,6 @@ export const FRAMES = {
     label: 'Dark Denim',
     width: 600,
     height: 1800,
-    requiredPhotoCount: 4,
     frameImageUrl: '/images/frames/dark-denim.png',
     sampleImageUrl: '/images/samples/dark-denim.png',
     overlayImageUrl: '/images/overlays/blue-silver-1.png',
@@ -80,23 +79,9 @@ export const FRAMES = {
     label: 'Light Denim',
     width: 600,
     height: 1800,
-    requiredPhotoCount: 4,
     frameImageUrl: '/images/frames/light-denim.png',
     sampleImageUrl: '/images/samples/light-denim.png',
     overlayImageUrl: '/images/overlays/blue-silver-1.png',
-    slots: BASIC_SLOTS,
-  },
-  // 이펙트 테스트용: basic_black 기반 버블 이펙트 프레임
-  bubble_black: {
-    id: 'bubble_black',
-    label: 'Bubble Black',
-    width: 600,
-    height: 1800,
-    requiredPhotoCount: 4,
-    frameImageUrl: '/images/frames/basic-black.png',
-    sampleImageUrl: '/images/samples/basic-black.png',
-    overlayImageUrl: null,
-    effectType: 'bubble',
     slots: BASIC_SLOTS,
   },
 } satisfies Record<string, FrameConfig>;

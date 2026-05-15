@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Luckiest_Guy, Noto_Sans_KR, Sansita, Unbounded } from 'next/font/google';
+import {
+  Geist,
+  Geist_Mono,
+  Luckiest_Guy,
+  Noto_Sans_KR,
+  Sansita,
+  Unbounded,
+} from 'next/font/google';
 import './globals.css';
 import AppShell from './_components/AppShell';
 
@@ -14,19 +21,19 @@ const geistMono = Geist_Mono({
 });
 
 const luckiestGuy = Luckiest_Guy({
-  variable: '--font-luckiest-guy',   // @theme --font-luckiestguy: var(--font-luckiest-guy)
+  variable: '--font-luckiest-guy', // @theme --font-luckiestguy: var(--font-luckiest-guy)
   subsets: ['latin'],
   weight: '400',
 });
 
 const notoSansKr = Noto_Sans_KR({
-  variable: '--font-noto-sans-kr',   // @theme --font-ko: var(--font-noto-sans-kr)
+  variable: '--font-noto-sans-kr', // @theme --font-ko: var(--font-noto-sans-kr)
   subsets: ['latin'],
   weight: ['400', '500', '700'],
 });
 
 const sansita = Sansita({
-  variable: '--font-sansita-face',   // @theme --font-sansita: var(--font-sansita-face)
+  variable: '--font-sansita-face', // @theme --font-sansita: var(--font-sansita-face)
   subsets: ['latin'],
   weight: ['400', '700', '800', '900'],
   style: ['normal', 'italic'],
@@ -39,7 +46,7 @@ const unbounded = Unbounded({
 });
 
 export const metadata: Metadata = {
-  title: 'BOGGLE BOGGLE STUDIO',
+  title: 'BOGGLE STUDIO',
   description: '집에서 편리하게 촬영하는 인생네컷',
 };
 
