@@ -29,7 +29,11 @@ export const TOTAL_SLOTS = 4;
  * { readonly id: "upload"; readonly label: "Upload"; readonly path: "/capture/upload" }
  */
 
-// 4*1 4:3 비율의 basic frame slot
+/* ════════════════════════════════════════
+프레임 사이즈에 따른 슬롯 좌표 정의
+════════════════════════════════════════ */
+
+// 600 * 1800 사이즈
 const BASIC_SLOTS = [
   { x: 70, y: 200, width: 460, height: 345 }, // SLOT 1
   { x: 70, y: 575, width: 460, height: 345 }, // SLOT 2
@@ -37,12 +41,78 @@ const BASIC_SLOTS = [
   { x: 70, y: 1325, width: 460, height: 345 }, // SLOT 4
 ];
 
-/**
- * 프레임 정보를 모아놓은 config
- * => next/image + Config 데이터의 width, height 활용하여 CLS 방지
- * @keys basic_black, basic_white, dark_denim, light_denim
- * @values id, label, width, height sampleImageUrl, frameImageUrl, overlayImageUrl, slots
- */
+// 1200 * 1800 사이즈
+const WIDE_SLOTS = [
+  { x: 670, y: 200, width: 460, height: 345 }, // SLOT 1
+  { x: 670, y: 575, width: 460, height: 345 }, // SLOT 2
+  { x: 670, y: 950, width: 460, height: 345 }, // SLOT 3
+  { x: 670, y: 1325, width: 460, height: 345 }, // SLOT 4
+];
+
+// 프레임 설정: 크기/슬롯 정보 담당
+export const FRAME_OPTIONS = {
+  basic: {
+    id: 'basic',
+    label: 'BASIC',
+    width: 600,
+    height: 1800,
+    slots: BASIC_SLOTS,
+  },
+  wide: {
+    id: 'wide',
+    label: 'WIDE',
+    width: 1200,
+    height: 1800,
+    slots: WIDE_SLOTS,
+  },
+};
+
+// 배경 설정: 프레임 크기별 실제 매핑될 배경 이미지 정보
+export const BACKGROUND_OPTIONS = {
+  black: {
+    id: 'black',
+    label: 'Black',
+    sampleImageUrl: '/images/samples/bg-black.png', // UI에서 한 줄로 보여줄 샘플
+    // 💡 핵심: 프레임 크기에 따라 다른 이미지 적용
+    images: {
+      basic: '/images/backgrounds/basic-black.png',
+      wide: '/images/backgrounds/wide-black.png',
+    },
+  },
+  white: {
+    id: 'white',
+    label: 'White',
+    sampleImageUrl: '/images/samples/bg-white.png',
+    images: {
+      basic: '/images/backgrounds/basic-white.png',
+      wide: '/images/backgrounds/wide-white.png',
+    },
+  },
+  'dark-denim': {
+    id: 'dark-denim',
+    label: 'Dark Denim',
+    sampleImageUrl: '/images/samples/bg-dark-denim.png',
+    images: {
+      basic: '/images/backgrounds/basic-dark-denim.png',
+      wide: '/images/backgrounds/wide-dark-denim.png',
+    },
+  },
+  'light-denim': {
+    id: 'light-denim',
+    label: 'Light Denim',
+    sampleImageUrl: '/images/samples/bg-light-denim.png',
+    images: {
+      basic: '/images/backgrounds/basic-light-denim.png',
+      wide: '/images/backgrounds/wide-light-denim.png',
+    },
+  },
+} as const;
+
+export type FrameType = keyof typeof FRAME_OPTIONS;
+export type Background = keyof typeof BACKGROUND_OPTIONS;
+export type ThemeId = `${FrameType}-${Background}`; // 'basic-black', 'wide-black' 등
+
+// 기존 코드 동작을 위해 잠시 보류
 export const FRAMES = {
   basic_black: {
     id: 'basic_black',

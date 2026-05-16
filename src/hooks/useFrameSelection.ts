@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FRAMES, FrameId } from '@/constants/booth';
+import { FRAME_OPTIONS, FrameType, ThemeId } from '@/constants/booth';
 import { useBoothStore } from '@/store/useBoothStore';
 
 export function useFrameSelection() {
-  const frameKeys = Object.keys(FRAMES) as FrameId[];
+  const frameKeys = Object.keys(FRAME_OPTIONS) as FrameType[];
   const router = useRouter();
-  const setFrameId = useBoothStore((state) => state.setFrameId);
+  const setThemeId = useBoothStore((state) => state.setThemeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
   const [focusedIndex, setFocusedIndex] = useState(0);
 
@@ -18,7 +18,8 @@ export function useFrameSelection() {
   }, [photoSlots, router]);
 
   const handleConfirm = () => {
-    setFrameId(frameKeys[focusedIndex]);
+    const themeId: ThemeId = `${frameKeys[focusedIndex]}-black`;
+    setThemeId(themeId);
     router.push('/result');
   };
 

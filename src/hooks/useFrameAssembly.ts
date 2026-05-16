@@ -1,14 +1,34 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useBoothStore } from '@/store/useBoothStore';
-import { FRAMES } from '@/constants/booth';
+import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background, ThemeId } from '@/constants/booth';
 import { FrameConfig } from '@/types';
 import { assembleFrame } from '@/utils/canvasHelper';
 import { generateFileName } from '@/utils/fileHelper';
 
+function buildFrameConfig(themeId: ThemeId): FrameConfig {
+  const dashIndex = themeId.indexOf('-');
+  const frameType = themeId.slice(0, dashIndex) as FrameType;
+  const background = themeId.slice(dashIndex + 1) as Background;
+
+  const frameOpt = FRAME_OPTIONS[frameType];
+  const bgOpt = BACKGROUND_OPTIONS[background];
+
+  return {
+    id: themeId,
+    label: `${frameOpt.label} ${bgOpt.label}`,
+    width: frameOpt.width,
+    height: frameOpt.height,
+    sampleImageUrl: bgOpt.sampleImageUrl,
+    frameImageUrl: bgOpt.images[frameType],
+    overlayImageUrl: null,
+    slots: frameOpt.slots,
+  };
+}
+
 export default function useFrameAssembly() {
   const router = useRouter();
-  const frameId = useBoothStore((state) => state.frameId);
+  const themeId = useBoothStore((state) => state.themeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
 
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -18,7 +38,7 @@ export default function useFrameAssembly() {
 
   useEffect(() => {
     // 방어 로직
-    if (photoSlots.length === 0 || !frameId) {
+    if (photoSlots.length === 0 || !themeId) {
       router.replace('/');
       return;
     }
@@ -27,7 +47,7 @@ export default function useFrameAssembly() {
     const assemble = async () => {
       try {
         setIsLoading(true);
-        const frameConfig = FRAMES[frameId] as FrameConfig;
+        const frameConfig = buildFrameConfig(themeId);
         const assembled = await assembleFrame(frameConfig, photoSlots);
 
         setResultImage(assembled);
@@ -40,7 +60,7 @@ export default function useFrameAssembly() {
     };
 
     assemble();
-  }, [photoSlots, frameId, router]);
+  }, [photoSlots, themeId, router]);
 
   return { resultImage, fileName, isLoading, error };
 }
