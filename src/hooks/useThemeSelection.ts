@@ -12,7 +12,7 @@ import { useBoothStore } from '@/store/useBoothStore';
 const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
 const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];
 
-export function useFrameSelection() {
+export function useThemeSelection() {
   const router = useRouter();
   const setThemeId = useBoothStore((state) => state.setThemeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);

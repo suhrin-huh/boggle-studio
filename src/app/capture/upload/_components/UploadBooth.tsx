@@ -40,7 +40,7 @@ export default function UploadBooth() {
 
   const handlePrint = () => {
     setPhotoSlots(localSlots as string[]);
-    router.push('/frame');
+    router.push('/theme');
   };
 
   return (
