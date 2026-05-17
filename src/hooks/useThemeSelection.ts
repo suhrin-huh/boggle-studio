@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  FRAME_OPTIONS,
-  BACKGROUND_OPTIONS,
-  FrameType,
-  Background,
-  ThemeId,
-} from '@/constants/booth';
+import { FrameType, Background, ThemeId } from '@/constants/booth';
 import { useBoothStore } from '@/store/useBoothStore';
-
-const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
-const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];
 
 export function useThemeSelection() {
   const router = useRouter();
@@ -39,7 +30,5 @@ export function useThemeSelection() {
     setSelectedFrame,
     setSelectedBg,
     handleConfirm,
-    FRAME_KEYS,
-    BG_KEYS,
   };
 }

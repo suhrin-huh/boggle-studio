@@ -1,14 +1,14 @@
 import PageTitle from '@/components/common/PageTitle';
-import FrameSelector from './_components/FrameSelector';
+import ThemeSelector from './_components/ThemeSelector';
+import ThemePreloadImages from './_components/ThemePreloadImages';
 
-/**
- * 프레임 선택 페이지
- */
-export default function FramePage() {
+export default function ThemePage() {
   return (
     <main className="p-md flex flex-1 flex-col items-center justify-center gap-8 font-sans">
-      <PageTitle title="SELECT A FRAME" />
-      <FrameSelector />
+      <PageTitle title="SELECT A THEME" />
+      <ThemeSelector>
+        <ThemePreloadImages />
+      </ThemeSelector>
     </main>
   );
 }

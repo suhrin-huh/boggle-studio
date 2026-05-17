@@ -106,6 +106,33 @@ export const BACKGROUND_OPTIONS = {
       wide: '/images/backgrounds/wide-light-denim.png',
     },
   },
+  'the-starry-night': {
+    id: 'the-starry-night',
+    label: 'The Starry Night',
+    sampleImageUrl: '/images/samples/bg-the-starry-night.png',
+    images: {
+      basic: '/images/backgrounds/basic-the-starry-night.png',
+      wide: '/images/backgrounds/wide-the-starry-night.png',
+    },
+  },
+  sunflower: {
+    id: 'sunflower',
+    label: 'Sunflower',
+    sampleImageUrl: '/images/samples/bg-sunflower.png',
+    images: {
+      basic: '/images/backgrounds/basic-sunflower.png',
+      wide: '/images/backgrounds/wide-sunflower.png',
+    },
+  },
+  narcissism: {
+    id: 'narcissism',
+    label: 'Narcissism',
+    sampleImageUrl: '/images/samples/bg-narcissism.png',
+    images: {
+      basic: '/images/backgrounds/basic-narcissism.png',
+      wide: '/images/backgrounds/wide-narcissism.png',
+    },
+  },
 } as const;
 
 export type FrameType = keyof typeof FRAME_OPTIONS;
