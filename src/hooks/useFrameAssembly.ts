@@ -1,32 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useBoothStore } from '@/store/useBoothStore';
-import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background, ThemeId } from '@/constants/booth';
-import { FrameConfig } from '@/types';
 import { assembleFrame } from '@/utils/canvasHelper';
 import { generateFileName } from '@/utils/fileHelper';
+import { buildThemeConfig } from '@/utils/configHelper';
 
-function buildFrameConfig(themeId: ThemeId): FrameConfig {
-  const dashIndex = themeId.indexOf('-');
-  const frameType = themeId.slice(0, dashIndex) as FrameType;
-  const background = themeId.slice(dashIndex + 1) as Background;
-
-  const frameOpt = FRAME_OPTIONS[frameType];
-  const bgOpt = BACKGROUND_OPTIONS[background];
-
-  return {
-    id: themeId,
-    label: `${frameOpt.label} ${bgOpt.label}`,
-    width: frameOpt.width,
-    height: frameOpt.height,
-    sampleImageUrl: bgOpt.sampleImageUrl,
-    frameImageUrl: bgOpt.images[frameType],
-    overlayImageUrl: null,
-    slots: frameOpt.slots,
-  };
+interface UseFrameAssemblyProps {
+  loadingTime: number;
 }
 
-export default function useFrameAssembly() {
+export default function useFrameAssembly({ loadingTime }: UseFrameAssemblyProps) {
   const router = useRouter();
   const themeId = useBoothStore((state) => state.themeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
@@ -47,15 +30,15 @@ export default function useFrameAssembly() {
     const assemble = async () => {
       try {
         setIsLoading(true);
-        const frameConfig = buildFrameConfig(themeId);
-        const assembled = await assembleFrame(frameConfig, photoSlots);
+        const themeConfig = buildThemeConfig(themeId);
+        const assembled = await assembleFrame(themeConfig, photoSlots);
 
         setResultImage(assembled);
         setFileName(generateFileName('Studio'));
       } catch {
         setError('Failed to create your cut.');
       } finally {
-        setTimeout(() => setIsLoading(false), 3000);
+        setTimeout(() => setIsLoading(false), loadingTime);
       }
     };
 

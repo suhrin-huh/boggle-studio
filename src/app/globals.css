@@ -121,3 +121,33 @@ CSS 변수로도 자동 노출됨 (var(--color-primary-light) 등)
     opacity: 0;
   }
 }
+
+/* 사진이 상단 슬롯 뒤에서 아래로 내려오는 효과 */
+@keyframes photo-emerge-down {
+  0% {
+    /* 시작: 사진 전체가 상단 슬롯 뒤(위쪽)에 숨겨져 있음 */
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    /* 0.5초 대기 후 나타나기 시작 */
+    opacity: 1;
+  }
+  100% {
+    /* 최종: 사진이 슬롯 아래로 완전히 내려옴 */
+    /* 사진 크기와 원하는 위치에 따라 값을 조절하세요 (예: 400px 또는 80% 등) */
+    transform: translateY(-10%);
+    opacity: 1;
+  }
+}
+
+/* 글자 파도 효과 (동일) */
+@keyframes text-wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}

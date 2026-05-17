@@ -1,4 +1,4 @@
-import { FrameConfig } from '@/types';
+import { ThemeConfig } from '@/types';
 
 /**
  * 이미지 소스를 HTMLImageElement로 로드합니다.
@@ -12,17 +12,18 @@ const loadImage = (src: string): Promise<HTMLImageElement> =>
   });
 
 /**
- * FrameConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성
+ * ThemeConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성
  * 합성 순서: 배경 프레임 → 슬롯 사진들 → 오버레이(있을 경우)
- * @param frameConfig - FRAMES에서 선택된 프레임 설정
+ * @param ThemeConfig - FRAMES에서 선택된 프레임 설정
  * @param photoSlots - 슬롯에 배치할 사진 소스(Base64 또는 URL) 배열
- * @returns 합성된 이미지의 Base64 문자열을 담은 Promise
+ * @returns 합성된 이미지의 Base64 문자 열을 담은 Promise
  */
+
 export const assembleFrame = async (
-  frameConfig: FrameConfig,
+  themeConfig: ThemeConfig,
   photoSlots: string[],
 ): Promise<string> => {
-  const { width, height, frameImageUrl, overlayImageUrl, slots } = frameConfig;
+  const { width, height, frameImageUrl, slots } = themeConfig;
 
   const canvas = document.createElement('canvas');
   canvas.width = width;
@@ -44,10 +45,10 @@ export const assembleFrame = async (
   });
 
   // 3단계: 오버레이 이미지가 있으면 최상단에 합성
-  if (overlayImageUrl) {
-    const overlayImage = await loadImage(overlayImageUrl);
-    ctx.drawImage(overlayImage, 0, 0, width, height);
-  }
+  // if (overlayImageUrl) {
+  //   const overlayImage = await loadImage(overlayImageUrl);
+  //   ctx.drawImage(overlayImage, 0, 0, width, height);
+  // }
 
   return canvas.toDataURL('image/png');
 };

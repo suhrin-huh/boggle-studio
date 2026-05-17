@@ -1,8 +1,6 @@
-/**
- * 서비스에 필요한 config
- */
-
-import { FrameConfig } from '@/types';
+/* ════════════════════════════════════════
+서비스에 필요한 config 및 상수 정의
+════════════════════════════════════════ */
 
 export const CAPTURE_MODE = {
   camera: {
@@ -21,13 +19,6 @@ export const CAPTURE_MODE = {
 export type CaptureMode = (typeof CAPTURE_MODE)[keyof typeof CAPTURE_MODE];
 
 export const TOTAL_SLOTS = 4;
-
-/*
- * 결과:
- * type CaptureMode =
- * { readonly id: "camera"; readonly label: "Camera"; readonly path: "/capture/camera" }
- * { readonly id: "upload"; readonly label: "Upload"; readonly path: "/capture/upload" }
- */
 
 /* ════════════════════════════════════════
 프레임 사이즈에 따른 슬롯 좌표 정의
@@ -139,49 +130,4 @@ export type FrameType = keyof typeof FRAME_OPTIONS;
 export type Background = keyof typeof BACKGROUND_OPTIONS;
 export type ThemeId = `${FrameType}-${Background}`; // 'basic-black', 'wide-black' 등
 
-// 기존 코드 동작을 위해 잠시 보류
-export const FRAMES = {
-  basic_black: {
-    id: 'basic_black',
-    label: 'Basic Black',
-    width: 600,
-    height: 1800,
-    frameImageUrl: '/images/frames/basic-black.png',
-    sampleImageUrl: '/images/samples/basic-black.png',
-    overlayImageUrl: null,
-    slots: BASIC_SLOTS,
-  },
-  basic_white: {
-    id: 'basic_white',
-    label: 'Basic White',
-    width: 600,
-    height: 1800,
-    frameImageUrl: '/images/frames/basic-white.png',
-    sampleImageUrl: '/images/samples/basic-white.png',
-    overlayImageUrl: null,
-    slots: BASIC_SLOTS,
-  },
-  dark_denim: {
-    id: 'dark_denim',
-    label: 'Dark Denim',
-    width: 600,
-    height: 1800,
-    frameImageUrl: '/images/frames/dark-denim.png',
-    sampleImageUrl: '/images/samples/dark-denim.png',
-    overlayImageUrl: '/images/overlays/blue-silver-1.png',
-    slots: BASIC_SLOTS,
-  },
-  light_denim: {
-    id: 'light_denim',
-    label: 'Light Denim',
-    width: 600,
-    height: 1800,
-    frameImageUrl: '/images/frames/light-denim.png',
-    sampleImageUrl: '/images/samples/light-denim.png',
-    overlayImageUrl: '/images/overlays/blue-silver-1.png',
-    slots: BASIC_SLOTS,
-  },
-} satisfies Record<string, FrameConfig>;
-
-export type FrameId = keyof typeof FRAMES;
-// 결과: 'basic_black' | 'basic_white';
+export const PREVIEW_SCALE = 1 / 6;
