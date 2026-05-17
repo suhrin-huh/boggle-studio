@@ -34,7 +34,7 @@ export default function CameraBooth() {
 
   const handlePrint = () => {
     setPhotoSlots(localSlots as string[]);
-    router.push('/frame');
+    router.push('/theme');
   };
 
   return (
