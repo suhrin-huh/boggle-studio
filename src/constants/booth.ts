@@ -135,3 +135,6 @@ export const PREVIEW_SCALE = 1 / 6;
 
 /** IndexedDB에 녹화 영상 Blob을 저장할 때 사용하는 키 접두사 */
 export const VIDEO_SLOT_KEY_PREFIX = 'booth-video';
+
+/** 촬영 버튼 클릭 후 슬롯당 카운트다운 시간 (ms) */
+export const CAPTURE_INTERVAL_MS = 3000;
