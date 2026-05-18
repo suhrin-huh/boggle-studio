@@ -47,7 +47,7 @@ export default function ResultView({ resultImage, resultVideoUrl, fileName }: Re
       )}
       <ResultActionButtons
         onDownload={handleDownload}
-        onCreateQr={() => {}}
+        onCreateQR={() => {}}
         onRestart={handleRestart}
       />
     </>

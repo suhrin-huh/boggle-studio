@@ -5,19 +5,19 @@ import NeumorphicButton from '@/components/common/NeumorphicButton';
 
 interface ResultActionButtonsProps {
   onDownload: () => void;
-  onCreateQr: () => void;
+  onCreateQR: () => void;
   onRestart: () => void;
 }
 
 /**
  * 결과 페이지의 하단 액션 버튼 그룹 컴포넌트
  * @param onDownload 최종 합성된 결과물(사진 및 스케치 영상)을 다운로드하는 함수
- * @param onCreateQr 결과물을 클라우드 업로드 및 공유용 QR 모달을 띄우는 함수
+ * @param onCreateQR 결과물을 클라우드 업로드 및 공유용 QR 모달을 띄우는 함수
  * @param onRestart 현재 세션 데이터 초기화 및 첫 화면으로 돌아가는 함수
  */
 export default function ResultActionButtons({
   onDownload,
-  onCreateQr,
+  onCreateQR,
   onRestart,
 }: ResultActionButtonsProps) {
   return (
@@ -29,7 +29,7 @@ export default function ResultActionButtons({
             <p className="tracking-wide">Download</p>
           </div>
         </NeumorphicButton>
-        <NeumorphicButton onClick={onCreateQr}>
+        <NeumorphicButton onClick={onCreateQR}>
           <div className="flex flex-col items-center gap-1.5">
             <QrCodeIcon />
             <p className="tracking-wide">QR Code</p>
