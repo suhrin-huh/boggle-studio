@@ -130,4 +130,8 @@ export type FrameType = keyof typeof FRAME_OPTIONS;
 export type Background = keyof typeof BACKGROUND_OPTIONS;
 export type ThemeId = `${FrameType}-${Background}`; // 'basic-black', 'wide-black' 등
 
+/**ResultView의 원본 사진에 대한 Preview 사진(비디오)의 비율 */
 export const PREVIEW_SCALE = 1 / 6;
+
+/** IndexedDB에 녹화 영상 Blob을 저장할 때 사용하는 키 접두사 */
+export const VIDEO_SLOT_KEY_PREFIX = 'booth-video';
