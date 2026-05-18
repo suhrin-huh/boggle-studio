@@ -7,17 +7,7 @@ import { assembleFrame } from '@/utils/canvasHelper';
 import { generateFileName } from '@/utils/fileHelper';
 import { buildThemeConfig } from '@/utils/configHelper';
 import { loadVideoBlob } from '@/utils/idbHelper';
-
-/** 브라우저 지원 여부에 따라 최적 MediaRecorder mimeType을 반환
- *  vp9 → vp8 → generic webm 순으로 fallback합니다.
- */
-const getSupportedMimeType = (): string => {
-  const candidates = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
-  for (const type of candidates) {
-    if (MediaRecorder.isTypeSupported(type)) return type;
-  }
-  return '';
-};
+import { getSupportedMimeType } from '@/utils/videoHelper';
 
 /**
  * <video> 요소가 재생 가능한 상태(canplay)가 될 때까지 대기
