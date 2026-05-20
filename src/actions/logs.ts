@@ -5,13 +5,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
-
-// TODO: src/types/action.ts로 이동 필요
-export type ActionState = {
-  success: boolean;
-  message: string;
-  errors?: Record<string, string[]>;
-};
+import { ActionState } from '@/types';
 
 export async function recordActiveView(): Promise<ActionState> {
   const supabase = await createClient();
