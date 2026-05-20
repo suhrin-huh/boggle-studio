@@ -1,8 +1,10 @@
 import PageTitle from '@/components/common/PageTitle';
 import ResultActionButtons from './ResultActionButtons';
+import QrCodeButton from './QrCodeButton';
 
 import { useRouter } from 'next/navigation';
 import { useBoothStore } from '@/store/useBoothStore';
+import { useQrUpload } from '@/hooks/useQrUpload';
 
 interface ResultViewProps {
   resultImage: string;
@@ -19,6 +21,7 @@ interface ResultViewProps {
 export default function ResultView({ resultImage, resultVideoUrl, fileName }: ResultViewProps) {
   const router = useRouter();
   const resetBooth = useBoothStore((state) => state.resetBooth);
+  const { qrState, handleQrCreate } = useQrUpload({ resultImage, resultVideoUrl, fileName });
 
   // 스케치 영상이 있으면 .webm으로, 없으면 .png로 다운로드 : TODO: 둘 다 다운로드할 수 있도록 UI 수정 필요
   const handleDownload = () => {
@@ -37,6 +40,7 @@ export default function ResultView({ resultImage, resultVideoUrl, fileName }: Re
     resetBooth();
     router.push('/');
   };
+
   return (
     <>
       <PageTitle title="Done!" />
@@ -47,7 +51,7 @@ export default function ResultView({ resultImage, resultVideoUrl, fileName }: Re
       )}
       <ResultActionButtons
         onDownload={handleDownload}
-        onCreateQR={() => {}}
+        qrButton={<QrCodeButton state={qrState} onClick={handleQrCreate} />}
         onRestart={handleRestart}
       />
     </>
