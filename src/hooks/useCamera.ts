@@ -20,5 +20,7 @@ export default function useCamera() {
     return webcamRef.current.getScreenshot();
   }, []);
 
-  return { webcamRef, capture, isCameraReady, setIsCameraReady };
+  const handleCameraReady = useCallback(() => setIsCameraReady(true), []);
+
+  return { webcamRef, capture, isCameraReady, handleCameraReady };
 }

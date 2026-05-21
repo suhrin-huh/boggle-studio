@@ -29,7 +29,7 @@ export default function CameraControls({
         disabled={isCapturing}
         onClick={isAllFilled ? onPrint : onCapture}
       >
-        {isAllFilled ? 'Select a Frame' : 'Capture'}
+        {isAllFilled ? 'Choose a Frame' : 'Capture'}
       </NeumorphicButton>
     </div>
   );
