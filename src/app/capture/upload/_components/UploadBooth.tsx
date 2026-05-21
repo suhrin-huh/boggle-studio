@@ -79,7 +79,7 @@ export default function UploadBooth() {
       {/* 액션 버튼 */}
       <div className="mt-4 flex flex-col items-center gap-3">
         <NeumorphicButton onClick={handlePrint} disabled={!isAllFilled}>
-          Create Your Print
+          Choose Frame
         </NeumorphicButton>
       </div>
     </div>
