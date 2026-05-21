@@ -21,6 +21,7 @@ export default function ThemePreview({ src, width, height, selectedFrame }: Them
           className="object-cover"
           priority
         />
+        {/* frame type에 맞추어 미리 이미지 생성 */}
         <PhotoCompositeCanvas selectedFrame={selectedFrame} />
       </div>
     </div>

@@ -4,7 +4,7 @@ import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background } from '@/cons
 import { useThemeSelection } from '@/hooks/useThemeSelection';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 import ThemePreview from './ThemePreview';
-import FrameTypeButtons from './FrameTypeButtons';
+import FrameTypePicker from './FrameTypePicker';
 import BackgroundPicker from './BackgroundPicker';
 
 const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
@@ -23,7 +23,7 @@ export default function ThemeSelector({ children }: ThemeSelectorProps) {
   const previewHeight = 300;
 
   return (
-    <div className="flex w-full flex-col items-center gap-8">
+    <div className="gap-lg flex flex-1 flex-col items-center">
       {children}
       <ThemePreview
         src={previewSrc}
@@ -31,12 +31,15 @@ export default function ThemeSelector({ children }: ThemeSelectorProps) {
         height={previewHeight}
         selectedFrame={selectedFrame}
       />
-      <FrameTypeButtons
+      {/* 프레임 타입 선택 */}
+      <FrameTypePicker
         frameKeys={FRAME_KEYS}
         selected={selectedFrame}
         onSelect={setSelectedFrame}
       />
+      {/* 배경 선택 */}
       <BackgroundPicker bgKeys={BG_KEYS} selected={selectedBg} onSelect={setSelectedBg} />
+      {/*  */}
       <NeumorphicButton onClick={handleConfirm}>Create a Photo</NeumorphicButton>
     </div>
   );
