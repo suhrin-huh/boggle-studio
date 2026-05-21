@@ -3,11 +3,13 @@ import HeroContent from './_components/HeroContent';
 import ServiceDemo from './_components/ServiceDemo';
 import NeumorphicButton from '@/components/common/NeumorphicButton'; // 직접 불러옵니다!
 import VisitorLogger from '@/components/common/VisitorLogger';
+import BoothReset from '@/components/common/BoothReset';
 
 export default function HomePage() {
   return (
     <main className="p-md gap-lg flex flex-1 flex-col items-center justify-center">
       <VisitorLogger />
+      <BoothReset />
       <HeroContent />
       <ServiceDemo />
       <p className="text-muted-dark font-unbounded text-[10px]">PLAYFUL · PHOTO · PIECES</p>
