@@ -26,7 +26,7 @@ export default function CameraControls({ phase, onCapture, onPrint }: CameraCont
   // 모든 슬롯 완료 → 프레임 선택 버튼
   if (phase === 'done') {
     return (
-      <NeumorphicButton className="h-20 w-full" onClick={onPrint}>
+      <NeumorphicButton className="mx-auto w-1/2 md:h-15" onClick={onPrint}>
         Choose a Frame
       </NeumorphicButton>
     );
@@ -34,8 +34,12 @@ export default function CameraControls({ phase, onCapture, onPrint }: CameraCont
 
   // idle | capturing → 촬영 버튼 (촬영 중에는 비활성화)
   return (
-    <NeumorphicButton className="h-20 w-full" disabled={phase === 'capturing'} onClick={onCapture}>
-      Capture
+    <NeumorphicButton
+      className="mx-auto w-1/2 md:h-15"
+      disabled={phase === 'capturing'}
+      onClick={onCapture}
+    >
+      Start!
     </NeumorphicButton>
   );
 }

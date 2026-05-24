@@ -53,8 +53,8 @@ export default function CameraScreen({
 
       {/* 완료 상태 : 웹캠 대신 DONE! 텍스트 표시 */}
       {isAllFilled ? (
-        <div className="flex h-full w-full items-center justify-center rounded-lg bg-black">
-          <span className="text-5xl font-bold tracking-widest text-white">DONE!</span>
+        <div className="bg-muted-dark/50 flex h-full w-full items-center justify-center rounded-lg">
+          <span className="font-unbounded text-xl font-bold tracking-widest text-white">DONE!</span>
         </div>
       ) : (
         /* 웹캠 */
