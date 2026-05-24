@@ -1,7 +1,12 @@
 // libraries & frameworks
 import Webcam from 'react-webcam';
 import type { RefObject, HTMLAttributes } from 'react';
+
+// components
 import LoadingText from './LoadingText';
+
+// assets
+import { CameraPhase } from '@/types';
 
 const VIDEO_CONSTRAINTS = {
   width: { ideal: 1920 },
@@ -12,7 +17,7 @@ const VIDEO_CONSTRAINTS = {
 };
 
 interface CameraScreenProps extends HTMLAttributes<HTMLDivElement> {
-  isCameraReady: boolean;
+  phase: CameraPhase;
   onCameraReady: () => void;
   filledCount: number;
   totalSlots: number;
@@ -22,7 +27,7 @@ interface CameraScreenProps extends HTMLAttributes<HTMLDivElement> {
 
 /**
  * 카메라 촬영 화면
- * @property isCameraReady
+ * @property phase
  * @property setIsCameraReady
  * @property filledCount
  * @property totalSlots
@@ -30,7 +35,7 @@ interface CameraScreenProps extends HTMLAttributes<HTMLDivElement> {
  * @property isFlashing
  */
 export default function CameraScreen({
-  isCameraReady,
+  phase,
   onCameraReady,
   filledCount,
   totalSlots,
@@ -39,27 +44,38 @@ export default function CameraScreen({
   children,
   ...rest
 }: CameraScreenProps) {
-  return (
-    <div
-      className={`relative aspect-4/3 overflow-hidden rounded-lg after:pointer-events-none after:absolute after:inset-0 after:z-50 after:bg-white after:opacity-0 ${isFlashing ? 'after:animate-[flash_0.35s_ease-out_forwards]' : ''}`}
-      {...rest}
-    >
-      {/* 로딩 UI */}
-      {!isCameraReady && <LoadingText />}
+  const isAllFilled = phase === 'done';
 
-      {/* 웹캠 */}
-      <Webcam
-        ref={webcamRef}
-        audio={false}
-        mirrored
-        screenshotFormat="image/png"
-        videoConstraints={VIDEO_CONSTRAINTS}
-        onUserMedia={onCameraReady}
-        className="h-full w-full rounded-lg object-cover shadow-lg"
+  return (
+    <div className="relative aspect-4/3 overflow-hidden rounded-lg" {...rest}>
+      {/* 로딩 UI */}
+      {phase === 'loading' && <LoadingText />}
+
+      {/* 완료 상태 : 웹캠 대신 DONE! 텍스트 표시 */}
+      {isAllFilled ? (
+        <div className="flex h-full w-full items-center justify-center rounded-lg bg-black">
+          <span className="text-5xl font-bold tracking-widest text-white">DONE!</span>
+        </div>
+      ) : (
+        /* 웹캠 */
+        <Webcam
+          ref={webcamRef}
+          audio={false}
+          mirrored
+          screenshotFormat="image/png"
+          videoConstraints={VIDEO_CONSTRAINTS}
+          onUserMedia={onCameraReady}
+          className="h-full w-full rounded-lg object-cover shadow-lg"
+        />
+      )}
+
+      {/* 플래시 효과 오버레이 — UI 전용, 카메라 raw 스트림(MediaRecorder)에는 포함되지 않음 */}
+      <div
+        className={`pointer-events-none absolute inset-0 z-50 bg-white opacity-0 ${isFlashing ? 'animate-[flash_0.35s_ease-out_forwards]' : ''}`}
       />
 
       {/* 촬영 횟수 카운트 */}
-      {isCameraReady && (
+      {phase === 'capturing' && (
         <span className="absolute top-[5%] right-[5%] z-10 text-[16px] font-semibold text-white tabular-nums">
           {filledCount} / {totalSlots}
         </span>

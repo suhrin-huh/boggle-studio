@@ -1,6 +1,7 @@
 'use client';
 
 // libraries & frameworks
+import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 
 // global stores & hooks
@@ -15,8 +16,9 @@ import CameraScreen from './CameraScreen';
 import CameraControls from './CameraControls';
 import CountdownOverlay from './CountdownOverlay';
 
-// constants
+// assets
 import { TOTAL_SLOTS } from '@/constants/booth';
+import { CameraPhase } from '@/types';
 
 export default function CameraBooth() {
   const router = useRouter();
@@ -46,6 +48,13 @@ export default function CameraBooth() {
     isCameraReady,
   });
 
+  const phase = useMemo<CameraPhase>(() => {
+    if (!isCameraReady) return 'loading';
+    if (isAllFilled) return 'done';
+    if (isCapturing) return 'capturing';
+    return 'idle';
+  }, [isCameraReady, isAllFilled, isCapturing]);
+
   const handlePrint = () => {
     setPhotoSlots(localSlots as string[]);
     setVideoSlotKeys(localVideoKeys);
@@ -56,7 +65,7 @@ export default function CameraBooth() {
     <>
       {/* webcam 스크린 */}
       <CameraScreen
-        isCameraReady={isCameraReady}
+        phase={phase}
         onCameraReady={handleCameraReady}
         filledCount={filledCount}
         totalSlots={TOTAL_SLOTS}
@@ -68,14 +77,11 @@ export default function CameraBooth() {
       </CameraScreen>
 
       {/* 카메라 컨트롤 버튼 */}
-      {isCameraReady && (
-        <CameraControls
-          isAllFilled={isAllFilled}
-          isCapturing={isCapturing}
-          onCapture={handleCapture}
-          onPrint={handlePrint}
-        />
-      )}
+      <CameraControls
+        phase={phase}
+        onCapture={handleCapture}
+        onPrint={handlePrint}
+      />
     </>
   );
 }
