@@ -1,5 +1,8 @@
+import Link from 'next/link';
+
 interface NeumorphicButtonProps {
   children: React.ReactNode;
+  href?: string;       // href가 있으면 <a>(Link)로, 없으면 <button>으로 렌더링
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
@@ -7,6 +10,7 @@ interface NeumorphicButtonProps {
 
 export default function NeumorphicButton({
   children,
+  href,
   onClick,
   disabled = false,
   className = '',
@@ -18,22 +22,33 @@ export default function NeumorphicButton({
   const pressedShadow =
     'shadow-[inset_-3px_-3px_7px_rgba(255,255,255,0.85),inset_3px_3px_7px_rgba(163,177,198,0.65)]';
 
+  const computedClassName = [
+    'cursor-pointer select-none',
+    'px-lg py-md rounded-2xl bg-[#e1ecfa]/30',
+    'font-unbounded text-[10px] font-semibold tracking-wide',
+    'transition-all duration-200 ease-in-out outline-none',
+    'active:scale-[0.97]',
+    disabled
+      ? `${pressedShadow} text-gray-400`
+      : `${raisedShadow} ${raisedHoverShadow} text-muted-dark`,
+    'active:shadow-[inset_-3px_-3px_7px_rgba(255,255,255,0.85),inset_3px_3px_7px_rgba(163,177,198,0.65)]',
+    className,
+  ].join(' ');
+
+  // href가 있으면 링크로 동작 (인터랙티브 요소 중첩 방지)
+  if (href) {
+    return (
+      <Link href={href} className={computedClassName}>
+        {children}
+      </Link>
+    );
+  }
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={[
-        'cursor-pointer select-none',
-        'px-lg py-md rounded-2xl bg-[#e1ecfa]/30',
-        'font-unbounded text-[10px] font-semibold tracking-wide',
-        'transition-all duration-200 ease-in-out outline-none',
-        'active:scale-[0.97]',
-        disabled
-          ? `${pressedShadow} text-gray-400`
-          : `${raisedShadow} ${raisedHoverShadow} text-muted-dark`,
-        'active:shadow-[inset_-3px_-3px_7px_rgba(255,255,255,0.85),inset_3px_3px_7px_rgba(163,177,198,0.65)]',
-        className,
-      ].join(' ')}
+      className={computedClassName}
     >
       {children}
     </button>
