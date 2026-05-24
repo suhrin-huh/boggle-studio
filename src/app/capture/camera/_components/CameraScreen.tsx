@@ -47,14 +47,14 @@ export default function CameraScreen({
   const isAllFilled = phase === 'done';
 
   return (
-    <div className="relative aspect-4/3 overflow-hidden rounded-lg" {...rest}>
+    <div className="relative aspect-4/3 w-full overflow-hidden rounded-lg" {...rest}>
       {/* 로딩 UI */}
       {phase === 'loading' && <LoadingText />}
 
       {/* 완료 상태 : 웹캠 대신 DONE! 텍스트 표시 */}
       {isAllFilled ? (
         <div className="bg-muted-dark/50 flex h-full w-full items-center justify-center rounded-lg">
-          <span className="font-unbounded text-xl font-bold tracking-widest text-white">DONE!</span>
+          <p className="font-unbounded text-xl font-bold text-white">DONE!</p>
         </div>
       ) : (
         /* 웹캠 */
