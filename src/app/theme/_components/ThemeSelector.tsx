@@ -23,7 +23,7 @@ export default function ThemeSelector({ children }: ThemeSelectorProps) {
   const previewHeight = 300;
 
   return (
-    <div className="gap-lg flex flex-1 flex-col items-center">
+    <div className="gap-lg flex flex-col items-center">
       {children}
       <ThemePreview
         src={previewSrc}
