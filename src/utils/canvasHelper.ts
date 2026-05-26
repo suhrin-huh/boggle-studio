@@ -1,9 +1,9 @@
-import { ThemeConfig } from '@/types';
+import { ThemeConfig, PhotoSlot } from '@/types';
 
 /**
- * 이미지 소스를 HTMLImageElement로 로드합니다.
+ * 이미지 소스를 HTMLImageElement로 로드
  */
-const loadImage = (src: string): Promise<HTMLImageElement> =>
+export const loadImage = (src: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
@@ -12,13 +12,44 @@ const loadImage = (src: string): Promise<HTMLImageElement> =>
   });
 
 /**
- * ThemeConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성
- * 합성 순서: 배경 프레임 → 슬롯 사진들 → 오버레이(있을 경우)
- * @param ThemeConfig - FRAMES에서 선택된 프레임 설정
- * @param photoSlots - 슬롯에 배치할 사진 소스(Base64 또는 URL) 배열
- * @returns 합성된 이미지의 Base64 문자 열을 담은 Promise
+ * 슬롯 중심을 기준으로 이미지(또는 비디오)를 회전시켜 캔버스에 그리는 함수
+ * videoAssemblyHelper의 RAF 루프에서도 재사용
+ * @param ctx    - 2D 렌더링 컨텍스트
+ * @param source - 그릴 HTMLImageElement 또는 HTMLVideoElement
+ * @param slots   - 슬롯 좌표·크기·회전 정보
  */
+export const drawContentSlot = (
+  ctx: CanvasRenderingContext2D,
+  source: HTMLImageElement | HTMLVideoElement,
+  slots: PhotoSlot,
+): void => {
+  const { x, y, width, height, rotate } = slots;
 
+  // 회전이 없는 경우 변환 없이 바로 그리기
+  if (!rotate) {
+    ctx.drawImage(source, x, y, width, height);
+    return;
+  }
+
+  // 슬롯 중심 좌표
+  const cx = x + width / 2;
+  const cy = y + height / 2;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  // rotate 상수는 반시계방향 기준 → Canvas는 시계방향 양수이므로 부호 반전
+  ctx.rotate(-rotate * (Math.PI / 180));
+  ctx.drawImage(source, -width / 2, -height / 2, width, height);
+  ctx.restore();
+};
+
+/**
+ * ThemeConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성하는 함수
+ * 합성 순서: 배경 프레임 → 슬롯 사진(회전 적용) → 오버레이(있을 경우)
+ * @param themeConfig - 프레임 크기·슬롯·배경·오버레이 정보
+ * @param photoSlots  - 슬롯에 배치할 사진 소스(Base64 또는 URL) 배열
+ * @returns 합성된 이미지의 Base64 문자열을 담은 Promise
+ */
 export const assembleFrame = async (
   themeConfig: ThemeConfig,
   photoSlots: string[],
@@ -36,27 +67,27 @@ export const assembleFrame = async (
   const frameImage = await loadImage(frameImageUrl);
   ctx.drawImage(frameImage, 0, 0, width, height);
 
-  // 2단계: 각 슬롯 좌표에 사진 합성
+  // 2단계: 각 슬롯 좌표에 회전을 적용하여 사진 합성
   const photoImages = await Promise.all(photoSlots.map(loadImage));
   photoImages.forEach((img, index) => {
     const slot = slots[index];
     if (!slot) return;
-    ctx.drawImage(img, slot.x, slot.y, slot.width, slot.height);
+    drawContentSlot(ctx, img, slot);
   });
 
   // 3단계: 오버레이 이미지가 있으면 최상단에 합성
-  // if (overlayImageUrl) {
-  //   const overlayImage = await loadImage(overlayImageUrl);
-  //   ctx.drawImage(overlayImage, 0, 0, width, height);
-  // }
+  if (themeConfig.overlayImageUrl) {
+    const overlayImage = await loadImage(themeConfig.overlayImageUrl);
+    ctx.drawImage(overlayImage, 0, 0, width, height);
+  }
 
   return canvas.toDataURL('image/png');
 };
 
 /**
- * 여러 장의 이미지(현재에는 4장)를 수직으로 조립하여 하나의 Base64 이미지로 반환합니다.
- * @param images - 합성할 이미지 소스(Base64 또는 URL) 배열
- * @param frameWidth - 합성될 이미지의 너비
+ * 여러 장의 이미지(현재에는 4장)를 수직으로 조립하여 하나의 Base64 이미지로 반환하는 함수
+ * @param images      - 합성할 이미지 소스(Base64 또는 URL) 배열
+ * @param frameWidth  - 합성될 이미지의 너비
  * @param frameHeight - 각 개별 프레임의 높이
  * @returns 합성된 이미지의 Base64 문자열을 담은 Promise
  */
@@ -66,7 +97,7 @@ export const assembleVertical = (
   frameHeight: number,
 ): Promise<string> => {
   // 이미지 로딩은 브라우저의 I/O 작업이므로 비동기 처리
-  // 모든 임미지가 로드된 시점을 정확히 제어하기 위해 Promise 반환
+  // 모든 이미지가 로드된 시점을 정확히 제어하기 위해 Promise 반환
   return new Promise((resolve, reject) => {
     // 메모리 상에서만 동작하는 오프스크린 버퍼 역할을 위해 캔버스 생성
     const canvas = document.createElement('canvas');
