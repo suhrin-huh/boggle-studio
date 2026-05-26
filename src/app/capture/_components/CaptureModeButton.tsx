@@ -16,19 +16,19 @@ interface CaptureModeButtonProps {
 
 /**
  * 모드 선택 버튼 UI
- * @param mode 모드의 id와 컴포넌트 내의 icon 대응
+ * href를 받아 NeumorphicButton이 <a>로 렌더링되므로 외부에서 Link로 감쌀 필요 없음
+ * @param mode 모드의 id, path, label 포함
  * @param disabled 버튼 비활성화 여부 (이펙트 프레임 선택 시 Upload 버튼 비활성화에 사용)
  */
 export default function CaptureModeButton({ mode, disabled = false }: CaptureModeButtonProps) {
   return (
     <NeumorphicButton
+      href={disabled ? undefined : mode.path}
       disabled={disabled}
-      className={`h-60 w-full ${disabled ? 'cursor-not-allowed' : 'hover:cursor-pointer'}`}
+      className={`gap-md flex h-30 w-1/2 flex-col items-center justify-center sm:h-60 ${disabled ? 'cursor-not-allowed' : 'hover:cursor-pointer'}`}
     >
-      <div className="flex flex-col items-center gap-2">
-        {MODE_ICONS[mode.id]}
-        <span>{mode.label}</span>
-      </div>
+      {MODE_ICONS[mode.id]}
+      <p>{mode.label}</p>
     </NeumorphicButton>
   );
 }

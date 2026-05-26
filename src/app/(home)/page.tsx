@@ -1,23 +1,18 @@
-import Link from 'next/link';
-import HeroContent from './_components/HeroContent';
-import ServiceDemo from './_components/ServiceDemo';
-import NeumorphicButton from '@/components/common/NeumorphicButton'; // 직접 불러옵니다!
+// components
+import PageContainer from '@/components/common/PageContainer';
 import VisitorLogger from '@/components/common/VisitorLogger';
 import BoothReset from '@/components/common/BoothReset';
+import ServiceIntro from './_components/ServiceIntro';
 
 export default function HomePage() {
   return (
-    <main className="p-md gap-lg flex flex-1 flex-col items-center justify-center">
+    <PageContainer>
+      {/* 이용 로그 기록용 */}
       <VisitorLogger />
+      {/* 메인 홈페이지 접근 시 전역 스토어 초기화 */}
       <BoothReset />
-      <HeroContent />
-      <ServiceDemo />
-      <p className="text-muted-dark font-unbounded text-[10px]">PLAYFUL · PHOTO · PIECES</p>
-
-      {/* ✨ 컴포넌트 따로 만들 필요 없이 여기서 바로 조립 (합성 패턴) */}
-      <Link href="/capture" className="z-10">
-        <NeumorphicButton className="hover:cursor-pointer">START</NeumorphicButton>
-      </Link>
-    </main>
+      {/* 서비스 소개 및 진입 라우팅  */}
+      <ServiceIntro />
+    </PageContainer>
   );
 }

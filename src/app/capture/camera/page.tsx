@@ -1,9 +1,13 @@
+// components
+import PageContainer from '@/components/common/PageContainer';
+import PageTitle from '@/components/common/PageTitle';
 import CameraBooth from './_components/CameraBooth';
 
 export default function CameraPage() {
   return (
-    <main className="p-md gap-lg flex flex-1 flex-col">
+    <PageContainer className="justify-stretch">
+      <PageTitle title="Camera" />
       <CameraBooth />
-    </main>
+    </PageContainer>
   );
 }

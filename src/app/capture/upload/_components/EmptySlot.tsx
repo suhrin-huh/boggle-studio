@@ -22,7 +22,7 @@ export default function EmptySlot({ index, onClick }: EmptySlotProps) {
       >
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
       </svg>
-      <span className="font-unbounded text-muted-dark text-xs font-medium md:text-sm">
+      <span className="font-unbounded text-muted-dark text-xs font-medium sm:text-sm">
         SLOT {index + 1}
       </span>
     </button>

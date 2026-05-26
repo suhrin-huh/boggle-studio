@@ -16,3 +16,5 @@ export interface ThemeConfig {
   frameImageUrl: string; // 배경 레이어
   slots: PhotoSlot[]; // 사진 슬롯 좌표 및 크기 정보 배열 (requiredPhotoCount의 개수와 일치)
 }
+
+export type CameraPhase = 'loading' | 'idle' | 'capturing' | 'done';

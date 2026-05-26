@@ -1,22 +1,22 @@
-import { CAPTURE_MODE } from '@/constants/booth';
-import Link from 'next/link';
+// components (common -> local)
+import PageContainer from '@/components/common/PageContainer';
 import PageTitle from '@/components/common/PageTitle';
 import CaptureModeButton from './_components/CaptureModeButton';
+
+// assets & types
+import { CAPTURE_MODE } from '@/constants/booth';
 
 export default function CapturePage() {
   const captureModes = Object.values(CAPTURE_MODE);
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center">
-      <PageTitle title="SELECT A MODE" />
-
-      <div className="gap-lg p-lg flex w-full shrink-0 flex-col">
+    <PageContainer>
+      <PageTitle title="Select an Option." />
+      <div className="gap-lg p-lg flex w-full flex-col items-center">
         {captureModes.map((mode) => (
-          <Link key={mode.id} href={mode.path} className="w-full">
-            <CaptureModeButton mode={mode} />
-          </Link>
+          <CaptureModeButton key={mode.id} mode={mode} />
         ))}
       </div>
-    </main>
+    </PageContainer>
   );
 }
