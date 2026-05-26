@@ -25,7 +25,7 @@ export default function CaptureModeButton({ mode, disabled = false }: CaptureMod
     <NeumorphicButton
       href={disabled ? undefined : mode.path}
       disabled={disabled}
-      className={`gap-md flex h-30 w-1/2 flex-col items-center justify-center md:h-60 ${disabled ? 'cursor-not-allowed' : 'hover:cursor-pointer'}`}
+      className={`gap-md flex h-30 w-1/2 flex-col items-center justify-center sm:h-60 ${disabled ? 'cursor-not-allowed' : 'hover:cursor-pointer'}`}
     >
       {MODE_ICONS[mode.id]}
       <p>{mode.label}</p>

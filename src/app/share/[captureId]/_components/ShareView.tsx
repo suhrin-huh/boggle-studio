@@ -41,7 +41,7 @@ export default function ShareView({ imageUrl, videoUrl, fileName }: ShareViewPro
         <img src={imageUrl} alt="Shared capture" className="h-90 w-auto" />
       )}
       {/* 파일 다운로드 버튼 */}
-      <div className="gap-md flex w-full flex-col justify-center md:flex-row">
+      <div className="gap-md flex w-full flex-col justify-center sm:flex-row">
         <NeumorphicButton onClick={handleDownloadImage}>
           <div className="text-muted-dark flex flex-col items-center gap-1.5">
             <DownloadIcon />

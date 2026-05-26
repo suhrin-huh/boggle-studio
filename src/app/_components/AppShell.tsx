@@ -9,9 +9,9 @@ interface AppShellProps {
 export default function AppShell({ children }: AppShellProps) {
   return (
     // 화면 전체 틀
-    <div className="md:p-lg flex h-dvh min-h-150 min-w-80 justify-center font-sans">
+    <div className="sm:p-lg flex h-dvh min-h-150 min-w-80 justify-center font-sans">
       {/* 메인 요소 레이아웃 */}
-      <div className="md:shadow-neu relative flex w-full flex-col overflow-hidden md:max-w-140 md:rounded-lg">
+      <div className="sm:shadow-neu relative flex w-full flex-col overflow-hidden sm:max-w-140 sm:rounded-lg">
         <Header />
         <Image src={background} alt="배경" loading="eager" fill className="-z-10" />
         {children}

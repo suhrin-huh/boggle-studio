@@ -20,7 +20,7 @@ export default function ResultActionButtons({
   onRestart,
 }: ResultActionButtonsProps) {
   return (
-    <div className="gap-md flex w-full flex-col justify-center md:flex-row">
+    <div className="gap-md flex w-full flex-col justify-center sm:flex-row">
       <NeumorphicButton onClick={onDownload}>
         <div className="text-muted-dark flex flex-col items-center gap-1.5">
           <DownloadIcon />
