@@ -16,7 +16,7 @@ export default function FrameTypePicker({ frameKeys, selected, onSelect }: Frame
           <li key={frameKey}>
             <button
               onClick={() => onSelect(frameKey)}
-              className="px-md py-sm text-muted-dark border-muted-light font-unbounded text-body-xs relative overflow-hidden rounded-lg border transition-colors"
+              className="px-lg py-xs sm:py-sm sm:text-body-lg text-muted-dark border-muted-light text-body-xs relative overflow-hidden rounded-lg border transition-colors"
             >
               {FRAME_OPTIONS[frameKey].label}
               {isSelected && (
