@@ -16,10 +16,14 @@ export const buildThemeConfig = (themeId: ThemeId): ThemeConfig => {
   const frameOpt = FRAME_OPTIONS[frameType];
   const bgOpt = BACKGROUND_OPTIONS[background];
 
+  const overlayPath = bgOpt.overlays[frameType];
+
   return {
     width: frameOpt.width,
     height: frameOpt.height,
     frameImageUrl: bgOpt.images[frameType],
     slots: frameOpt.slots,
+    // 오버레이 경로가 있을 때만 포함 (빈 문자열 제외)
+    ...(overlayPath ? { overlayImageUrl: overlayPath } : {}),
   };
 };
