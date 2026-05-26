@@ -32,12 +32,15 @@ const BASIC_SLOTS = [
   { x: 70, y: 1325, width: 460, height: 345 }, // SLOT 4
 ];
 
-// 1200 * 1800 사이즈
+/**
+ * 1200 * 1800 사이즈
+ * - rotate : 반시계방항 기준 회전 각도
+ */
 const WIDE_SLOTS = [
-  { x: 670, y: 200, width: 460, height: 345 }, // SLOT 1
-  { x: 670, y: 575, width: 460, height: 345 }, // SLOT 2
-  { x: 670, y: 950, width: 460, height: 345 }, // SLOT 3
-  { x: 670, y: 1325, width: 460, height: 345 }, // SLOT 4
+  { x: 670, y: 200, width: 550, height: 412.5, rotate: 9 }, // SLOT 1
+  { x: 670, y: 575, width: 550, height: 412.5, rotate: -12 }, // SLOT 2
+  { x: 670, y: 950, width: 550, height: 412.5, rotate: 3 }, // SLOT 3
+  { x: 670, y: 1325, width: 550, height: 412.5, rotate: 10 }, // SLOT 4
 ];
 
 // 프레임 설정: 크기/슬롯 정보 담당
@@ -58,16 +61,21 @@ export const FRAME_OPTIONS = {
   },
 };
 
-// 배경 설정: 프레임 크기별 실제 매핑될 배경 이미지 정보
+/**
+ * 프레임에 합성될 배경 옵션별 정보
+ * - 현재 overlay의 경우 wide에만 존재
+ */
 export const BACKGROUND_OPTIONS = {
   black: {
     id: 'black',
     label: 'Black',
-    sampleImageUrl: '/images/samples/bg-black.png', // UI에서 한 줄로 보여줄 샘플
-    // 💡 핵심: 프레임 크기에 따라 다른 이미지 적용
+    sampleImageUrl: '/images/samples/bg-black.png',
     images: {
       basic: '/images/backgrounds/basic-black.png',
       wide: '/images/backgrounds/wide-black.png',
+    },
+    overlays: {
+      wide: '/images/overlays/wide-black',
     },
   },
   white: {
@@ -78,6 +86,9 @@ export const BACKGROUND_OPTIONS = {
       basic: '/images/backgrounds/basic-white.png',
       wide: '/images/backgrounds/wide-white.png',
     },
+    overlays: {
+      wide: '/images/overlays/wide-white',
+    },
   },
   'dark-denim': {
     id: 'dark-denim',
@@ -86,6 +97,9 @@ export const BACKGROUND_OPTIONS = {
     images: {
       basic: '/images/backgrounds/basic-dark-denim.png',
       wide: '/images/backgrounds/wide-dark-denim.png',
+    },
+    overlays: {
+      wide: '/images/overlays/wide-dark-denim',
     },
   },
   'light-denim': {
@@ -96,34 +110,37 @@ export const BACKGROUND_OPTIONS = {
       basic: '/images/backgrounds/basic-light-denim.png',
       wide: '/images/backgrounds/wide-light-denim.png',
     },
-  },
-  'the-starry-night': {
-    id: 'the-starry-night',
-    label: 'The Starry Night',
-    sampleImageUrl: '/images/samples/bg-the-starry-night.png',
-    images: {
-      basic: '/images/backgrounds/basic-the-starry-night.png',
-      wide: '/images/backgrounds/wide-the-starry-night.png',
+    overlays: {
+      wide: '/images/overlays/wide-light-denim',
     },
   },
-  sunflower: {
-    id: 'sunflower',
-    label: 'Sunflower',
-    sampleImageUrl: '/images/samples/bg-sunflower.png',
-    images: {
-      basic: '/images/backgrounds/basic-sunflower.png',
-      wide: '/images/backgrounds/wide-sunflower.png',
-    },
-  },
-  narcissism: {
-    id: 'narcissism',
-    label: 'Narcissism',
-    sampleImageUrl: '/images/samples/bg-narcissism.png',
-    images: {
-      basic: '/images/backgrounds/basic-narcissism.png',
-      wide: '/images/backgrounds/wide-narcissism.png',
-    },
-  },
+  // 'the-starry-night': {
+  //   id: 'the-starry-night',
+  //   label: 'The Starry Night',
+  //   sampleImageUrl: '/images/samples/bg-the-starry-night.png',
+  //   images: {
+  //     basic: '/images/backgrounds/basic-the-starry-night.png',
+  //     wide: '/images/backgrounds/wide-the-starry-night.png',
+  //   },
+  // },
+  // sunflower: {
+  //   id: 'sunflower',
+  //   label: 'Sunflower',
+  //   sampleImageUrl: '/images/samples/bg-sunflower.png',
+  //   images: {
+  //     basic: '/images/backgrounds/basic-sunflower.png',
+  //     wide: '/images/backgrounds/wide-sunflower.png',
+  //   },
+  // },
+  // narcissism: {
+  //   id: 'narcissism',
+  //   label: 'Narcissism',
+  //   sampleImageUrl: '/images/samples/bg-narcissism.png',
+  //   images: {
+  //     basic: '/images/backgrounds/basic-narcissism.png',
+  //     wide: '/images/backgrounds/wide-narcissism.png',
+  //   },
+  // },
 } as const;
 
 export type FrameType = keyof typeof FRAME_OPTIONS;
