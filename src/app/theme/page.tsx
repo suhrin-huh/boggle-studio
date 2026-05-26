@@ -1,17 +1,21 @@
 // components
 import PageContainer from '@/components/common/PageContainer';
 import PageTitle from '@/components/common/PageTitle';
-import ThemeSelector from './_components/ThemeSelector';
+import ThemeBooth from './_components/ThemeBooth';
 import ThemePreloadImages from './_components/ThemePreloadImages';
 
+/**
+ * 테마 선택 페이지
+ * 사용자가 사진 부스의 프레임 타입과 배경을 선택하는 라우트 컴포넌트
+ */
 export default function ThemePage() {
   return (
     <PageContainer>
       <PageTitle title="Choose Your Theme" />
-      <ThemeSelector>
+      <ThemeBooth>
         {/* theme 이미지 preload용 */}
         <ThemePreloadImages />
-      </ThemeSelector>
+      </ThemeBooth>
     </PageContainer>
   );
 }
