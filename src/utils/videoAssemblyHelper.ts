@@ -1,13 +1,16 @@
 'use client';
 
-import { ThemeConfig } from '@/types';
+// utils
 import { loadVideoBlob } from '@/utils/idbHelper';
 import { getSupportedMimeType } from '@/utils/videoHelper';
 import { loadImage, createAssemblyCanvas, drawSingleSlot } from '@/utils/canvasHelper';
 
+// assets & types
+import { ThemeConfig } from '@/types';
+
 /**
- * <video> 요소가 재생 가능한 상태(canplay)가 될 때까지 대기합니다.
- * src가 없는 슬롯(녹화 실패)은 즉시 resolve합니다.
+ * <video> 요소가 재생 가능한 상태(canplay)가 될 때까지 대기
+ * src가 없는 슬롯(녹화 실패)은 즉시 resolve
  */
 const waitForCanPlay = (el: HTMLVideoElement): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -25,11 +28,8 @@ const waitForCanPlay = (el: HTMLVideoElement): Promise<void> =>
   });
 
 /**
- * 비디오 슬롯들을 프레임에 합성하여 최종 Blob을 반환합니다.
+ * 비디오 슬롯들을 프레임에 합성하여 최종 Blob을 반환
  * 합성 순서: 배경 → 슬롯 비디오(회전 적용) → 오버레이(있을 경우)
- *
- * 반환된 Blob의 objectURL 생명주기는 호출자(훅)가 관리합니다.
- *
  * @param themeConfig   - 프레임 크기·슬롯·배경·오버레이 정보
  * @param videoSlotKeys - IndexedDB 비디오 키 배열
  * @param signal        - 컴포넌트 언마운트 시 취소를 위한 AbortSignal (선택)
@@ -95,12 +95,13 @@ export const assembleVideo = async (
     // iOS 자동 재생 차단 등이 발생하면 여기서 catch로 던져짐
     await Promise.all(videoEls.map((el) => el.play()));
 
-    // 5단계: RAF 루프로 매 프레임 합성 (배경 → 슬롯 비디오(회전) → 오버레이)
+    // 5단계: RAF 루프로 매 프레임 합성 (배경 → 슬롯 비디오(회전 + 좌우 반전) → 오버레이)
     const drawFrame = () => {
       ctx.drawImage(bgImage, 0, 0, themeConfig.width, themeConfig.height);
       videoEls.forEach((el, i) => {
         const slot = themeConfig.slots[i];
-        if (slot) drawSingleSlot(ctx, el, slot);
+        // mirrored: true — 웹캠 raw 스트림은 CSS 반전이 없으므로 합성 단계에서 보정
+        if (slot) drawSingleSlot(ctx, el, slot, true);
       });
       if (overlayImage) {
         ctx.drawImage(overlayImage, 0, 0, themeConfig.width, themeConfig.height);

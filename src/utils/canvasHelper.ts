@@ -32,32 +32,39 @@ export const createAssemblyCanvas = (
 
 /**
  * 단일 이미지(또는 비디오)를 캔버스에 그리는 함수
- * - rotate 값이 존재할 경우, 슬롯 중심을 기준으로 이미지(또는 비디오)를 회전
+ * - rotate 값이 존재할 경우, 슬롯 중심을 기준으로 회전
+ * - mirrored가 true이면, 회전 후 수평 반전 (웹캠 녹화 영상 합성 시 사용)
+ *   → react-webcam의 mirrored 옵션은 CSS 반전이라 raw 스트림 녹화에는 적용되지 않으므로
+ *     합성 단계에서 보정이 필요
  * @param ctx         - 2D 렌더링 컨텍스트
  * @param source      - 그릴 HTMLImageElement 또는 HTMLVideoElement
  * @param slotConfig  - 슬롯 좌표·크기·회전 정보
+ * @param mirrored    - 수평 반전 여부 (기본값 false)
  */
 export const drawSingleSlot = (
   ctx: CanvasRenderingContext2D,
   source: HTMLImageElement | HTMLVideoElement,
   slotConfig: PhotoSlotConfig,
+  mirrored = false,
 ): void => {
   const { x, y, width, height, rotate } = slotConfig;
 
-  // 회전이 없는 경우 변환 없이 바로 그리기
-  if (!rotate) {
+  // 회전도 반전도 없는 경우 변환 없이 바로 그리기
+  if (!rotate && !mirrored) {
     ctx.drawImage(source, x, y, width, height);
     return;
   }
 
-  // 슬롯 중심 좌표
+  // 슬롯 중심 좌표를 기준으로 회전·반전 적용
   const cx = x + width / 2;
   const cy = y + height / 2;
 
   ctx.save();
   ctx.translate(cx, cy);
   // rotate 상수는 반시계방향 기준 → Canvas는 시계방향 양수이므로 부호 반전
-  ctx.rotate(-rotate * (Math.PI / 180));
+  if (rotate) ctx.rotate(-rotate * (Math.PI / 180));
+  // 수평 반전: 회전 후 X축 스케일 반전 (슬롯 중심 기준)
+  if (mirrored) ctx.scale(-1, 1);
   ctx.drawImage(source, -width / 2, -height / 2, width, height);
   ctx.restore();
 };
