@@ -1,7 +1,7 @@
 /**
- * 사진 합성시에 필요한 필드
+ * 프레임 내 단일 슬롯의 위치·크기·회전 설정 정보
  */
-export interface PhotoSlot {
+export interface PhotoSlotConfig {
   x: number;
   y: number;
   width: number;
@@ -16,7 +16,7 @@ export interface ThemeConfig {
   width: number; // 프레임의 가로 길이
   height: number; // 프레임의 세로 길이
   frameImageUrl: string; // 배경 레이어
-  slots: PhotoSlot[]; // 사진 슬롯 좌표 및 크기 정보 배열 (requiredPhotoCount의 개수와 일치)
+  slots: PhotoSlotConfig[]; // 사진 슬롯 좌표 및 크기 정보 배열 (requiredPhotoCount의 개수와 일치)
   overlayImageUrl?: string; // 슬롯 사진 위에 합성할 오버레이 이미지 경로 (선택)
 }
 

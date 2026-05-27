@@ -27,7 +27,7 @@ export const TOTAL_SLOTS = 4;
 ════════════════════════════════════════ */
 
 /** BASIC 프레임(600×1800) 슬롯 좌표 및 크기 정보 */
-const BASIC_SLOTS = [
+const BASIC_SLOT_CONFIGS = [
   { x: 70, y: 200, width: 460, height: 345 }, // SLOT 1
   { x: 70, y: 575, width: 460, height: 345 }, // SLOT 2
   { x: 70, y: 950, width: 460, height: 345 }, // SLOT 3
@@ -39,7 +39,7 @@ const BASIC_SLOTS = [
  * @param x,y : 슬롯의 좌표, figma 기준 회전 전의 좌표
  * @param rotate - 반시계방향 기준 회전 각도 (도 단위)
  */
-const WIDE_SLOTS = [
+const WIDE_SLOT_CONFIGS = [
   { x: 93.88, y: 235.48, width: 550, height: 412.5, rotate: 9 }, // SLOT 1
   { x: 541.87, y: 457.67, width: 550, height: 412.5, rotate: -12 }, // SLOT 2
   { x: 150.42, y: 814.11, width: 550, height: 412.5, rotate: 3 }, // SLOT 3
@@ -53,14 +53,14 @@ export const FRAME_OPTIONS = {
     label: 'BASIC',
     width: 600,
     height: 1800,
-    slots: BASIC_SLOTS,
+    slots: BASIC_SLOT_CONFIGS,
   },
   wide: {
     id: 'wide',
     label: 'WIDE',
     width: 1200,
     height: 1800,
-    slots: WIDE_SLOTS,
+    slots: WIDE_SLOT_CONFIGS,
   },
 };
 

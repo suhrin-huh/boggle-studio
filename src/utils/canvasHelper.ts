@@ -1,4 +1,4 @@
-import { ThemeConfig, PhotoSlot } from '@/types';
+import { ThemeConfig, PhotoSlotConfig } from '@/types';
 
 /**
  * 이미지 소스를 HTMLImageElement로 로드하는 함수
@@ -40,7 +40,7 @@ export const createAssemblyCanvas = (
 export const drawSingleSlot = (
   ctx: CanvasRenderingContext2D,
   source: HTMLImageElement | HTMLVideoElement,
-  slotConfig: PhotoSlot,
+  slotConfig: PhotoSlotConfig,
 ): void => {
   const { x, y, width, height, rotate } = slotConfig;
 
@@ -72,7 +72,7 @@ export const drawSingleSlot = (
 export const batchDrawPhotoSlots = async (
   ctx: CanvasRenderingContext2D,
   photoSrcs: string[],
-  slotConfigs: PhotoSlot[],
+  slotConfigs: PhotoSlotConfig[],
   scale = 1,
 ): Promise<void> => {
   // 모든 이미지 소스를 미리 완벽하게 로드 (I/O 작업 격리)
