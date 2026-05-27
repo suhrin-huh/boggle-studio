@@ -1,10 +1,14 @@
 'use client';
 
-import useResultAssembly from '@/hooks/useResultAssembly';
+// components
 import ResultLoading from './ResultLoading';
 import ResultError from './ResultError';
 import ResultView from './ResultView';
 
+// hooks & utils
+import useResultAssembly from '@/hooks/useResultAssembly';
+
+/**로딩 화면이 보여질 시간 */
 const LOADING_TIME = 3000;
 
 /**
@@ -21,8 +25,6 @@ export default function ResultBooth() {
   if (!resultImage) return null;
 
   return (
-    <>
-      <ResultView resultImage={resultImage} resultVideoUrl={resultVideoUrl} fileName={fileName} />
-    </>
+    <ResultView resultImage={resultImage} resultVideoUrl={resultVideoUrl} fileName={fileName} />
   );
 }
