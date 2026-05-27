@@ -36,13 +36,14 @@ const BASIC_SLOTS = [
 
 /**
  * WIDE 프레임(1200×1800) 슬롯 좌표, 크기, 회전 정보
+ * @param x,y : 슬롯의 좌표, figma 기준 회전 전의 좌표
  * @param rotate - 반시계방향 기준 회전 각도 (도 단위)
  */
 const WIDE_SLOTS = [
-  { x: 670, y: 200, width: 550, height: 412.5, rotate: 9 }, // SLOT 1
-  { x: 670, y: 575, width: 550, height: 412.5, rotate: -12 }, // SLOT 2
-  { x: 670, y: 950, width: 550, height: 412.5, rotate: 3 }, // SLOT 3
-  { x: 670, y: 1325, width: 550, height: 412.5, rotate: 10 }, // SLOT 4
+  { x: 93.88, y: 235.48, width: 550, height: 412.5, rotate: 9 }, // SLOT 1
+  { x: 541.87, y: 457.67, width: 550, height: 412.5, rotate: -12 }, // SLOT 2
+  { x: 150.42, y: 814.11, width: 550, height: 412.5, rotate: 3 }, // SLOT 3
+  { x: 511.64, y: 1059.62, width: 550, height: 412.5, rotate: 10 }, // SLOT 4
 ];
 
 /** 프레임 타입별 크기와 슬롯 배치 정보 */
@@ -92,7 +93,7 @@ export const BACKGROUND_OPTIONS = {
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-black',
+      wide: '/images/overlays/wide-black.png',
     },
   },
   white: {
@@ -105,7 +106,7 @@ export const BACKGROUND_OPTIONS = {
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-white',
+      wide: '/images/overlays/wide-white.png',
     },
   },
   'dark-denim': {
@@ -118,7 +119,7 @@ export const BACKGROUND_OPTIONS = {
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-dark-denim',
+      wide: '/images/overlays/wide-dark-denim.png',
     },
   },
   'light-denim': {
@@ -131,7 +132,7 @@ export const BACKGROUND_OPTIONS = {
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-light-denim',
+      wide: '/images/overlays/wide-light-denim.png',
     },
   },
   // 'the-starry-night': {
