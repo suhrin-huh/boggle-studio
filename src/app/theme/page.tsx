@@ -2,7 +2,7 @@
 import PageContainer from '@/components/common/PageContainer';
 import PageTitle from '@/components/common/PageTitle';
 import ThemeBooth from './_components/ThemeBooth';
-import ThemePreloadImages from './_components/ThemePreloadImages';
+import ThemeImagePreloader from './_components/ThemeImagePreloader';
 
 /**
  * 테마 선택 페이지
@@ -14,7 +14,7 @@ export default function ThemePage() {
       <PageTitle title="Choose Your Theme" />
       <ThemeBooth>
         {/* theme 이미지 preload용 */}
-        <ThemePreloadImages />
+        <ThemeImagePreloader />
       </ThemeBooth>
     </PageContainer>
   );

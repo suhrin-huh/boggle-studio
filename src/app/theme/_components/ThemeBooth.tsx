@@ -25,6 +25,7 @@ export default function ThemeBooth({ children }: ThemeBoothProps) {
     useThemeSelection();
 
   const previewSrc = BACKGROUND_OPTIONS[selectedBg].images[selectedFrame];
+  const overlayUrl = BACKGROUND_OPTIONS[selectedBg].overlays[selectedFrame];
   const previewWidth = selectedFrame === 'basic' ? 100 : 200;
   const previewHeight = 300;
 
@@ -36,6 +37,7 @@ export default function ThemeBooth({ children }: ThemeBoothProps) {
         width={previewWidth}
         height={previewHeight}
         selectedFrame={selectedFrame}
+        overlayUrl={overlayUrl}
       />
       {/* 프레임 타입 선택 */}
       <FrameTypePicker
