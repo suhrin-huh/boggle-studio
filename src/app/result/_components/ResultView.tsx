@@ -1,10 +1,14 @@
+// libraries & frameworks
+import { useRouter } from 'next/navigation';
+
+// global stores, hoos & utils
+import { useBoothStore } from '@/store/useBoothStore';
+import { useQrUpload } from '@/hooks/useQrUpload';
+
+// components
 import PageTitle from '@/components/common/PageTitle';
 import ResultActionButtons from './ResultActionButtons';
 import QrCodeButton from './QrCodeButton';
-
-import { useRouter } from 'next/navigation';
-import { useBoothStore } from '@/store/useBoothStore';
-import { useQrUpload } from '@/hooks/useQrUpload';
 
 interface ResultViewProps {
   resultImage: string;
@@ -23,16 +27,18 @@ export default function ResultView({ resultImage, resultVideoUrl, fileName }: Re
   const resetBooth = useBoothStore((state) => state.resetBooth);
   const { qrState, handleQrCreate } = useQrUpload({ resultImage, resultVideoUrl, fileName });
 
-  // 스케치 영상이 있으면 .webm으로, 없으면 .png로 다운로드 : TODO: 둘 다 다운로드할 수 있도록 UI 수정 필요
-  const handleDownload = () => {
+  const handleDownloadImage = () => {
     const link = document.createElement('a');
-    if (resultVideoUrl) {
-      link.href = resultVideoUrl;
-      link.download = fileName.replace('.png', '.webm');
-    } else {
-      link.href = resultImage;
-      link.download = fileName;
-    }
+    link.href = resultImage;
+    link.download = fileName;
+    link.click();
+  };
+
+  const handleDownloadVideo = () => {
+    if (!resultVideoUrl) return;
+    const link = document.createElement('a');
+    link.href = resultVideoUrl;
+    link.download = fileName.replace('.png', '.webm');
     link.click();
   };
 
@@ -50,7 +56,9 @@ export default function ResultView({ resultImage, resultVideoUrl, fileName }: Re
         <img src={resultImage} alt="Generated cut" className="h-90 w-auto" />
       )}
       <ResultActionButtons
-        onDownload={handleDownload}
+        onDownloadImage={handleDownloadImage}
+        onDownloadVideo={handleDownloadVideo}
+        isVideoAvailable={!!resultVideoUrl}
         qrButton={<QrCodeButton state={qrState} onClick={handleQrCreate} />}
         onRestart={handleRestart}
       />

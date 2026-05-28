@@ -21,9 +21,11 @@ interface BackgroundPickerProps {
 }
 
 /**
- * @property bgKeys 배경 옵션 종류
- * @property selected 선택된 옵션
- * @property onSelect 옵션 변경 핸들러
+ * 배경 선택 캐러셀 컴포넌트
+ * 사용 가능한 배경 옵션을 캐러셀 형태로 표시하고, 선택된 항목에 링 스타일을 적용
+ * @param bgKeys - 선택 가능한 배경 종류 키 배열
+ * @param selected - 현재 선택된 배경 키
+ * @param onSelect - 배경 선택 시 호출되는 핸들러
  */
 export default function BackgroundPicker({ bgKeys, selected, onSelect }: BackgroundPickerProps) {
   return (

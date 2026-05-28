@@ -46,9 +46,7 @@ export default function QrCodeButton({ state, onClick }: QrCodeButtonProps) {
       {state.status === 'done' && (
         <div className="flex flex-col items-center">
           <QRCode value={shareUrl} size={60} />
-          <p className="text-muted-dark text-[9px]">
-            {state.ttlMinutes}분간 사진을 다운로드할 수 있습니다.
-          </p>
+          <p className="text-muted-dark text-[9px]">Available for {state.ttlMinutes} mins</p>
         </div>
       )}
     </NeumorphicButton>

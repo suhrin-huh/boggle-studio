@@ -10,15 +10,22 @@ import BackgroundPicker from './BackgroundPicker';
 const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
 const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];
 
-interface ThemeSelectorProps {
+interface ThemeBoothProps {
   children: React.ReactNode;
 }
 
-export default function ThemeSelector({ children }: ThemeSelectorProps) {
+/**
+ * 테마 선택 UI 컨테이너 컴포넌트
+ * 프레임 타입 선택(FrameTypePicker), 배경 선택(BackgroundPicker), 미리보기(ThemePreview),
+ * 확인 버튼을 포함한 테마 선택 영역을 렌더링하고, useThemeSelection 훅을 통해 상태를 관리
+ * @param children - 슬롯 콘텐츠 (ThemePreloadImages 등)
+ */
+export default function ThemeBooth({ children }: ThemeBoothProps) {
   const { selectedFrame, selectedBg, setSelectedFrame, setSelectedBg, handleConfirm } =
     useThemeSelection();
 
   const previewSrc = BACKGROUND_OPTIONS[selectedBg].images[selectedFrame];
+  const overlayUrl = BACKGROUND_OPTIONS[selectedBg].overlays[selectedFrame];
   const previewWidth = selectedFrame === 'basic' ? 100 : 200;
   const previewHeight = 300;
 
@@ -30,6 +37,7 @@ export default function ThemeSelector({ children }: ThemeSelectorProps) {
         width={previewWidth}
         height={previewHeight}
         selectedFrame={selectedFrame}
+        overlayUrl={overlayUrl}
       />
       {/* 프레임 타입 선택 */}
       <FrameTypePicker

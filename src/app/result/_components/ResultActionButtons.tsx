@@ -3,28 +3,43 @@ import RestartIcon from '@/assets/icon/RestartIcon';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 
 interface ResultActionButtonsProps {
-  onDownload: () => void;
+  onDownloadImage: () => void;
+  onDownloadVideo: () => void;
+  isVideoAvailable: boolean;
   qrButton: React.ReactNode;
   onRestart: () => void;
 }
 
 /**
  * 결과 페이지의 하단 액션 버튼 그룹 컴포넌트
- * @param onDownload 최종 합성된 결과물(사진 및 스케치 영상)을 다운로드하는 함수
- * @param qrButton QR 코드 버튼 컴포넌트 (상태에 따라 스피너/QR 이미지 표시)
- * @param onRestart 현재 세션 데이터 초기화 및 첫 화면으로 돌아가는 함수
+ * @param onDownloadImage  합성 이미지(PNG)를 다운로드하는 함수
+ * @param onDownloadVideo  합성 비디오(WebM)를 다운로드하는 함수
+ * @param isVideoAvailable 비디오 생성 여부 — false이면 비디오 버튼 disabled
+ * @param qrButton         QR 코드 버튼 컴포넌트
+ * @param onRestart        세션 초기화 후 첫 화면으로 이동하는 함수
  */
 export default function ResultActionButtons({
-  onDownload,
+  onDownloadImage,
+  onDownloadVideo,
+  isVideoAvailable,
   qrButton,
   onRestart,
 }: ResultActionButtonsProps) {
   return (
-    <div className="gap-md flex w-full flex-col justify-center sm:flex-row">
-      <NeumorphicButton onClick={onDownload}>
-        <div className="text-muted-dark flex flex-col items-center gap-1.5">
+    <div className="gap-md grid w-full grid-cols-4 justify-center">
+      {/* 이미지 다운로드 */}
+      <NeumorphicButton onClick={onDownloadImage}>
+        <div className="flex flex-col items-center gap-1.5">
           <DownloadIcon />
-          <p className="tracking-wide">Download</p>
+          <p className="tracking-wide">Image</p>
+        </div>
+      </NeumorphicButton>
+
+      {/* 비디오 다운로드 — 비디오 생성 실패 시 disabled */}
+      <NeumorphicButton onClick={onDownloadVideo} disabled={!isVideoAvailable}>
+        <div className="flex flex-col items-center gap-1.5">
+          <DownloadIcon />
+          <p className="tracking-wide">Video</p>
         </div>
       </NeumorphicButton>
 
