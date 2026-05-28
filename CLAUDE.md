@@ -1,4 +1,4 @@
-# Boggle Boggle Studio Project Rules
+# Boggle Studio Project Rules
 
 ## Tech Stack
 
@@ -7,7 +7,7 @@
 - Styling: Tailwind CSS v4
 - State: Zustand
 - Features: react-webcam, Supabase Storage, Canvas API
-- Linting/Formatting: ESLint 9, Prettier(prettier-plugin-tailwindcss)
+- Linting/Formatting: ESLint 9, Prettier (prettier-plugin-tailwindcss)
 
 ## Development Commands
 
@@ -18,50 +18,109 @@
 ## Assistant Communication Guidelines
 
 - Language: ALWAYS respond to the user in Korean (한국어), regardless of the prompt's language. Explanations, suggestions, and chat responses must be in Korean.
-- Code Comments: Write code comments in Korean to maintain context for the user.
+- Code Comments: Write all code comments in Korean to maintain proper context for the user.
 
 ## Directory Structure
 
-- `src/app/`: Next.js App Router (Routing, Layouts)
-- `src/components/`: Globally shared UI components only
-- `src/hooks/`: Business logic & Side effects (Custom Hooks)
-- `src/store/`: Zustand global states
-- `src/utils/`: Pure functions (Data processing, Canvas logic)
-- `src/types/`: Shared TypeScript definitions
-- `src/assets/`: Static resources (Images, Icons, Lottie)
+- `src/app/`: Next.js App Router (Pages & Routing only; UI components must be isolated within local `_components/` directories)
+- `src/components`: Globally shared UI components
+- `src/actions/`: Next.js Server Actions logic
+- `src/hooks/`: Business logic & Side effects management (Custom Hooks)
+- `src/store/`: Zustand global state stores (`useBoothStore.ts`)
+- `src/utils/`: Pure function-based helper logic (Canvas, File, Video processing, etc.)
+- `src/constants/`: Global configurations and static data (`booth.ts`)
+- `src/types/`: Shared TypeScript type definitions
 
-## Naming Conventions
+## Code Declaration & Naming Conventions
 
-- Components: Use `PascalCase` (e.g., `CaptureButton.tsx`, `FrameSelector.tsx`).
-- Component Props: Use `PascalCase` + `Props` suffix (e.g., `interface CaptureButtonProps { ... }`).
-- Hooks: Use `camelCase` starting with 'use' (e.g., `useCamera.ts`, `useTimer.ts`).
-- Functions: Use `camelCase` with descriptive verbs (e.g., `generateFileName()`, `calculatePosition()`).
-- Constants: Use `UPPER_SNAKE_CASE` (e.g., `MAX_PHOTO_COUNT`, `DEFAULT_FRAME_COLOR`).
-- Utils / Files: Use `camelCase` (e.g., `canvasHelper.ts`, `dateFormatter.ts`).
-- Styles / Assets: Use `kebab-case` (e.g., `globals.css`, `logo-main.png`, `icon-camera.svg`).
-- Types / Interfaces: Use `PascalCase` (e.g., `interface UserData`, `type FrameType`).
+### Standard Declaration Pattern
 
-## Design Patterns & Component Rules
+To ensure consistency and prevent naming mismatches during imports, declaration patterns are strictly unified based on file types using Function Declarations:
 
-- Functional Components: Write all components as function declarations with export default (e.g., `export default function Component() { ... }`).
-- Separation of Concerns: Keep UI rendering logic inside components. Extract complex state changes and business logic into `hooks/`. Move heavy Canvas compositing logic to pure functions in `utils/`.
-- Props Handling: Destructure props immediately in the function signature for better readability.
-- Early Return: Minimize code depth (indentation) by using the Early Return pattern for edge cases and condition checks at the top of the function.
-- Component Composition (Children Pattern): Avoid rigid, deeply nested internal component structures. Instead of a parent component internally importing and rendering its deep children, use the `children` prop to compose them at the usage site. This makes the UI hierarchy visible at a glance from the top level (Inversion of Control) and prevents prop drilling (e.g., `<Container><List><Item /></List></Container>`).
+- Components: Use export default function to simplify top-level page and container composition.
 
-## Styling & UI (Tailwind CSS v4)
+- Hooks & Utility Functions: Use Named Exports (export function) to strictly enforce identical naming across the codebase and allow multiple exports per file.
 
-- Utility-First & Reusability: Strictly prioritize Tailwind CSS v4 utility classes. Leverage v4's CSS-first configuration by defining reusable design systems and theme variables inside a SINGLE `@theme` block at the top of `globals.css` to prevent scattered configurations. Define custom utilities using `@utility` blocks.
-- Complex & Conditional Styling: If a combination of utility classes becomes too long or complex, DO NOT clutter the JSX. Abstract these complex styles into reusable classes within `globals.css`. Use `clsx` or `tailwind-merge` ONLY for handling dynamic, state-based class toggling.
+```typescript
+/**
+ * @description Brief and clear explanation of the component's purpose.
+ * @param {ParamType} props - Description of the properties.
+ * @returns {JSX.Element} Description of the returned value.
+ */
+// 1. Components (Default Export)
+export default function ComponentName({ propA, propB }: ComponentNameProps) {
+  if (!propA) return null; // Early Return pattern
+  return <div>...</div>;
+}
 
-## TypeScript & State Management
+/**
+ * @description Brief and clear explanation of the custom hook's purpose.
+ * @param {ParamType} param - Description of the parameters.
+ * @returns {ReturnType} Description of the returned state or methods.
+ */
+// 2. Hooks & Utilities (Named Export)
+export function useExampleHook(param: ParamType): ReturnType {
+  // Logic here
+  return { data };
+}
+```
 
-- Strict Typing: The use of `any` is strictly prohibited. Explicitly define types for all function parameters and return values.
-- Zustand Pattern: - Use `useProjectStore` as the Single Source of Truth (SSOT) for shared page data.
-  - Always use the selector pattern (e.g., `const data = useProjectStore(state => state.data)`) to prevent unnecessary re-renders.
-- File Output Naming: The final composited image must strictly follow the format: `BoggleBoggle_[Text]_[YYYYMMDDHHmmss]_[Random4Chars].png`.
+### Mandatory JSDoc Documentation
 
-## Error Handling & UX (Essential)
+Every component, utility function, and custom hook must include a JSDoc comment at the top, explicitly describing its purpose, parameters (properties), and return values to ensure clear intent at a glance.
 
-- Async Logic: Wrap all asynchronous operations (`async/await`) in `try-catch` blocks. Always provide clear Loading and Error UI feedback to the user.
-- Optimization: Manage memory references carefully during Canvas operations. Ensure proper `useEffect` cleanup to prevent memory leaks.
+### Naming Conventions
+
+Components: Use PascalCase (e.g., CameraBooth.tsx). Form component props as ComponentNameProps.
+
+- Hooks: Use camelCase with a 'use' prefix (e.g., useCamera.ts).
+
+- Functions / Utils: Use camelCase starting with descriptive verbs (e.g., generateFileName()).
+
+- Constants: Use UPPER_SNAKE_CASE (e.g., MAX_PHOTO_COUNT).
+
+- Types / Interfaces: Use PascalCase (e.g., type FrameType).
+
+## Design Patterns & Coding Rules
+
+### Separation of Concerns & Pure Functions
+
+- UI Components: Focus strictly on rendering. Destructure props immediately in the function signature. Avoid deeply nested structures by actively utilizing the children prop (Component Composition).
+
+- Hooks: Isolate business logic, state mutations, and side effects away from the UI.
+
+- Utils: Write heavy operations (Canvas compositing, video processing, etc.) as independent, reusable pure functions that do not rely on or modify external state.
+
+### State Management (Zustand)
+
+- Treat useBoothStore as the Single Source of Truth (SSOT) for shared global data.
+
+- Always implement the Selector Pattern (e.g., `const data = useBoothStore(state => state.data))` to prevent unnecessary re-renders.)
+
+### Tailwind CSS v4 Styling
+
+- Prioritize Tailwind CSS v4 utility classes. Define the design system configurations within a single @theme block at the top of globals.css.
+
+- Abstract long or complex utility combinations into reusable classes using @utility blocks within globals.css to keep JSX clean. Use clsx or tailwind-merge only for dynamic, state-based class toggling.
+
+## Workflow Automation
+
+### Save Plan File Before Coding
+
+When a plan/feature is requested, extract the work title from the user's message. Once the user approves the plan and gives the command to start (e.g., "작업 시작해", "구현해줘"):
+
+1. Before writing any codebase changes, create a file
+2. Generate a file at `at /plan/{work-title}-plan.md.` matching the layout in `.claude/plan-template.md.`
+3. Write the full approved plan details exactly as generated during the planning phase.
+
+### Generate Work Summary Before Pushing
+
+When the user requests a remote repository push (e.g., "origin에 반영해줘", "push해줘"):
+
+1. Analyze the git diff between `main` and the current working branch.
+
+2. Generate a summary matching the layout in `.claude/work-summary-template.md.`
+
+3. Save the summary to `/plan/{branch-name}-summary.md.`
+
+4. Display the generated summary to the user for review, and proceed with the push only after receiving explicit confirmation.
