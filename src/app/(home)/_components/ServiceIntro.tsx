@@ -14,7 +14,14 @@ export default function ServiceIntro() {
   return (
     <>
       <div className="gap-sm flex flex-col text-center">
-        <Image src={introText} alt="서비스 소개글" width={240} height={60} priority />
+        <Image
+          src={introText}
+          alt="서비스 소개글"
+          width={240}
+          height={60}
+          priority
+          style={{ height: 'auto' }}
+        />
         <p className="text-muted-dark text-body-xs font-unbounded">capture the unexpected.</p>
       </div>
       <PhotoFrame className="aspect-3/4 w-60">
