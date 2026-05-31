@@ -1,33 +1,22 @@
-// 서버 컴포넌트&액션용
-// react 패키지의 cache 함수를 사용하면, 한 번의 요청 내에서 이 함수가 여러 번 호출되더라도 최초 한 번만 실행되고 나머지는 캐시된 인스턴스를 반환
-// => 이를 컨트롤러에서 호출하여 사용
-
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { cache } from 'react';
 
-// cache로 감싸서 "Request-Scoped Singleton" 구현
-export const createClient = cache(async () => {
-  const cookieStore = await cookies();
+/**
+ * Request-Scoped Singleton
+ * Supabase 클라이언트 생성기
+ * @param useAdmin - RLS 정책을 무시할 수 있는 마스터 어드민 권한 클라이언트를 반환
+ */
+export const createClient = cache(async (useAdmin = false) => {
+  // default : 일반 유저용 ANON_KEY 사용
+  let supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
-            );
-          } catch {
-            // Server Action이나 Route Handler에서는 무시될 수 있음
-          }
-        },
-      },
-    },
-  );
+  // 마스터 권한이 필요할 경우 내부적으로 SERVICE_ROLE_KEY 장착
+  if (useAdmin) {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error('서버 환경 변수에 SUPABASE_SERVICE_ROLE_KEY가 설정되지 않았습니다.');
+    }
+    supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  }
+
+  return createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, supabaseKey);
 });

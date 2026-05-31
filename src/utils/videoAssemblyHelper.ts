@@ -12,8 +12,8 @@ import { ThemeConfig } from '@/types';
  * <video> 요소가 재생 가능한 상태(canplay)가 될 때까지 대기
  * src가 없는 슬롯(녹화 실패)은 즉시 resolve
  */
-const waitForCanPlay = (el: HTMLVideoElement): Promise<void> =>
-  new Promise((resolve, reject) => {
+function waitForCanPlay(el: HTMLVideoElement): Promise<void> {
+  return new Promise((resolve, reject) => {
     // src가 없으면 재생할 영상이 없으므로 즉시 통과
     if (!el.src) {
       resolve();
@@ -26,6 +26,7 @@ const waitForCanPlay = (el: HTMLVideoElement): Promise<void> =>
     el.oncanplay = () => resolve();
     el.onerror = () => reject(new Error('비디오 버퍼링 실패'));
   });
+}
 
 /**
  * 비디오 슬롯들을 프레임에 합성하여 최종 Blob을 반환
@@ -35,11 +36,11 @@ const waitForCanPlay = (el: HTMLVideoElement): Promise<void> =>
  * @param signal        - 컴포넌트 언마운트 시 취소를 위한 AbortSignal (선택)
  * @returns 합성 완료된 비디오 Blob
  */
-export const assembleVideo = async (
+export async function assembleVideo(
   themeConfig: ThemeConfig,
   videoSlotKeys: string[],
   signal?: AbortSignal,
-): Promise<Blob> => {
+): Promise<Blob> {
   // 취소 여부를 확인하는 헬퍼 — 주요 비동기 작업 완료 후 체크
   const checkAborted = () => {
     if (signal?.aborted) throw new DOMException('assembleVideo 취소됨', 'AbortError');
@@ -139,4 +140,4 @@ export const assembleVideo = async (
     // 비디오 요소용 임시 objectURL은 성공·실패 무관하게 즉시 해제
     tempObjectUrls.forEach((url) => URL.revokeObjectURL(url));
   }
-};
+}
