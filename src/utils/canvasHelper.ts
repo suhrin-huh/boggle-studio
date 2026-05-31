@@ -3,13 +3,14 @@ import { ThemeConfig, PhotoSlotConfig } from '@/types';
 /**
  * 이미지 소스를 HTMLImageElement로 로드하는 함수
  */
-export const loadImage = (src: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
+export function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error(`이미지 로드 실패: ${src}`));
     img.src = src;
   });
+}
 
 /**
  * 메모리 상에서만 가상으로 동작하는 백그라운드 오프스크린 캔버스와 2D 컨텍스트를 생성
@@ -18,17 +19,17 @@ export const loadImage = (src: string): Promise<HTMLImageElement> =>
  * @returns canvas    - 생성된 HTMLCanvasElement 객체
  * @returns ctx       - 2D 렌더링 컨텍스트
  */
-export const createAssemblyCanvas = (
+export function createAssemblyCanvas(
   width: number,
   height: number,
-): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } => {
+): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas context를 가져올 수 없습니다.');
   return { canvas, ctx };
-};
+}
 
 /**
  * 단일 이미지(또는 비디오)를 캔버스에 그리는 함수
@@ -41,12 +42,12 @@ export const createAssemblyCanvas = (
  * @param slotConfig  - 슬롯 좌표·크기·회전 정보
  * @param mirrored    - 수평 반전 여부 (기본값 false)
  */
-export const drawSingleSlot = (
+export function drawSingleSlot(
   ctx: CanvasRenderingContext2D,
   source: HTMLImageElement | HTMLVideoElement,
   slotConfig: PhotoSlotConfig,
   mirrored = false,
-): void => {
+): void {
   const { x, y, width, height, rotate } = slotConfig;
 
   // 회전도 반전도 없는 경우 변환 없이 바로 그리기
@@ -67,7 +68,7 @@ export const drawSingleSlot = (
   if (mirrored) ctx.scale(-1, 1);
   ctx.drawImage(source, -width / 2, -height / 2, width, height);
   ctx.restore();
-};
+}
 
 /**
  * 모든 사진 소스를 병렬로 선행 로드한 후, 각각의 슬롯 좌표에 일괄 합성하는 함수
@@ -76,12 +77,12 @@ export const drawSingleSlot = (
  * @param slotConfigs - 프레임 규격에 정의된 개별 슬롯 설정 정보 배열
  * @param scale       - 캔버스 컨텍스트에 적용할 스케일 배율 (default 1, 미리보기 축소 시 PREVIEW_SCALE 활용)
  */
-export const batchDrawPhotoSlots = async (
+export async function batchDrawPhotoSlots(
   ctx: CanvasRenderingContext2D,
   photoSrcs: string[],
   slotConfigs: PhotoSlotConfig[],
   scale = 1,
-): Promise<void> => {
+): Promise<void> {
   // 모든 이미지 소스를 미리 완벽하게 로드 (I/O 작업 격리)
   const loadedImages = await Promise.all(
     slotConfigs.map((_, i) => {
@@ -103,7 +104,7 @@ export const batchDrawPhotoSlots = async (
   });
 
   ctx.restore();
-};
+}
 
 /**
  * 배경 프레임 이미지를 캔버스 전체에 그리는 함수
@@ -112,15 +113,15 @@ export const batchDrawPhotoSlots = async (
  * @param width         - 캔버스 너비
  * @param height        - 캔버스 높이
  */
-export const drawBackground = async (
+export async function drawBackground(
   ctx: CanvasRenderingContext2D,
   frameImageUrl: string,
   width: number,
   height: number,
-): Promise<void> => {
+): Promise<void> {
   const img = await loadImage(frameImageUrl);
   ctx.drawImage(img, 0, 0, width, height);
-};
+}
 
 /**
  * 오버레이 이미지를 캔버스 최상단에 합성
@@ -129,15 +130,15 @@ export const drawBackground = async (
  * @param width          - 캔버스 너비
  * @param height         - 캔버스 높이
  */
-export const drawOverlay = async (
+export async function drawOverlay(
   ctx: CanvasRenderingContext2D,
   overlayImageUrl: string,
   width: number,
   height: number,
-): Promise<void> => {
+): Promise<void> {
   const img = await loadImage(overlayImageUrl);
   ctx.drawImage(img, 0, 0, width, height);
-};
+}
 
 /**
  * ThemeConfig와 photoSlots를 기반으로 프레임 합성 이미지를 생성하는 함수
@@ -146,10 +147,10 @@ export const drawOverlay = async (
  * @param photoSlots  - 슬롯에 배치할 사진 소스(Base64 또는 URL) 배열
  * @returns 합성된 이미지의 Base64 문자열을 담은 Promise
  */
-export const assembleFrame = async (
+export async function assembleFrame(
   themeConfig: ThemeConfig,
   photoSlots: string[],
-): Promise<string> => {
+): Promise<string> {
   const { width, height, frameImageUrl, slots, overlayImageUrl } = themeConfig;
 
   // 1단계: 캔버스 생성
@@ -165,4 +166,4 @@ export const assembleFrame = async (
   if (overlayImageUrl) await drawOverlay(ctx, overlayImageUrl, width, height);
 
   return canvas.toDataURL('image/png');
-};
+}

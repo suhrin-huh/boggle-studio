@@ -10,20 +10,26 @@ import { VIDEO_SLOT_KEY_PREFIX } from '@/constants/booth';
  * @param key  - 저장할 키 (generateVideoKey로 생성)
  * @param blob - 저장할 webm Blob
  */
-export const saveVideoBlob = (key: string, blob: Blob): Promise<void> => set(key, blob);
+export function saveVideoBlob(key: string, blob: Blob): Promise<void> {
+  return set(key, blob);
+}
 
 /**
  * IndexedDB에서 비디오 Blob을 불러옴
  * @param key - 조회할 키
  * @returns 저장된 Blob, 없으면 undefined
  */
-export const loadVideoBlob = (key: string): Promise<Blob | undefined> => get(key);
+export function loadVideoBlob(key: string): Promise<Blob | undefined> {
+  return get(key);
+}
 
 /**
  * IndexedDB에서 비디오 Blob 삭제
  * @param key - 삭제할 키
  */
-export const deleteVideoBlob = (key: string): Promise<void> => del(key);
+export function deleteVideoBlob(key: string): Promise<void> {
+  return del(key);
+}
 
 /**
  * 슬롯 인덱스 기반의 고유 IndexedDB 키를 생성
@@ -31,5 +37,6 @@ export const deleteVideoBlob = (key: string): Promise<void> => del(key);
  * @param slotIndex - 촬영 슬롯 번호 (0-based)
  * @returns `booth-video-{slotIndex}` 형식의 키
  */
-export const generateVideoKey = (slotIndex: number): string =>
-  `${VIDEO_SLOT_KEY_PREFIX}-${slotIndex}`;
+export function generateVideoKey(slotIndex: number): string {
+  return `${VIDEO_SLOT_KEY_PREFIX}-${slotIndex}`;
+}

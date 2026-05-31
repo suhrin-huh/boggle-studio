@@ -8,7 +8,7 @@ import {
 
 import { ThemeConfig } from '@/types';
 
-export const buildThemeConfig = (themeId: ThemeId): ThemeConfig => {
+export function buildThemeConfig(themeId: ThemeId): ThemeConfig {
   // themeId를 파싱하여 프레임 타입과 배경 키 추출
   const dashIndex = themeId.indexOf('-');
   const frameType = themeId.slice(0, dashIndex) as FrameType;
@@ -37,4 +37,4 @@ export const buildThemeConfig = (themeId: ThemeId): ThemeConfig => {
     slots,
     ...(overlayImageUrl ? { overlayImageUrl } : {}),
   };
-};
+}
