@@ -15,6 +15,7 @@ import useCaptureSequence from '@/hooks/useCaptureSequence';
 import CameraScreen from './CameraScreen';
 import CameraControls from './CameraControls';
 import CountdownOverlay from './CountdownOverlay';
+import LoadingText from './LoadingText';
 
 // assets
 import { TOTAL_SLOTS } from '@/constants/booth';
@@ -63,6 +64,7 @@ export default function CameraBooth() {
 
   return (
     <>
+      {phase === 'loading' && <LoadingText />}
       {/* webcam 스크린 */}
       <CameraScreen
         phase={phase}
@@ -77,11 +79,7 @@ export default function CameraBooth() {
       </CameraScreen>
 
       {/* 카메라 컨트롤 버튼 */}
-      <CameraControls
-        phase={phase}
-        onCapture={handleCapture}
-        onPrint={handlePrint}
-      />
+      <CameraControls phase={phase} onCapture={handleCapture} onPrint={handlePrint} />
     </>
   );
 }

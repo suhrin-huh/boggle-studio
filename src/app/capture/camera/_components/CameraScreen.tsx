@@ -2,9 +2,6 @@
 import Webcam from 'react-webcam';
 import type { RefObject, HTMLAttributes } from 'react';
 
-// components
-import LoadingText from './LoadingText';
-
 // assets
 import { CameraPhase } from '@/types';
 
@@ -48,9 +45,6 @@ export default function CameraScreen({
 
   return (
     <div className="relative aspect-4/3 w-full overflow-hidden rounded-lg" {...rest}>
-      {/* 로딩 UI */}
-      {phase === 'loading' && <LoadingText />}
-
       {/* 완료 상태 : 웹캠 대신 DONE! 텍스트 표시 */}
       {isAllFilled ? (
         <div className="bg-muted-dark/50 flex h-full w-full items-center justify-center rounded-lg">
@@ -77,7 +71,7 @@ export default function CameraScreen({
       {/* 촬영 횟수 카운트 */}
       {phase === 'capturing' && (
         <span className="absolute top-[5%] right-[5%] z-10 text-[16px] font-semibold text-white tabular-nums">
-          {filledCount} / {totalSlots}
+          {filledCount + 1} / {totalSlots}
         </span>
       )}
 
