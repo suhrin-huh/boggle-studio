@@ -18,24 +18,31 @@ const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];
 export default function ThemeImagePreloader() {
   return (
     <div className="invisible absolute" aria-hidden>
-      {FRAME_KEYS.flatMap((frameKey) =>
-        BG_KEYS.map((bgKey) => {
+      {FRAME_KEYS.flatMap((frameKey, frameIndex) =>
+        BG_KEYS.map((bgKey, bgIndex) => {
           const w = Math.round(FRAME_OPTIONS[frameKey].width * PREVIEW_SCALE);
           const h = Math.round(FRAME_OPTIONS[frameKey].height * PREVIEW_SCALE);
           const overlayUrl = BACKGROUND_OPTIONS[bgKey].overlays[frameKey];
-
+          // 초기 렌더 시 가장 먼저 보이는 조합(0번째 프레임 × 0번째 배경)만 high priority 부여
+          const isInitial = frameIndex === 0 && bgIndex === 0;
           return (
             <div key={`${frameKey}-${bgKey}`} className="relative" style={{ width: w, height: h }}>
-              {/* 배경 이미지 사전 로드 */}
               <Image
                 src={BACKGROUND_OPTIONS[bgKey].images[frameKey]}
-                alt=""
+                alt={`bg-${frameKey}-${bgKey}`}
                 width={w}
                 height={h}
-                priority
+                priority={isInitial}
               />
-              {/* 오버레이 이미지 사전 로드 (wide 프레임에만 존재) */}
-              {overlayUrl && <img src={overlayUrl} alt="" className="hidden" />}
+              {overlayUrl && (
+                <Image
+                  src={overlayUrl}
+                  alt={`overlay-${frameKey}-${bgKey}`}
+                  width={w}
+                  height={h}
+                  priority={isInitial}
+                />
+              )}
             </div>
           );
         }),
