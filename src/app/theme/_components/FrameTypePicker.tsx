@@ -16,6 +16,8 @@ interface FrameTypePickerProps {
  * @param onSelect - 프레임 타입 선택 시 호출되는 핸들러
  */
 export default function FrameTypePicker({ frameKeys, selected, onSelect }: FrameTypePickerProps) {
+  if (frameKeys.length === 1) return null;
+
   return (
     <ul className="gap-sm flex">
       {frameKeys.map((frameKey) => {

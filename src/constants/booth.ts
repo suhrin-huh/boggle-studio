@@ -55,13 +55,13 @@ export const FRAME_OPTIONS = {
     height: 1800,
     slots: BASIC_SLOT_CONFIGS,
   },
-  wide: {
-    id: 'wide',
-    label: 'WIDE',
-    width: 1200,
-    height: 1800,
-    slots: WIDE_SLOT_CONFIGS,
-  },
+  // wide: {
+  //   id: 'wide',
+  //   label: 'WIDE',
+  //   width: 1200,
+  //   height: 1800,
+  //   slots: WIDE_SLOT_CONFIGS,
+  // },
 };
 
 /** 프레임 타입 식별자 */

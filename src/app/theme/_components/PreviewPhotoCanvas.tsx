@@ -11,12 +11,12 @@ interface PreviewPhotoCanvasProps {
 
 /**
  * 미리보기 크기(PREVIEW_SCALE)로 축소된 캔버스에 사진 슬롯을 합성하는 컴포넌트
- * basic/wide 두 캔버스를 모두 미리 그려두어, 배경·프레임 전환 시 재합성 없이 즉시 전환
+ * 현재에는 basic만 남겨둔 상태
  */
 export default function PreviewPhotoCanvas({ selectedFrame }: PreviewPhotoCanvasProps) {
   const photoSlots = useBoothStore((state) => state.photoSlots);
   const basicCanvasRef = useRef<HTMLCanvasElement>(null);
-  const wideCanvasRef = useRef<HTMLCanvasElement>(null);
+  // const wideCanvasRef = useRef<HTMLCanvasElement>(null);
 
   // 마운트 시 basic/wide 두 캔버스를 모두 그려두어 배경 전환 시 재합성 불필요
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function PreviewPhotoCanvas({ selectedFrame }: PreviewPhotoCanvas
     };
 
     if (basicCanvasRef.current) drawToCanvas(basicCanvasRef.current, 'basic');
-    if (wideCanvasRef.current) drawToCanvas(wideCanvasRef.current, 'wide');
+    // if (wideCanvasRef.current) drawToCanvas(wideCanvasRef.current, 'wide');
   }, [photoSlots]);
 
   return (
@@ -44,10 +44,10 @@ export default function PreviewPhotoCanvas({ selectedFrame }: PreviewPhotoCanvas
         ref={basicCanvasRef}
         className={`absolute inset-0 ${selectedFrame === 'basic' ? '' : 'hidden'}`}
       />
-      <canvas
+      {/* <canvas
         ref={wideCanvasRef}
         className={`absolute inset-0 ${selectedFrame === 'wide' ? '' : 'hidden'}`}
-      />
+      /> */}
     </>
   );
 }
