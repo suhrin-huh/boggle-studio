@@ -2,7 +2,6 @@
 
 import DownloadIcon from '@/assets/icon/DownloadIcon';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
-import PageTitle from '@/components/common/PageTitle';
 
 interface ShareViewProps {
   imageUrl: string;
@@ -34,7 +33,6 @@ export default function ShareView({ imageUrl, videoUrl, fileName }: ShareViewPro
 
   return (
     <>
-      <PageTitle title="DOWNLOAD YOUR PHOTO!" />
       {videoUrl ? (
         <video src={videoUrl} className="h-90 w-auto" autoPlay loop muted playsInline />
       ) : (

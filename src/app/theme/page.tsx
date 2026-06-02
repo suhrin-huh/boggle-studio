@@ -1,6 +1,5 @@
 // components
 import PageContainer from '@/components/common/PageContainer';
-import PageTitle from '@/components/common/PageTitle';
 import ThemeBooth from './_components/ThemeBooth';
 import ThemeImagePreloader from './_components/ThemeImagePreloader';
 
@@ -11,7 +10,6 @@ import ThemeImagePreloader from './_components/ThemeImagePreloader';
 export default function ThemePage() {
   return (
     <PageContainer>
-      <PageTitle title="Choose Your Theme" />
       <ThemeBooth>
         {/* theme 이미지 preload용 */}
         <ThemeImagePreloader />

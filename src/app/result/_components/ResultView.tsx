@@ -6,7 +6,6 @@ import { useBoothStore } from '@/store/useBoothStore';
 import { useQrUpload } from '@/hooks/useQrUpload';
 
 // components
-import PageTitle from '@/components/common/PageTitle';
 import ResultActionButtons from './ResultActionButtons';
 import QrCodeButton from './QrCodeButton';
 
@@ -49,7 +48,6 @@ export default function ResultView({ resultImage, resultVideoUrl, fileName }: Re
 
   return (
     <>
-      <PageTitle title="Done!" />
       {resultVideoUrl ? (
         <video src={resultVideoUrl} className="h-90 w-auto" autoPlay loop muted playsInline />
       ) : (

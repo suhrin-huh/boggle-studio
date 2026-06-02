@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import PageTitle from '@/components/common/PageTitle';
 
 interface SlotBezelProps {
   /**
@@ -36,13 +35,12 @@ function SlotBezel({ variant }: SlotBezelProps) {
 export default function ResultLoading() {
   return (
     <>
-      <PageTitle title="Generating..." />
       <div className="relative flex h-120 w-full flex-col items-center justify-start overflow-hidden pt-10 font-sans">
         {/* 뒤에 깔리는 전체 베젤 */}
         <SlotBezel variant="full" />
 
         {/* 예시 이미지 */}
-        <div className="absolute top-[30px] z-10 flex w-60 animate-[photo-emerge-down_3s_ease-out_forwards] flex-col items-center overflow-hidden">
+        <div className="absolute top-[30px] z-10 flex w-60 animate-[photo-emerge-down_5s_ease-out_forwards] flex-col items-center overflow-hidden">
           <Image src="/images/samples/black.png" alt="sample image" width={150} height={450} />
         </div>
 
