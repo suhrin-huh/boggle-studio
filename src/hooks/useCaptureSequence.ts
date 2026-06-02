@@ -6,7 +6,7 @@ import { saveVideoBlob, generateVideoKey } from '@/utils/idbHelper';
 import { TOTAL_SLOTS, CAPTURE_INTERVAL_MS } from '@/constants/booth';
 
 interface UseCaptureSequenceProps {
-  capture: () => string | null;
+  capture: () => Promise<string | null>;
   startRecording: () => Promise<void>;
   stopRecording: () => Promise<Blob>;
   addNextPhoto: (photoData: string) => void;
@@ -45,7 +45,7 @@ export const useCaptureSequence = ({
       }
       setCountdown(null);
 
-      const screenshot = capture();
+      const screenshot = await capture();
       if (!screenshot) break;
 
       setIsFlashing(true);

@@ -1,7 +1,57 @@
 import { ThemeConfig, PhotoSlotConfig } from '@/types';
 
 /**
+ * dataUrl 이미지를 지정한 비율로 중앙 크롭하는 함수 (CSS object-cover와 동일한 동작)
+ * - 소스가 목표보다 넓으면 → 좌우 크롭
+ * - 소스가 목표보다 좁으면 → 상하 크롭
+ * - 비율이 같으면 → 그대로 반환
+ * @param dataUrl     - 크롭할 이미지 dataURL
+ * @param targetRatio - 목표 가로세로 비율 (width / height)
+ */
+export function cropToRatio(dataUrl: string, targetRatio: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const srcW = img.width;
+      const srcH = img.height;
+      const srcRatio = srcW / srcH;
+
+      let sx = 0,
+        sy = 0,
+        sw = srcW,
+        sh = srcH;
+
+      if (srcRatio > targetRatio) {
+        sw = srcH * targetRatio;
+        sx = (srcW - sw) / 2;
+      } else if (srcRatio < targetRatio) {
+        sh = srcW / targetRatio;
+        sy = (srcH - sh) / 2;
+      } else {
+        resolve(dataUrl);
+        return;
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(sw);
+      canvas.height = Math.round(sh);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('canvas context를 가져올 수 없습니다.'));
+        return;
+      }
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/png'));
+    };
+    img.onerror = () => reject(new Error('이미지 로드 실패'));
+    img.src = dataUrl;
+  });
+}
+
+/**
  * 이미지 소스를 HTMLImageElement로 로드하는 함수
+ * @param src - 로드할 이미지 URL 또는 dataURL
+ * @returns 로드 완료된 HTMLImageElement를 담은 Promise
  */
 export function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {

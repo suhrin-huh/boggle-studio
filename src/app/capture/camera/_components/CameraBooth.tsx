@@ -22,6 +22,9 @@ import { TOTAL_SLOTS } from '@/constants/booth';
 import { CameraPhase } from '@/types';
 
 export default function CameraBooth() {
+  // 촬영 비율
+  const CAPTURE_RATIO = 4 / 3;
+
   const router = useRouter();
 
   // 전역스토어
@@ -34,7 +37,9 @@ export default function CameraBooth() {
   });
 
   // webcam
-  const { webcamRef, capture, isCameraReady, handleCameraReady } = useCamera();
+  const { webcamRef, capture, isCameraReady, handleCameraReady } = useCamera({
+    captureRatio: CAPTURE_RATIO,
+  });
 
   // 스케치 영상 제작
   const { startSlotRecording, stopSlotRecording } = useVideoRecorder(webcamRef);
