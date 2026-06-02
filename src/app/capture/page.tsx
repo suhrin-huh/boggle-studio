@@ -3,7 +3,7 @@ import PageContainer from '@/components/common/PageContainer';
 import CaptureModeButton from './_components/CaptureModeButton';
 
 // assets & types
-import { CAPTURE_MODE } from '@/constants/booth';
+import { CAPTURE_MODE } from '@/constants';
 
 export default function CapturePage() {
   const captureModes = Object.values(CAPTURE_MODE);
