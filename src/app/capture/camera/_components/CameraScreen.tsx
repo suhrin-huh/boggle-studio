@@ -24,12 +24,12 @@ interface CameraScreenProps extends HTMLAttributes<HTMLDivElement> {
 
 /**
  * 카메라 촬영 화면
- * @property phase
- * @property setIsCameraReady
- * @property filledCount
- * @property totalSlots
- * @property webcamRef
- * @property isFlashing
+ * @param phase
+ * @param setIsCameraReady
+ * @param filledCount
+ * @param totalSlots
+ * @param webcamRef
+ * @param isFlashing
  */
 export default function CameraScreen({
   phase,

@@ -10,7 +10,7 @@ interface SlotBezelProps {
 
 /**
  * 즉석 사진 출력구 UI 컴포넌트
- * @property variant : full | top
+ * @param variant : full | top
  */
 function SlotBezel({ variant }: SlotBezelProps) {
   const isTop = variant === 'top';

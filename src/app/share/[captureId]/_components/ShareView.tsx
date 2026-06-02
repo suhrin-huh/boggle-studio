@@ -10,9 +10,9 @@ interface ShareViewProps {
 }
 
 /**저장 만료 등의 이유로 데이터 조회에 실패한 경우 보여지는 UI
- * @property imageUrl
- * @property videoUrl
- * @property fileName : QR 다운로드시에도 동일한 파일명 가지도록 DB에 저장
+ * @param imageUrl
+ * @param videoUrl
+ * @param fileName : QR 다운로드시에도 동일한 파일명 가지도록 DB에 저장
  */
 export default function ShareView({ imageUrl, videoUrl, fileName }: ShareViewProps) {
   const downloadFile = async (url: string, extension: 'png' | 'webm') => {
