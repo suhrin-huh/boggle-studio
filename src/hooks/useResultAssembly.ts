@@ -20,7 +20,7 @@ interface UseResultAssemblyProps {
  * - 비디오 합성: assembleVideo (videoAssemblyHelper) — 실패해도 에러 전파 없이 null 유지
  * @param loadingTime - ResultLoading view가 보이는 최소 시간 (ms)
  */
-export default function useResultAssembly({ loadingTime }: UseResultAssemblyProps) {
+export const useResultAssembly = ({ loadingTime }: UseResultAssemblyProps) => {
   const themeId = useBoothStore((state) => state.themeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
   const videoSlotKeys = useBoothStore((state) => state.videoSlotKeys);
@@ -85,4 +85,4 @@ export default function useResultAssembly({ loadingTime }: UseResultAssemblyProp
   }, [photoSlots]);
 
   return { resultVideoUrl, resultImage, fileName, isLoading, error };
-}
+};

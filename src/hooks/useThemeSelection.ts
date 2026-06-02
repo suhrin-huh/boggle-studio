@@ -13,7 +13,7 @@ import { useBoothStore } from '@/store/useBoothStore';
  * @returns setSelectedBg - 배경 변경 핸들러
  * @returns handleConfirm - 테마 확정 및 결과 페이지 이동 핸들러
  */
-export function useThemeSelection() {
+export const useThemeSelection = () => {
   const router = useRouter();
   const setThemeId = useBoothStore((state) => state.setThemeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
@@ -41,4 +41,4 @@ export function useThemeSelection() {
     setSelectedBg,
     handleConfirm,
   };
-}
+};

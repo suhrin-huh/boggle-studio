@@ -10,7 +10,7 @@ import type Webcam from 'react-webcam';
  * @returns isCameraReady : 웹캠 로드 상태 여부
  * @returns setIsCameraReady
  */
-export default function useCamera() {
+export const useCamera = () => {
   const webcamRef = useRef<Webcam>(null);
   // 웹캠 로드 상태 여부
   const [isCameraReady, setIsCameraReady] = useState(false);
@@ -23,4 +23,4 @@ export default function useCamera() {
   const handleCameraReady = useCallback(() => setIsCameraReady(true), []);
 
   return { webcamRef, capture, isCameraReady, handleCameraReady };
-}
+};

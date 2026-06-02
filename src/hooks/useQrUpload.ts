@@ -15,7 +15,7 @@ interface UseQrUploadParams {
   fileName: string;
 }
 
-export function useQrUpload({ resultImage, resultVideoUrl, fileName }: UseQrUploadParams) {
+export const useQrUpload = ({ resultImage, resultVideoUrl, fileName }: UseQrUploadParams) => {
   const [qrState, setQrState] = useState<QrState>({ status: 'idle' });
 
   const handleQrCreate = async () => {
@@ -71,4 +71,4 @@ export function useQrUpload({ resultImage, resultVideoUrl, fileName }: UseQrUplo
   };
 
   return { qrState, handleQrCreate };
-}
+};

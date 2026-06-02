@@ -6,7 +6,7 @@ import ResultError from './ResultError';
 import ResultView from './ResultView';
 
 // hooks & utils
-import useResultAssembly from '@/hooks/useResultAssembly';
+import { useResultAssembly } from '@/hooks/useResultAssembly';
 
 /**로딩 화면이 보여질 시간 */
 const LOADING_TIME = 3000;

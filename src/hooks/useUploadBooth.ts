@@ -10,7 +10,7 @@ interface UseUploadBoothProps {
  * @param onConfirm : (index, data) => void / 완료 버튼 이벤트 핸들러
  * @returns fileInputRef, fileToCrop, handleSlotClick, handleFileChange, handleModalConfirm, closeModal
  */
-export default function useUploadBooth({ onConfirm }: UseUploadBoothProps) {
+export const useUploadBooth = ({ onConfirm }: UseUploadBoothProps) => {
   /** 상태 및 Ref */
   const fileInputRef = useRef<HTMLInputElement>(null); // 여러 슬롯을 하나의 input으로 관리
   const [editingIndex, setEditingIndex] = useState<number | null>(null); // 편집이 진행되는 슬롯 index
@@ -52,4 +52,4 @@ export default function useUploadBooth({ onConfirm }: UseUploadBoothProps) {
     handleModalConfirm,
     closeModal,
   };
-}
+};

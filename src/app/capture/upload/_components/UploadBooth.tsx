@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useBoothStore } from '@/store/useBoothStore';
 
 // hooks
-import useLocalPhotoSlots from '@/hooks/useLocalPhotoSlots';
-import useUploadBooth from '@/hooks/useUploadBooth';
+import { useLocalPhotoSlots } from '@/hooks/useLocalPhotoSlots';
+import { useUploadBooth } from '@/hooks/useUploadBooth';
 
 // components
 import PhotoGrid from './PhotoGrid';

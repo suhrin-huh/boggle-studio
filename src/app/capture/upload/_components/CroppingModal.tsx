@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import useCropSelection from '@/hooks/useCropSelection';
+import { useCropSelection } from '@/hooks/useCropSelection';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 
 interface CroppingModalProps {

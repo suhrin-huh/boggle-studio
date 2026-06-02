@@ -83,7 +83,7 @@ const heightFromWidth = (w: number) => w / ASPECT;
 /* ════════════════════════════════════════════════════
    훅
 ════════════════════════════════════════════════════ */
-export default function useCropSelection(): UseCropSelectionReturn {
+export const useCropSelection = (): UseCropSelectionReturn => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgDataRef = useRef<CropImgData | null>(null);
   const selectionRef = useRef<CropSelection | null>(null);
@@ -416,4 +416,4 @@ export default function useCropSelection(): UseCropSelectionReturn {
   }, []);
 
   return { cropRect, loadFile, canvasRef, cropToBase64, resetCrop, reset, confirmCrop };
-}
+};

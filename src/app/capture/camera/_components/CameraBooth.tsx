@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 
 // global stores & hooks
 import { useBoothStore } from '@/store/useBoothStore';
-import useCamera from '@/hooks/useCamera';
-import useLocalPhotoSlots from '@/hooks/useLocalPhotoSlots';
-import useVideoRecorder from '@/hooks/useVideoRecorder';
-import useCaptureSequence from '@/hooks/useCaptureSequence';
+import { useCamera } from '@/hooks/useCamera';
+import { useLocalPhotoSlots } from '@/hooks/useLocalPhotoSlots';
+import { useVideoRecorder } from '@/hooks/useVideoRecorder';
+import { useCaptureSequence } from '@/hooks/useCaptureSequence';
 
 // components
 import CameraScreen from './CameraScreen';

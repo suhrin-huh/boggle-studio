@@ -8,7 +8,7 @@ interface UseLocalPhotoSlotsProps {
  * @param totalSlots : 선택된 프레임에 필요한 사진의 수
  * @returns localSlots, setPhotoAtIndex, addNextPhoto, isAllFilled,
  */
-export default function useLocalPhotoSlots({ totalSlots }: UseLocalPhotoSlotsProps) {
+export const useLocalPhotoSlots = ({ totalSlots }: UseLocalPhotoSlotsProps) => {
   const [localSlots, setLocalSlots] = useState<(string | null)[]>([]);
 
   useEffect(() => {
@@ -51,4 +51,4 @@ export default function useLocalPhotoSlots({ totalSlots }: UseLocalPhotoSlotsPro
     isAllFilled,
     filledCount,
   };
-}
+};

@@ -18,14 +18,14 @@ interface UseCaptureSequenceProps {
  * 자동 순차 촬영 시퀀스를 관리하는 훅.
  * 카운트다운 → 스냅샷 → 녹화 저장을 남은 슬롯 수만큼 반복합니다.
  */
-export default function useCaptureSequence({
+export const useCaptureSequence = ({
   capture,
   startRecording,
   stopRecording,
   addNextPhoto,
   filledCount,
   isCameraReady,
-}: UseCaptureSequenceProps) {
+}: UseCaptureSequenceProps) => {
   const [isFlashing, setIsFlashing] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -63,4 +63,4 @@ export default function useCaptureSequence({
   };
 
   return { isFlashing, isCapturing, countdown, localVideoKeys, handleCapture };
-}
+};

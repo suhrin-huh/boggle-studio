@@ -11,7 +11,7 @@ import { getSupportedMimeType } from '@/utils/videoHelper';
  * @param webcamRef - react-webcam의 Webcam 인스턴스 ref
  * @returns startSlotRecording, stopSlotRecording
  */
-export default function useVideoRecorder(webcamRef: RefObject<Webcam | null>) {
+export const useVideoRecorder = (webcamRef: RefObject<Webcam | null>) => {
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
 
@@ -66,4 +66,4 @@ export default function useVideoRecorder(webcamRef: RefObject<Webcam | null>) {
     });
 
   return { startSlotRecording, stopSlotRecording };
-}
+};
