@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { saveVideoBlob, generateVideoKey } from '@/utils/idbHelper';
-import { TOTAL_SLOTS, CAPTURE_INTERVAL_MS } from '@/constants/booth';
+import { TOTAL_SLOTS, CAPTURE_INTERVAL_MS } from '@/constants';
 
 interface UseCaptureSequenceProps {
   capture: () => Promise<string | null>;

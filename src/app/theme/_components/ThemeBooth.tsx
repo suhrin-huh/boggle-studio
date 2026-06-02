@@ -1,6 +1,6 @@
 'use client';
 
-import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background } from '@/constants/booth';
+import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background } from '@/constants';
 import { useThemeSelection } from '@/hooks/useThemeSelection';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 import ThemePreview from './ThemePreview';

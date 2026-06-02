@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { FRAME_OPTIONS, FrameType, PREVIEW_SCALE } from '@/constants/booth';
+import { FRAME_OPTIONS, FrameType, PREVIEW_SCALE } from '@/constants';
 import { useBoothStore } from '@/store/useBoothStore';
 import { batchDrawPhotoSlots } from '@/utils/canvasHelper';
 

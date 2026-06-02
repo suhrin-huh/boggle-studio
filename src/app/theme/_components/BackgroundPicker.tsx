@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Carousel from '@/components/common/Carousel';
 
 // assets & types
-import { BACKGROUND_OPTIONS, Background } from '@/constants/booth';
+import { BACKGROUND_OPTIONS, Background } from '@/constants';
 
 /** 캐러셀에 동시 표시할 배경 옵션 개수 */
 const VISIBLE_COUNT = 5;
@@ -32,7 +32,7 @@ export default function BackgroundPicker({ bgKeys, selected, onSelect }: Backgro
     <Carousel
       items={bgKeys}
       renderItem={(bgKey, _index, isActive) => (
-        <div className="p-sm">
+        <div className="p-sm select-none">
           <Image
             src={BACKGROUND_OPTIONS[bgKey].sampleImageUrl}
             alt={BACKGROUND_OPTIONS[bgKey].label}

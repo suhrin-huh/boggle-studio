@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FrameType } from '@/constants/booth';
+import { FrameType } from '@/constants';
 import PreviewPhotoCanvas from './PreviewPhotoCanvas';
 
 interface ThemePreviewProps {

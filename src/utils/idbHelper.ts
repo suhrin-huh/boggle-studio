@@ -3,7 +3,7 @@
  */
 
 import { get, set, del } from 'idb-keyval';
-import { VIDEO_SLOT_KEY_PREFIX } from '@/constants/booth';
+import { VIDEO_SLOT_KEY_PREFIX } from '@/constants';
 
 /**
  * IndexedDB에 비디오 Blob을 저장

@@ -2,7 +2,7 @@ import NeumorphicButton from '@/components/common/NeumorphicButton';
 import CameraIcon from '@/assets/icon/CameraIcon';
 import UploadIcon from '@/assets/icon/UploadIcon';
 
-import type { CaptureMode } from '@/constants/booth';
+import type { CaptureMode } from '@/constants';
 
 const MODE_ICONS: Record<string, React.ReactNode> = {
   camera: <CameraIcon size={28} />,

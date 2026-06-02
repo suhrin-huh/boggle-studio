@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FrameType, Background, ThemeId } from '@/constants/booth';
+import { FrameType, Background, ThemeId } from '@/constants';
 import { useBoothStore } from '@/store/useBoothStore';
 
 /**

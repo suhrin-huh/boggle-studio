@@ -1,10 +1,4 @@
-import {
-  FRAME_OPTIONS,
-  BACKGROUND_OPTIONS,
-  FrameType,
-  Background,
-  ThemeId,
-} from '@/constants/booth';
+import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background, ThemeId } from '@/constants';
 
 import { ThemeConfig } from '@/types';
 

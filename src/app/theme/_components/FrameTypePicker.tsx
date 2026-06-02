@@ -1,6 +1,6 @@
 // assets & types
 import { CheckIcon } from '@/assets/icon/CheckIcon';
-import { FRAME_OPTIONS, FrameType } from '@/constants/booth';
+import { FRAME_OPTIONS, FrameType } from '@/constants';
 
 interface FrameTypePickerProps {
   frameKeys: FrameType[];

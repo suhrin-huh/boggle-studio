@@ -18,7 +18,7 @@ import CountdownOverlay from './CountdownOverlay';
 import LoadingText from './LoadingText';
 
 // assets
-import { TOTAL_SLOTS } from '@/constants/booth';
+import { TOTAL_SLOTS } from '@/constants';
 import { CameraPhase } from '@/types';
 
 export default function CameraBooth() {

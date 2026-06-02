@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { ThemeId } from '@/constants/booth';
+import { ThemeId } from '@/constants';
 import { deleteVideoBlob } from '@/utils/idbHelper';
 
 export interface BoothState {

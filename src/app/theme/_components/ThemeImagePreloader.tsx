@@ -5,7 +5,7 @@ import {
   PREVIEW_SCALE,
   FrameType,
   Background,
-} from '@/constants/booth';
+} from '@/constants';
 
 const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
 const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];

@@ -1,30 +1,5 @@
-/* ════════════════════════════════════════
-서비스에 필요한 config 및 상수 정의
-════════════════════════════════════════ */
-
-/** 촬영 모드 옵션 (카메라 직접 촬영 / 이미지 업로드) */
-export const CAPTURE_MODE = {
-  camera: {
-    id: 'camera',
-    label: 'Camera',
-    path: '/capture/camera',
-  },
-  upload: {
-    id: 'upload',
-    label: 'Upload',
-    path: '/capture/upload',
-  },
-} as const;
-
-/** CAPTURE_MODE 값에서 추출한 유니온 타입 */
-export type CaptureMode = (typeof CAPTURE_MODE)[keyof typeof CAPTURE_MODE];
-
 /** 프레임 한 장에 배치되는 사진 슬롯 수 */
 export const TOTAL_SLOTS = 4;
-
-/* ════════════════════════════════════════
-프레임 사이즈에 따른 슬롯 좌표 정의
-════════════════════════════════════════ */
 
 /** BASIC 프레임(600×1800) 슬롯 좌표 및 크기 정보 */
 const BASIC_SLOT_CONFIGS = [
@@ -89,11 +64,11 @@ export const BACKGROUND_OPTIONS = {
     sampleImageUrl: '/images/samples/bg-black.png',
     images: {
       basic: '/images/backgrounds/basic-black.png',
-      wide: '/images/backgrounds/wide-black.png',
+      // wide: '/images/backgrounds/wide-black.png',
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-black.png',
+      // wide: '/images/overlays/wide-black.png',
     },
   },
   white: {
@@ -102,11 +77,11 @@ export const BACKGROUND_OPTIONS = {
     sampleImageUrl: '/images/samples/bg-white.png',
     images: {
       basic: '/images/backgrounds/basic-white.png',
-      wide: '/images/backgrounds/wide-white.png',
+      // wide: '/images/backgrounds/wide-white.png',
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-white.png',
+      // wide: '/images/overlays/wide-white.png',
     },
   },
   'dark-denim': {
@@ -115,11 +90,11 @@ export const BACKGROUND_OPTIONS = {
     sampleImageUrl: '/images/samples/bg-dark-denim.png',
     images: {
       basic: '/images/backgrounds/basic-dark-denim.png',
-      wide: '/images/backgrounds/wide-dark-denim.png',
+      // wide: '/images/backgrounds/wide-dark-denim.png',
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-dark-denim.png',
+      // wide: '/images/overlays/wide-dark-denim.png',
     },
   },
   'light-denim': {
@@ -128,11 +103,11 @@ export const BACKGROUND_OPTIONS = {
     sampleImageUrl: '/images/samples/bg-light-denim.png',
     images: {
       basic: '/images/backgrounds/basic-light-denim.png',
-      wide: '/images/backgrounds/wide-light-denim.png',
+      // wide: '/images/backgrounds/wide-light-denim.png',
     },
     overlays: {
       basic: null,
-      wide: '/images/overlays/wide-light-denim.png',
+      // wide: '/images/overlays/wide-light-denim.png',
     },
   },
   // 'the-starry-night': {
@@ -172,9 +147,3 @@ export type ThemeId = `${FrameType}-${Background}`;
 
 /**ResultView의 원본에 대한 Preview의 비율 */
 export const PREVIEW_SCALE = 1 / 6;
-
-/** IndexedDB에 녹화 영상 Blob을 저장할 때 사용하는 키 접두사 */
-export const VIDEO_SLOT_KEY_PREFIX = 'booth-video';
-
-/** 촬영 버튼 클릭 후 슬롯당 카운트다운 시간 (ms) */
-export const CAPTURE_INTERVAL_MS = 3000;

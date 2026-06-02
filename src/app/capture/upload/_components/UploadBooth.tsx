@@ -15,7 +15,7 @@ import CroppingModal from './CroppingModal';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 
 // constants
-import { TOTAL_SLOTS } from '@/constants/booth';
+import { TOTAL_SLOTS } from '@/constants';
 
 export default function UploadBooth() {
   const router = useRouter();
