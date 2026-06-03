@@ -1,16 +1,14 @@
 import Image from 'next/image';
 
 interface SlotBezelProps {
-  /**
-   * - `full`: 사진 뒤에 깔리는 베젤 배경 (z-index: 10, 전체 높이)
-   * - `top`: 사진 앞을 덮어 입체감을 주는 상단 베젤 덮개 (z-index: 20, 절반 높이)
-   */
   variant: 'full' | 'top';
 }
 
 /**
  * 즉석 사진 출력구 UI 컴포넌트
- * @param variant : full | top
+ * @param variant
+ * - full: 사진 뒤에 깔리는 베젤 배경 (z-index: 10, 전체 높이)
+ * - top: 사진 앞을 덮어 입체감을 주는 상단 베젤 덮개 (z-index: 20, 절반 높이)
  */
 function SlotBezel({ variant }: SlotBezelProps) {
   const isTop = variant === 'top';
@@ -40,8 +38,13 @@ export default function ResultLoading() {
         <SlotBezel variant="full" />
 
         {/* 예시 이미지 */}
-        <div className="absolute top-[30px] z-10 flex w-60 animate-[photo-emerge-down_5s_ease-out_forwards] flex-col items-center overflow-hidden">
-          <Image src="/images/samples/black.png" alt="sample image" width={150} height={450} />
+        <div className="absolute top-7.5 z-10 flex w-60 animate-[photo-emerge-down_5s_ease-out_forwards] flex-col items-center overflow-hidden">
+          <Image
+            src="/images/samples/generating-sample.png"
+            alt="sample image"
+            width={150}
+            height={450}
+          />
         </div>
 
         {/* 앞을 덮는 상단 덮개 베젤 */}
