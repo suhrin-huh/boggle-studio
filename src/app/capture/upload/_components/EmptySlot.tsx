@@ -5,8 +5,8 @@ interface EmptySlotProps {
 
 /**
  * 슬롯에 사진이 없는 경우 보여주는 UI
- * @param index: 슬롯 번호
- * @param onClick: 클릭 이벤트 함수
+ * @param index - 슬롯 번호
+ * @param onClick - 슬롯 클릭 시 파일 선택을 여는 핸들러
  */
 export default function EmptySlot({ index, onClick }: EmptySlotProps) {
   return (

@@ -1,22 +1,22 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useBoothStore } from '@/store/useBoothStore';
 
-// hooks
+import { useBoothStore } from '@/store/useBoothStore';
 import { useLocalPhotoSlots } from '@/hooks/useLocalPhotoSlots';
 import { useUploadBooth } from '@/hooks/useUploadBooth';
 
-// components
+import NeumorphicButton from '@/components/common/NeumorphicButton';
 import PhotoGrid from './PhotoGrid';
 import EmptySlot from './EmptySlot';
 import FilledSlot from './FilledSlot';
 import CroppingModal from './CroppingModal';
-import NeumorphicButton from '@/components/common/NeumorphicButton';
 
-// constants
 import { TOTAL_SLOTS } from '@/constants';
 
+/**
+ * 이미지 업로드 및 크롭 흐름을 관리하는 부스 컴포넌트
+ */
 export default function UploadBooth() {
   const router = useRouter();
   const setPhotoSlots = useBoothStore((state) => state.setPhotoSlots);
@@ -47,7 +47,6 @@ export default function UploadBooth() {
     <div className="w-full">
       <PhotoGrid>
         {localSlots.map((slot, index) => {
-          // 이미지가 확정된 슬롯 (미리보기)
           return slot ? (
             <FilledSlot
               key={index}
@@ -56,13 +55,11 @@ export default function UploadBooth() {
               onChangeClick={() => handleSlotClick(index)}
             />
           ) : (
-            // 비어있는 슬롯
             <EmptySlot key={index} index={index} onClick={() => handleSlotClick(index)} />
           );
         })}
       </PhotoGrid>
 
-      {/* 숨겨진 파일 입력 트리거 */}
       <input
         type="file"
         accept="image/*"
@@ -71,12 +68,10 @@ export default function UploadBooth() {
         className="hidden"
       />
 
-      {/* 파일이 선택되면 전체화면 모달 마운트 */}
       {fileToCrop && (
         <CroppingModal file={fileToCrop} onConfirm={handleModalConfirm} onCancel={closeModal} />
       )}
 
-      {/* 액션 버튼 */}
       <div className="mt-4 flex flex-col items-center gap-3">
         <NeumorphicButton onClick={handlePrint} disabled={!isAllFilled}>
           Choose Frame
