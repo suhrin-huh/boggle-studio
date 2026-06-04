@@ -1,8 +1,6 @@
-// libraries & frameworks
 import Webcam from 'react-webcam';
 import type { RefObject, HTMLAttributes } from 'react';
 
-// assets
 import { CameraPhase } from '@/types';
 
 const VIDEO_CONSTRAINTS = {
@@ -23,13 +21,13 @@ interface CameraScreenProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * 카메라 촬영 화면
- * @param phase
- * @param setIsCameraReady
- * @param filledCount
- * @param totalSlots
- * @param webcamRef
- * @param isFlashing
+ * 웹캠 스트림과 플래시·카운트 UI를 조합한 카메라 촬영 화면
+ * @param phase - 현재 카메라 촬영 단계
+ * @param onCameraReady - 웹캠 스트림이 준비됐을 때 호출하는 콜백
+ * @param filledCount - 현재까지 촬영된 슬롯 수
+ * @param totalSlots - 전체 슬롯 수
+ * @param webcamRef - 웹캠 엘리먼트 참조
+ * @param isFlashing - 촬영 플래시 효과 활성화 여부
  */
 export default function CameraScreen({
   phase,
@@ -45,13 +43,11 @@ export default function CameraScreen({
 
   return (
     <div className="relative aspect-4/3 w-full overflow-hidden rounded-lg" {...rest}>
-      {/* 완료 상태 : 웹캠 대신 DONE! 텍스트 표시 */}
       {isAllFilled ? (
         <div className="bg-muted-dark/50 flex h-full w-full items-center justify-center rounded-lg">
           <p className="font-unbounded text-xl font-bold text-white">DONE!</p>
         </div>
       ) : (
-        /* 웹캠 */
         <Webcam
           ref={webcamRef}
           audio={false}
@@ -68,14 +64,12 @@ export default function CameraScreen({
         className={`pointer-events-none absolute inset-0 z-50 bg-white opacity-0 ${isFlashing ? 'animate-[flash_0.35s_ease-out_forwards]' : ''}`}
       />
 
-      {/* 촬영 횟수 카운트 */}
       {phase === 'capturing' && (
         <span className="absolute top-[5%] right-[5%] z-10 text-[16px] font-semibold text-white tabular-nums">
           {filledCount + 1} / {totalSlots}
         </span>
       )}
 
-      {/* 기타 요소 : 이펙트, 스티커 등 */}
       {children}
     </div>
   );

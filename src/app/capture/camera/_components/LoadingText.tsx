@@ -1,3 +1,6 @@
+/**
+ * 카메라 초기화 중 표시하는 바운스 애니메이션 로딩 텍스트
+ */
 export default function LoadingText() {
   return (
     <div className="gap-sm font-unbounded absolute flex h-full w-full items-center justify-center font-bold">
@@ -10,7 +13,6 @@ export default function LoadingText() {
           }}
         >
           {char}
-          {/* <span className="inline-block animate-[bounce-custom_0.6s_infinite]">{char}</span> */}
         </span>
       ))}
     </div>

@@ -2,6 +2,10 @@ interface CountdownOverlayProps {
   countdown: number | null;
 }
 
+/**
+ * 카운트다운 숫자를 화면 중앙에 표시하는 오버레이
+ * @param countdown - 표시할 카운트다운 숫자, null이면 미표시
+ */
 export default function CountdownOverlay({ countdown }: CountdownOverlayProps) {
   if (countdown === null) return null;
 
