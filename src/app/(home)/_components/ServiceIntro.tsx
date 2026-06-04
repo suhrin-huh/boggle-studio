@@ -1,15 +1,15 @@
-// libraries & frameworks
 import Image from 'next/image';
 import Link from 'next/link';
 
-// components
-import PhotoFrame from './PhotoFrame';
 import NeumorphicButton from '@/components/common/NeumorphicButton';
+import PhotoFrame from './PhotoFrame';
 
-// assets & types
 import introText from '@/assets/image/intro-text.png';
 import serviceDemo from '@/assets/image/service-demo.gif';
 
+/**
+ * 서비스 소개 및 촬영 진입 UI 컴포넌트
+ */
 export default function ServiceIntro() {
   return (
     <>

@@ -4,15 +4,13 @@ interface PageContainerProps {
 }
 
 /**
- * 페이지별 통합 UI를 위한 공통 컨테이너
- *
+ * 페이지별 통합 레이아웃을 위한 공통 컨테이너 컴포넌트
  */
 export default function PageContainer({ children, className }: PageContainerProps) {
   const classes = [
-    'p-md', // padding 및 margin
-    'gap-lg flex flex-1 flex-col items-center justify-center', //flex 관련 속성
-    'overflow-hidden', // overflow 및 스크롤 => 안 생기게 하자..!
-    '', // width 및 height
+    'p-md',
+    'gap-lg flex flex-1 flex-col items-center justify-center',
+    'overflow-hidden',
     className,
   ].join(' ');
 

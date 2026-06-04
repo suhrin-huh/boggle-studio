@@ -3,6 +3,9 @@ interface PhotoFrameProps {
   className?: string;
 }
 
+/**
+ * 은빛 금속 질감의 사진 프레임 컴포넌트. 자식 요소를 프레임 안에 감싸 렌더링한다.
+ */
 export default function PhotoFrame({ children, className }: PhotoFrameProps) {
   return (
     <div
