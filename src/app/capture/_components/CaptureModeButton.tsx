@@ -15,10 +15,9 @@ interface CaptureModeButtonProps {
 }
 
 /**
- * 모드 선택 버튼 UI
- * href를 받아 NeumorphicButton이 <a>로 렌더링되므로 외부에서 Link로 감쌀 필요 없음
- * @param mode 모드의 id, path, label 포함
- * @param disabled 버튼 비활성화 여부 (이펙트 프레임 선택 시 Upload 버튼 비활성화에 사용)
+ * 촬영 모드 선택 버튼 컴포넌트
+ * @param mode - 모드 정보
+ * @param disabled - 버튼 비활성화 여부
  */
 export default function CaptureModeButton({ mode, disabled = false }: CaptureModeButtonProps) {
   return (
