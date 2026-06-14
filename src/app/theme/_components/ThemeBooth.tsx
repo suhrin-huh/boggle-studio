@@ -1,14 +1,19 @@
 'use client';
 
-import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background } from '@/constants';
 import { useThemeSelection } from '@/hooks/useThemeSelection';
+
 import NeumorphicButton from '@/components/common/NeumorphicButton';
 import ThemePreview from './ThemePreview';
 import FrameTypePicker from './FrameTypePicker';
 import BackgroundPicker from './BackgroundPicker';
 
-const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
-const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];
+import {
+  FRAME_OPTIONS,
+  BACKGROUND_OPTIONS,
+  PREVIEW_SCALE,
+  FrameType,
+  Background,
+} from '@/constants';
 
 interface ThemeBoothProps {
   children: React.ReactNode;
@@ -16,38 +21,37 @@ interface ThemeBoothProps {
 
 /**
  * 테마 선택 UI 컨테이너 컴포넌트
- * 프레임 타입 선택(FrameTypePicker), 배경 선택(BackgroundPicker), 미리보기(ThemePreview),
- * 확인 버튼을 포함한 테마 선택 영역을 렌더링하고, useThemeSelection 훅을 통해 상태를 관리
- * @param children - 슬롯 콘텐츠 (ThemePreloadImages 등)
  */
 export default function ThemeBooth({ children }: ThemeBoothProps) {
+  const FRAME_KEYS = Object.keys(FRAME_OPTIONS) as FrameType[];
+  const BG_KEYS = Object.keys(BACKGROUND_OPTIONS) as Background[];
   const { selectedFrame, selectedBg, setSelectedFrame, setSelectedBg, handleConfirm } =
     useThemeSelection();
 
-  const previewSrc = BACKGROUND_OPTIONS[selectedBg].images[selectedFrame];
-  const overlayUrl = BACKGROUND_OPTIONS[selectedBg].overlays[selectedFrame];
-  const previewWidth = selectedFrame === 'basic' ? 100 : 200;
-  const previewHeight = 300;
+  const { width, height } = FRAME_OPTIONS[selectedFrame];
+  const previewWidth = Math.round(width * PREVIEW_SCALE);
+  const previewHeight = Math.round(height * PREVIEW_SCALE);
+  const backgroundUrl = `/images/previews/backgrounds/${selectedFrame}-${selectedBg}.png`;
+  const overlayUrl = BACKGROUND_OPTIONS[selectedBg].overlays[selectedFrame]
+    ? `/images/previews/overlays/${selectedFrame}-${selectedBg}.png`
+    : null;
 
   return (
-    <div className="gap-lg flex flex-col items-center">
+    <div className="gap-lg flex flex-col items-center sm:scale-120">
       {children}
       <ThemePreview
-        src={previewSrc}
         width={previewWidth}
         height={previewHeight}
         selectedFrame={selectedFrame}
+        backgroundUrl={backgroundUrl}
         overlayUrl={overlayUrl}
       />
-      {/* 프레임 타입 선택 */}
       <FrameTypePicker
         frameKeys={FRAME_KEYS}
         selected={selectedFrame}
         onSelect={setSelectedFrame}
       />
-      {/* 배경 선택 */}
       <BackgroundPicker bgKeys={BG_KEYS} selected={selectedBg} onSelect={setSelectedBg} />
-      {/*  */}
       <NeumorphicButton onClick={handleConfirm}>Create a Photo</NeumorphicButton>
     </div>
   );

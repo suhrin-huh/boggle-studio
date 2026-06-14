@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FrameType, Background, ThemeId } from '@/constants';
+import { FRAME_OPTIONS, BACKGROUND_OPTIONS, FrameType, Background, ThemeId } from '@/constants';
 import { useBoothStore } from '@/store/useBoothStore';
 
 /**
@@ -18,13 +18,17 @@ export const useThemeSelection = () => {
   const setThemeId = useBoothStore((state) => state.setThemeId);
   const photoSlots = useBoothStore((state) => state.photoSlots);
 
-  const [selectedFrame, setSelectedFrame] = useState<FrameType>('basic');
-  const [selectedBg, setSelectedBg] = useState<Background>('black');
+  const [selectedFrame, setSelectedFrame] = useState<FrameType>(
+    Object.keys(FRAME_OPTIONS)[0] as FrameType,
+  );
+  const [selectedBg, setSelectedBg] = useState<Background>(
+    Object.keys(BACKGROUND_OPTIONS)[0] as Background,
+  );
 
   useEffect(() => {
     // 촬영 없이 프레임 페이지로 바로 접근한 경우 방어
     if (photoSlots.length === 0) {
-      router.replace('/');
+      // router.replace('/');
     }
   }, [photoSlots, router]);
 
