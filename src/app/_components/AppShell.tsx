@@ -13,7 +13,7 @@ export default function AppShell({ children }: AppShellProps) {
       {/* 메인 요소 레이아웃 */}
       <div className="sm:shadow-neu relative flex w-full flex-col overflow-hidden sm:max-w-140 sm:rounded-lg">
         <Header />
-        <Image src={background} alt="배경" loading="eager" fill className="-z-10" />
+        <Image src={background} alt="배경" loading="eager" fill className="-z-10" priority />
         {children}
       </div>
     </div>
