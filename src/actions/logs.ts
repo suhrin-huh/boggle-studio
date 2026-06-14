@@ -14,7 +14,7 @@ export async function recordActiveView(): Promise<ActionState> {
   // 접속 기기 파악을 위한 user-agent 수집
   const userAgent = headerList.get('user-agent') || 'unknown';
 
-  const isDevMode = process.env.NODE_ENVIRONMENT === 'dev';
+  const isDevMode = process.env.NODE_ENV === 'development';
 
   if (isDevMode)
     return {
